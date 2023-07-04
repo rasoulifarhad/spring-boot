@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomerRestfulCuntroller {
   
     private final CustomerRepository repository;
+    private final CustomerModelAssembler assembler;
 
     @GetMapping("/restful/customers")
     CollectionModel<EntityModel<Customer>> all() {
@@ -38,13 +39,18 @@ public class CustomerRestfulCuntroller {
                                 .spliterator(),false)
                     .collect(toList());
         List<EntityModel<Customer>>  customers = customerList.stream()
-                                                    .map(customer -> EntityModel.of(
-                                                        customer,
-                                                        linkTo(methodOn(CustomerRestfulCuntroller.class).byId(customer.getId())).withSelfRel(),
-                                                        linkTo(methodOn(CustomerRestfulCuntroller.class).all()).withRel("customers"))   
-                                                    )
+                                                    .map(assembler::toModel)
                                                     .collect(toList());
         return CollectionModel.of(customers, linkTo(methodOn(CustomerRestfulCuntroller.class).all()).withSelfRel());
+
+        // List<EntityModel<Customer>>  customers = customerList.stream()
+        //                                             .map(customer -> EntityModel.of(
+        //                                                 customer,
+        //                                                 linkTo(methodOn(CustomerRestfulCuntroller.class).byId(customer.getId())).withSelfRel(),
+        //                                                 linkTo(methodOn(CustomerRestfulCuntroller.class).all()).withRel("customers"))   
+        //                                             )
+        //                                             .collect(toList());
+        // return CollectionModel.of(customers, linkTo(methodOn(CustomerRestfulCuntroller.class).all()).withSelfRel());
     }
 
     @PostMapping("/restful/customers")
@@ -55,11 +61,12 @@ public class CustomerRestfulCuntroller {
     @GetMapping("/restful/customers/{id}")
     public EntityModel<Customer> byId(@PathVariable Long id) {
         Customer customer = repository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
-        return EntityModel.of(
-            customer,
-            linkTo(methodOn(CustomerRestfulCuntroller.class).byId(id)).withSelfRel(),
-            linkTo(methodOn(CustomerRestfulCuntroller.class).all()).withRel("customers")
-        );
+        return assembler.toModel(customer);
+        // return EntityModel.of(
+        //     customer,
+        //     linkTo(methodOn(CustomerRestfulCuntroller.class).byId(id)).withSelfRel(),
+        //     linkTo(methodOn(CustomerRestfulCuntroller.class).all()).withRel("customers")
+        // );
     }
 
     @PutMapping("/restful/customers/{id}")

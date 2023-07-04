@@ -1,4 +1,4 @@
-package com.farhad.example.springdatajpa.jparest;
+package com.farhad.example.springdatarest.jparest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

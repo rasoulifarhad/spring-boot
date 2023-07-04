@@ -1,4 +1,4 @@
-package com.farhad.example.springdatajpa.jparest.repository;
+package com.farhad.example.springdatarest.jparest.repository;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.farhad.example.springdatajpa.jparest.model.Person;
+import com.farhad.example.springdatarest.jparest.model.Person;
 
 // At runtime, Spring Data REST automatically creates an implementation of this interface. Then it uses the @RepositoryRestResource annotation 
 // to direct Spring MVC to create RESTful endpoints at /people.

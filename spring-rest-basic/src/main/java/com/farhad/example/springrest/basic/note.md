@@ -3,6 +3,8 @@ See https://spring.io/guides/tutorials/rest/
 
 See https://github.com/spring-projects/spring-hateoas-examples
 
+See https://datatracker.ietf.org/doc/html/rfc7807
+
 
 ```
 $ curl -v -X POST localhost:8080/v2/customers -H 'Content-Type:application/json' -d '{"name": "Amir Amiri"}'

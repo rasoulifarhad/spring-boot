@@ -1,4 +1,4 @@
-package com.farhad.example.springdatajpa.basic.restful;
+package com.farhad.example.springrest.basic.restful;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -7,7 +7,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-import com.farhad.example.springdatajpa.basic.model.Customer;
+import com.farhad.example.springrest.basic.model.Customer;
 
 @Component
 public class CustomerModelAssembler implements RepresentationModelAssembler<Customer, EntityModel<Customer>> {

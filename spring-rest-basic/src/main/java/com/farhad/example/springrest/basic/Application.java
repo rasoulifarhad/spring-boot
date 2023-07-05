@@ -1,4 +1,4 @@
-package com.farhad.example.springdatajpa.basic;
+package com.farhad.example.springrest.basic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

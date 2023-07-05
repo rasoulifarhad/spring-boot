@@ -1,4 +1,4 @@
-package com.farhad.example.springdatajpa.basic.rest;
+package com.farhad.example.springrest.basic.rest;
 
 import static java.util.stream.Collectors.toList;
 
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farhad.example.springdatajpa.basic.CustomerNotFoundException;
-import com.farhad.example.springdatajpa.basic.model.Customer;
-import com.farhad.example.springdatajpa.basic.repository.CustomerRepository;
+import com.farhad.example.springrest.basic.model.Customer;
+import com.farhad.example.springrest.basic.model.CustomerNotFoundException;
+import com.farhad.example.springrest.basic.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        Email Template
+    </head>
+    <body>
+        <h2>Welcom, <soan th:text="${user.name}"></soan>!</h2>
+        <p>We're excited to have you on board.</p>
+        <p>Here are some details about your recent purchase:</p>
+        <ul>
+            <li th:each="product : ${user.purchasedProducts}" th:text="${product.name}"></li>
+        </ul>
+    </body>
+</html>

@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<datafaker.version>1.9.0</datafaker.version>
+		<javamoney.moneta.version>1.4.2</javamoney.moneta.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,6 +41,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency> 
+			<groupId>org.javamoney</groupId>
+			<artifactId>moneta</artifactId>
+			<version>${javamoney.moneta.version}</version>
+			<type>pom</type>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-hateoas</artifactId>

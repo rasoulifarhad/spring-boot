@@ -26,12 +26,12 @@ public class LibraryController {
     
     private final LibraryRepository repository;
 
-    @GetMapping("/restful/libraries")
+    @GetMapping("/v2/libraries")
     public List<Library> all() {
         return repository.findAll();
     }
 
-    @PostMapping("/restful/libraries")
+    @PostMapping("/v2/libraries")
     public Library newLibrary(@RequestBody Library library) {
         return repository.save(library);
     }
@@ -43,7 +43,7 @@ public class LibraryController {
     // 
     // linkTo(methodOn(LibraryController.class).all()).withRel("libraries") asks Spring HATEOAS to build a link to the aggregate root, all(), 
     // and call it "libraries".
-    @GetMapping(value="/restful/libraries/{id}")
+    @GetMapping(value="/v2/libraries/{id}")
     public EntityModel<Library> byId(@PathVariable Long id) {
         Library library = repository.findById(id).orElseThrow(() -> new LibraryNotFoundException(id));
         return EntityModel.of(
@@ -53,7 +53,7 @@ public class LibraryController {
         );
     }
 
-    @PutMapping("/restful/libraries/{id}")
+    @PutMapping("/v2/libraries/{id}")
     public Library replaceLibrary(@RequestBody Library newLibrary, @PathVariable Long id) {
         return repository.findById(id)
                     .map(library -> {
@@ -67,7 +67,7 @@ public class LibraryController {
                     });
     }
 
-    @DeleteMapping("/restful/libraries/{id}") 
+    @DeleteMapping("/v2/libraries/{id}") 
     public void deleteById(@PathVariable Long id) {
         repository.deleteById(id);
     }

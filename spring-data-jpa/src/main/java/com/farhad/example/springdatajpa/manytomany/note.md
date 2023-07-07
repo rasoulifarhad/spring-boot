@@ -56,3 +56,6 @@ Set<Course> likedCourses;
 Set<Student> likes;
 ```
 > Keep in mind that since a many-to-many relationship doesn't have an owner side in the database, we could configure the join table in the Course class and reference it from the Student class.
+
+
+> With JPA, when your Many-to-Many relationship between two entities with additional information, we need to create a new Java class

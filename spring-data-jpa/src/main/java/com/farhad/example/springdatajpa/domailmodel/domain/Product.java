@@ -1,4 +1,4 @@
-package com.farhad.example.springdatajpa.domailmodel;
+package com.farhad.example.springdatajpa.domailmodel.domain;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
 
-import com.farhad.example.springdatajpa.domailmodel.dao.ProductDao;
 import com.farhad.example.springdatajpa.domailmodel.repository.ProductRepository;
 
 import lombok.AllArgsConstructor;
@@ -41,7 +40,6 @@ public class Product {
     @NonNull private String name;
     @NonNull private MonetaryAmount price;
     @NonNull private LocalDate expirationDate;
-    @NonNull private ProductDao productDao;
 
     public void save() {
         Optional<Product> product = repository.findByName(name);

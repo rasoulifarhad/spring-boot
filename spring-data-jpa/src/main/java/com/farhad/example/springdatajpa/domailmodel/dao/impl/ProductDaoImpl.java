@@ -2,8 +2,8 @@ package com.farhad.example.springdatajpa.domailmodel.dao.impl;
 
 import java.util.Optional;
 
-import com.farhad.example.springdatajpa.domailmodel.Product;
 import com.farhad.example.springdatajpa.domailmodel.dao.ProductDao;
+import com.farhad.example.springdatajpa.domailmodel.domain.Product;
 
 public class ProductDaoImpl implements ProductDao {
 

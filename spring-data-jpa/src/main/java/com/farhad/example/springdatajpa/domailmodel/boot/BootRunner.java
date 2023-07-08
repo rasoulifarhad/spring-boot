@@ -1,25 +1,27 @@
-package com.farhad.example.springdatajpa.domailmodel;
+package com.farhad.example.springdatajpa.domailmodel.boot;
 
 import java.time.LocalDate;
 
 import org.javamoney.moneta.Money;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import com.farhad.example.springdatajpa.domailmodel.dao.impl.CustomerDaoImpl;
+import com.farhad.example.springdatajpa.domailmodel.domain.Customer;
+import com.farhad.example.springdatajpa.domailmodel.domain.Product;
 import com.farhad.example.springdatajpa.domailmodel.repository.CustomerRepository;
 import com.farhad.example.springdatajpa.domailmodel.repository.ProductRepository;
 
-public class App {
+@Configuration
+public class BootRunner {
     
     @Bean
-    public CommandLineRunner init(CustomerRepository customerRepository, ProductRepository productRepository) {
-        return args -> {
+    public CommandLineRunner runner(ProductRepository productRepository, CustomerRepository customerRepository) {
+        return  args -> {
             Customer tom = Customer.builder()
                                 .name("Tom")
                                 .money(Money.of(30, "USD"))
                                 .repository(customerRepository)
-                                .customerDao(new CustomerDaoImpl())
                                 .build();
             tom.save();
 
@@ -45,9 +47,24 @@ public class App {
             butter.save();
             chesse.save();
 
-        };
-    }
-    public static void main(String[] args) {
-        
+            tom.showBalance();
+            tom.showPurchases();
+
+            tom.buyProduct(eggs);
+            tom.showBalance();
+
+            tom.buyProduct(butter);
+            tom.showBalance();
+
+            // Trying to buy cheese, but receive a refusal
+            // because he didn't have enough money
+            tom.buyProduct(chesse);
+            tom.showBalance();    
+
+            tom.save();
+
+            tom.showBalance();
+            tom.showPurchases();
+        } ;
     }
 }

@@ -1,5 +1,13 @@
 See https://java-design-patterns.com/patterns/domain-model/
 
+> Domain Model: An object model of the domain that incorporates both behavior and data.
+
+<br/>
+
+![domainModelSketch](domainModelSketch.gif)
+
+<br/>
+
 ##  build an e-commerce web application
 
 - there are few nouns you talk about repeatedly

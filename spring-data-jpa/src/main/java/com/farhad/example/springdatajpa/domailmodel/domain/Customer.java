@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.money.MonetaryAmount;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.TypeDef;
 
 import com.farhad.example.springdatajpa.domailmodel.repository.CustomerRepository;
 
@@ -26,6 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 @Entity
 @Table(name = "customers")
+@TypeDef(
+    typeClass = MonetaryAmount.class,
+    defaultForType = MonetaryAmount.class
+)
 public class Customer {
     
     @NonNull 
@@ -37,6 +45,10 @@ public class Customer {
     @NonNull 
     private String name;
     @NonNull 
+    @Columns(columns = {
+        @Column(name = "money_amount"),
+        @Column(name = "money_currency")
+    })
     private MonetaryAmount money;
 
     // @Builder.Default 

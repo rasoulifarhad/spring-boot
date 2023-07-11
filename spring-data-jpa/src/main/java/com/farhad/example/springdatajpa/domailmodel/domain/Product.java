@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.TypeDef;
@@ -22,6 +23,7 @@ import io.hypersistence.utils.hibernate.type.money.MonetaryAmountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "products")
 @TypeDef(
     typeClass = MonetaryAmountType.class,
@@ -41,7 +44,8 @@ public class Product {
     private static final double DISCOUNT_RATE = 0.2;
 
     @NonNull 
-    private final ProductRepository repository;
+    @Transient
+    private ProductRepository repository;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

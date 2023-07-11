@@ -14,14 +14,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.TypeDef;
 
 import com.farhad.example.springdatajpa.domailmodel.repository.CustomerRepository;
 
+import io.hypersistence.utils.hibernate.type.money.MonetaryAmountType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,14 +34,17 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 @Entity
 @Table(name = "customers")
+@NoArgsConstructor
+@AllArgsConstructor
 @TypeDef(
-    typeClass = MonetaryAmount.class,
+    typeClass = MonetaryAmountType.class,
     defaultForType = MonetaryAmount.class
 )
 public class Customer {
     
     @NonNull 
-    private final CustomerRepository repository;
+    @Transient
+    private CustomerRepository repository;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +65,7 @@ public class Customer {
         joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")   
     )
-    private List<Product> purchasedProducts = new ArrayList<>();
+    @Builder.Default private List<Product> purchasedProducts = new ArrayList<>();
 
     public void save() {
         Optional<Customer> customer = repository.findByName(name);

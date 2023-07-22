@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,19 +20,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user_groups")
 @Getter
-public class User {
-
+public class UserGroup {
+    
     @EmbeddedId
-    private User.ID id;
+    private UserGroup.ID id;
+
     // @Id
     // private UUID id;
 
-    @Column(name = "phone_number")
-    @NotNull
-    @Convert(converter = PhoneNumberConverter.class)
-    private  String phoneNumber;
+    private String name;
 
     @Data
     @Setter(value = AccessLevel.PRIVATE)

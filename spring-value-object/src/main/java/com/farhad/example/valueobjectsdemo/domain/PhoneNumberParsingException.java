@@ -6,4 +6,8 @@ public class PhoneNumberParsingException extends RuntimeException {
         super(string);
     }
 
+    public PhoneNumberParsingException(String string, Exception e) {
+        super(string, e);
+    }
+
 }

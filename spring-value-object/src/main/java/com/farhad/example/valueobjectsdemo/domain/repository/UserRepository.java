@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.farhad.example.valueobjectsdemo.domain.PhoneNumber;
 import com.farhad.example.valueobjectsdemo.domain.User;
+import com.farhad.example.valueobjectsdemo.domain.value.PhoneNumber;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
     

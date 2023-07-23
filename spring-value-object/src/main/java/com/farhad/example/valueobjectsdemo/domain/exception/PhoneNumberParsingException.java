@@ -1,4 +1,4 @@
-package com.farhad.example.valueobjectsdemo.domain;
+package com.farhad.example.valueobjectsdemo.domain.exception;
 
 public class PhoneNumberParsingException extends RuntimeException {
 

@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.farhad.example.valueobjectsdemo.domain.converter.PassportConverter;
+import com.farhad.example.valueobjectsdemo.domain.converter.PhoneNumberConverter;
+import com.farhad.example.valueobjectsdemo.domain.value.Passport;
+import com.farhad.example.valueobjectsdemo.domain.value.PhoneNumber;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -32,6 +37,9 @@ public class User {
     @Convert(converter = PhoneNumberConverter.class)
     private  PhoneNumber phoneNumber;
 
+    @Convert(converter = PassportConverter.class)
+    @NotNull
+    private Passport passport;
     // @Data
     // @Setter(value = AccessLevel.PRIVATE)
     // @Embeddable
@@ -44,11 +52,12 @@ public class User {
     //     private UUID id;
     // }
 
-    public static User newUser(String name, PhoneNumber phoneNumber) {
+    public static User newUser(String name, PhoneNumber phoneNumber, Passport passport) {
         User user = new User();
         user.id = UUID.randomUUID();
         user.name = name;
         user.phoneNumber = phoneNumber;
+        user.passport = passport;
         return user;
     }
 }

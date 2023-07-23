@@ -1,7 +1,9 @@
-package com.farhad.example.valueobjectsdemo.domain;
+package com.farhad.example.valueobjectsdemo.domain.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import com.farhad.example.valueobjectsdemo.domain.value.PhoneNumber;
 
 @Converter
 public class PhoneNumberConverter implements AttributeConverter<PhoneNumber, String> {

@@ -1,5 +1,6 @@
-package com.farhad.example.valueobjectsdemo.domain;
+package com.farhad.example.valueobjectsdemo.domain.value;
 
+import com.farhad.example.valueobjectsdemo.domain.exception.PhoneNumberParsingException;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;

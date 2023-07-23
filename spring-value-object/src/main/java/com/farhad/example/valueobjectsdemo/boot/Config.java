@@ -18,10 +18,12 @@ public class Config {
         return args -> {
             User user = User.newUser(new PhoneNumber("78005553535"));
             User savedUser = userRepository.save(user);
-            System.out.println(savedUser);
+            System.out.println("Saved: " + savedUser);
 
             Optional<User> loadedUser = userRepository.findById(savedUser.getId());
-            System.out.println(loadedUser);
+            System.out.println("loaded: " + loadedUser);
+
+            System.out.println("Finded: " + userRepository.findByPhoneNumber(new PhoneNumber("78005553535")));
 
         };
     }

@@ -16,7 +16,7 @@ public class Config {
     @Bean
     public CommandLineRunner initData(UserRepository userRepository) {
         return args -> {
-            User user = User.newUser(new PhoneNumber("78005553535"));
+            User user = User.newUser("user1", new PhoneNumber("78005553535"));
             User savedUser = userRepository.save(user);
             System.out.println("Saved: " + savedUser);
 

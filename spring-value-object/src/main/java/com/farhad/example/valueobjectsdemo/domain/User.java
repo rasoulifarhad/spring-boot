@@ -23,6 +23,10 @@ public class User {
     @Id
     private UUID id;
 
+    @Column(name = "name")
+    @NotNull
+    private String name;
+
     @Column(name = "phone_number")
     @NotNull
     @Convert(converter = PhoneNumberConverter.class)
@@ -40,9 +44,10 @@ public class User {
     //     private UUID id;
     // }
 
-    public static User newUser(PhoneNumber phoneNumber) {
+    public static User newUser(String name, PhoneNumber phoneNumber) {
         User user = new User();
         user.id = UUID.randomUUID();
+        user.name = name;
         user.phoneNumber = phoneNumber;
         return user;
     }

@@ -11,5 +11,6 @@ public interface UserRepository extends JpaRepository<User, User.ID> {
     
     Optional<User> findByPhoneNumber(@NotNull PhoneNumber phoneNumber);
 
+    Optional<Passport> findPassportById(User.ID id);
     List<User> findByNameLike(String name);
 }

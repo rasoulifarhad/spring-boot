@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import org.springframework.format.Formatter;
+import org.springframework.stereotype.Component;
 
 import com.farhad.example.valueobjectsdemo.domain.User;
 import com.farhad.example.valueobjectsdemo.domain.User.ID;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+@Component
 public class UserIdSerdeProvider implements SerdeProvider<User.ID> {
 
     @Override

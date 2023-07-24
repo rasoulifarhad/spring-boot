@@ -7,7 +7,7 @@ import java.util.Locale;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 
-import com.farhad.example.valueobjectsdemo.domain.value.PhoneNumber;
+import com.farhad.example.valueobjectsdemo.domain.value.Passport;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -17,64 +17,63 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 @Component
-public class PhoneNumberSerdeProvider implements SerdeProvider<PhoneNumber> {
+public class PassportSerdeProvider implements SerdeProvider<Passport> {
 
     @Override
-    public JsonDeserializer<PhoneNumber> getJsonDeserializer() {
-        return new JsonDeserializer<PhoneNumber>() {
+    public JsonDeserializer<Passport> getJsonDeserializer() {
+        return new JsonDeserializer<Passport>() {
 
             @Override
-            public PhoneNumber deserialize(JsonParser p, DeserializationContext ctxt)
+            public Passport deserialize(JsonParser p, DeserializationContext ctxt)
                     throws IOException, JacksonException {
-                        final String value = p.getValueAsString();
-                        if(value == null) {
+
+                        if (p.getValueAsString() == null) {
                             return null;
-                        } else {
-                            return new PhoneNumber(value);
                         }
+                        return Passport.parse(p.getValueAsString());
             }
             
         };
     }
 
     @Override
-    public JsonSerializer<PhoneNumber> getJsonSerializer() {
-        return new JsonSerializer<PhoneNumber>() {
+    public JsonSerializer<Passport> getJsonSerializer() {
+        return new JsonSerializer<Passport>() {
 
             @Override
-            public void serialize(PhoneNumber value, JsonGenerator gen, SerializerProvider serializers)
+            public void serialize(Passport value, JsonGenerator gen, SerializerProvider serializers)
                     throws IOException {
-                        if(value  == null) {
+                        if (value == null) {
                             gen.writeNull();
                         } else {
                             gen.writeString(value.toString());
                         }
+
             }
             
         };
     }
 
     @Override
-    public Class<PhoneNumber> getType() {
-        return PhoneNumber.class;
-    }
-
-    @Override
-    public Formatter<PhoneNumber> getTypedFieldFormatter() {
-        return new Formatter<PhoneNumber>() {
+    public Formatter<Passport> getTypedFieldFormatter() {
+        return new Formatter<Passport>() {
 
             @Override
-            public String print(PhoneNumber object, Locale locale) {
+            public String print(Passport object, Locale locale) {
                 return object.toString();
             }
 
             @Override
-            public PhoneNumber parse(String text, Locale locale) throws ParseException {
-                return new PhoneNumber(text);
+            public Passport parse(String text, Locale locale) throws ParseException {
+                return Passport.parse(text);
             }
             
         };
     }
 
+    @Override
+    public Class<Passport> getType() {
+        return Passport.class;
+    }
     
 }

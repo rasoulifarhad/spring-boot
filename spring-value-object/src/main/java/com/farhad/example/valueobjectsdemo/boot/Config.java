@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.farhad.example.valueobjectsdemo.domain.User;
+import com.farhad.example.valueobjectsdemo.domain.User.Name;
 import com.farhad.example.valueobjectsdemo.domain.repository.UserRepository;
 import com.farhad.example.valueobjectsdemo.domain.value.Passport;
 import com.farhad.example.valueobjectsdemo.domain.value.PhoneNumber;
@@ -18,7 +19,7 @@ public class Config {
     public CommandLineRunner initData(UserRepository userRepository) {
         return args -> {
             userRepository.deleteAll();
-            User user = User.newUser("user1", new PhoneNumber("78005553535"), Passport.parse("8410123456"));
+            User user = User.newUser(new Name("user1"), new PhoneNumber("78005553535"), Passport.parse("8410123456"));
             User savedUser = userRepository.save(user);
             System.out.println("Saved: " + savedUser);
 

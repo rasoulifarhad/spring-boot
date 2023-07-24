@@ -1,11 +1,13 @@
 package com.farhad.example.valueobjectsdemo.domain;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -15,7 +17,12 @@ import com.farhad.example.valueobjectsdemo.domain.converter.UserNameConverter;
 import com.farhad.example.valueobjectsdemo.domain.value.Passport;
 import com.farhad.example.valueobjectsdemo.domain.value.PhoneNumber;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.Value;
 
@@ -25,10 +32,10 @@ import lombok.Value;
 @ToString
 public class User {
 
-    // @EmbeddedId
-    // private User.ID id;
-    @Id
-    private UUID id;
+    @EmbeddedId
+    private User.ID id;
+    // @Id
+    // private UUID id;
 
     @Column(name = "name")
     @NotNull
@@ -43,21 +50,22 @@ public class User {
     @Convert(converter = PassportConverter.class)
     @NotNull
     private Passport passport;
-    // @Data
-    // @Setter(value = AccessLevel.PRIVATE)
-    // @Embeddable
-    // @AllArgsConstructor
-    // @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    // public static class ID implements Serializable {
 
-    //     @Column(updatable = false)
-    //     @NotNull
-    //     private UUID id;
-    // }
+    @Data
+    @Setter(value = AccessLevel.PRIVATE)
+    @Embeddable
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ID implements Serializable {
+
+        @Column(updatable = false)
+        @NotNull
+        private UUID id;
+    }
 
     public static User newUser(Name name, PhoneNumber phoneNumber, Passport passport) {
         User user = new User();
-        user.id = UUID.randomUUID();
+        user.id = new ID(UUID.randomUUID());
         user.name = name;
         user.phoneNumber = phoneNumber;
         user.passport = passport;

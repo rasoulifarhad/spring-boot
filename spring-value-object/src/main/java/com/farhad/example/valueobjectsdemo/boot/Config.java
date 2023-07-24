@@ -46,9 +46,16 @@ public class Config {
             map.put("passport", "8410123455");
             map.put("name", "user2");
             
-            restTemplate.postForEntity("http://localhost:8080/api/users?phoneNumber={phoneNumber}&passport={passport}&name={name}", null, Void.class,map);
+            restTemplate.postForEntity(
+                "http://localhost:8080/api/users?phoneNumber={phoneNumber}&passport={passport}&name={name}", 
+                null, 
+                Void.class,map);
 
-            final ResponseEntity<Map> response = restTemplate.getForEntity("http://localhost:8080/api/users?phoneNumber={phoneNumber}", Map.class, Collections.singletonMap("phoneNumber", "71234567890"));
+            final ResponseEntity<Map> response = 
+                restTemplate.getForEntity(
+                    "http://localhost:8080/api/users?phoneNumber={phoneNumber}", 
+                    Map.class, 
+                    Collections.singletonMap("phoneNumber", "71234567890"));
 
             System.out.println(response);
         };

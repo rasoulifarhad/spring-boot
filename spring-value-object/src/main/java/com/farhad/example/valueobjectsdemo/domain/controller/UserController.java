@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/api/users")
     public UserResponse byPhoneNumber(@RequestParam PhoneNumber phoneNumber) {
-        User user =  userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() -> new RuntimeException("Phone not found"  + phoneNumber));
+        User user =  userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() -> new RuntimeException("Phone not found: "  + phoneNumber));
         return new UserResponse(
             user.getId(),
             user.getPhoneNumber(),
@@ -32,7 +32,9 @@ public class UserController {
 
     @PostMapping("/api/users")
     public void createUser(@RequestParam PhoneNumber phoneNumber, @RequestParam Passport passport, @RequestParam Name name) {
-
+        userRepository.save(
+            User.newUser(name, phoneNumber, passport)
+        );
     }
 
 }

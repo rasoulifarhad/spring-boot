@@ -52,7 +52,7 @@ public class User {
     private Passport passport;
 
     @Data
-    @Setter(value = AccessLevel.PRIVATE)
+    @Setter( AccessLevel.PRIVATE)
     @Embeddable
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)

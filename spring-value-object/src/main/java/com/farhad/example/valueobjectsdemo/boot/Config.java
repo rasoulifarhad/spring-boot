@@ -28,6 +28,8 @@ public class Config {
 
             System.out.println("Finded: " + userRepository.findByPhoneNumber(new PhoneNumber("78005553535")));
 
+            System.out.println("Passport: " + userRepository.findPassportById(loadedUser.get().getId()));
+
         };
     }
 

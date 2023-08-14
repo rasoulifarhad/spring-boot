@@ -11,13 +11,11 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Customer {
+public class CustomerWoV {
 
     @Id
     private String id;
-    private String firstName;
-    private String lastName;
-
+    private String name;
 
     @CreatedDate
     private Instant createdDate;

@@ -10,28 +10,50 @@ import org.springframework.context.annotation.Configuration;
 public class Boot {
     
     @Bean
-    public CommandLineRunner runner(CustomerRepository customerRepository) {
+    public CommandLineRunner runner(CustomerWithoutVersionRepository repository) {
         return args ->  {
 
             // create and save customr
-            Customer farhad = Customer.builder()
-                                    .firstName("farhad")
-                                    .lastName("rasouli")
+            CustomerWoV farhad = CustomerWoV.builder()
+                                    .name("farhad")
                                     .build();
-            Customer createdFarhad = customerRepository.save(farhad);
+            CustomerWoV createdEntity01 = repository.save(farhad);
+            System.out.println();
+            System.out.println("Given entity, When we id not seted and save entity, then :");
+            System.out.println(createdEntity01);
 
             // search customer by id
-            Optional<Customer> searchedFarhad = customerRepository.findById(createdFarhad.getId());
-            System.out.println(searchedFarhad);
+            System.out.println();
+            System.out.println("Given entity persistet in repository, When we search by id, then :");
+            Optional<CustomerWoV> searchedEntity = repository.findById(createdEntity01.getId());
+            System.out.println(searchedEntity);
 
             // update customer
-            Customer ct = searchedFarhad.get();
-            ct.setLastName("rasouli_02");
-            customerRepository.save(ct);
+            System.out.println();
+            System.out.println("Given entity persistet in repository, When we update entity, then :");
+            CustomerWoV ct = searchedEntity.get();
+            ct.setName("rasouli_02");
+            CustomerWoV updatedEntity01 = repository.save(ct);
+            System.out.println(updatedEntity01); 
 
             // search updated document
-            Customer updatedCustomer = customerRepository.findById(createdFarhad.getId()).get();
-            System.out.println(updatedCustomer);
+            System.out.println();
+            System.out.println("Given entity persistet in repository, When we update entity and search entity with id, then :");
+            updatedEntity01.setName("updated farhad");
+            repository.save(updatedEntity01);
+            searchedEntity = repository.findById(createdEntity01.getId());
+            System.out.println(searchedEntity.get());
+
+            // Create , set Id field , and save
+            CustomerWoV farhadWithIdSeted = CustomerWoV.builder()
+                                                            .id("blahblahblah")
+                                                            .name("Id seted")
+                                                            .build();
+            CustomerWoV createdEntity02 = repository.save(farhadWithIdSeted);
+            System.out.println();
+            System.out.println("Given entity, When we set id and save entity, then :");
+            System.out.println(createdEntity02);
+
 
 
         };

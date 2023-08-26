@@ -1,4 +1,4 @@
-package com.farhad.example.hexagonalarchitecture.controller;
+package com.farhad.example.hexagonalarchitecture.application.controller;
 
 import java.math.BigDecimal;
 

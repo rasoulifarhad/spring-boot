@@ -3,7 +3,7 @@ package com.farhad.example.hexagonalarchitecture.domain.service;
 import java.math.BigDecimal;
 
 import com.farhad.example.hexagonalarchitecture.domain.model.Account;
-import com.farhad.example.hexagonalarchitecture.domain.port.incoming.Diposit;
+import com.farhad.example.hexagonalarchitecture.domain.port.incoming.Deposit;
 import com.farhad.example.hexagonalarchitecture.domain.port.incoming.Withdraw;
 import com.farhad.example.hexagonalarchitecture.domain.port.outgoing.PersistAccount;
 import com.farhad.example.hexagonalarchitecture.domain.port.outgoing.RetrieveAccount;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 // ports. This is the class which holds everything together. 
 
 @RequiredArgsConstructor
-public class AccountService implements Diposit, Withdraw {
+public class AccountService implements Deposit, Withdraw {
 
 	private final PersistAccount persistAccount;
 	private final RetrieveAccount retrieveAccount;

@@ -1,9 +1,9 @@
-package com.farhad.example.wiremockdemo.controller;
+package com.farhad.example.wiremockdemo.demo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farhad.example.wiremockdemo.httpbin.HttpBinProxy;
+import com.farhad.example.wiremockdemo.demo.httpbin.HttpBinProxy;
 
 import lombok.RequiredArgsConstructor;
 

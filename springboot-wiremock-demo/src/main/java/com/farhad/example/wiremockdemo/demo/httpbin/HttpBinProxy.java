@@ -1,4 +1,4 @@
-package com.farhad.example.wiremockdemo.httpbin;
+package com.farhad.example.wiremockdemo.demo.httpbin;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

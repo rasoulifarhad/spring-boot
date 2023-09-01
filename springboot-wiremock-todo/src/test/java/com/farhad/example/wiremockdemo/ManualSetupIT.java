@@ -1,6 +1,7 @@
 package com.farhad.example.wiremockdemo;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
@@ -135,20 +136,34 @@ public class ManualSetupIT {
 			.expectBody().jsonPath("$.length()").isEqualTo(3);
 	}
 
-	// @Test
-	// public void testExactUrlOnly() {
-	// 	wireMockServer.stubFor(WireMock.get(urlEqualTo("/some/thing"))
-	// 				.willReturn(aResponse()
-	// 					.withHeader("Content-Type","text/plain")
-	// 					.withBody("Hello World!")));
+	@Test
+	public void testExactUrlOnly() {
+		wireMockServer.stubFor(WireMock.get(urlEqualTo("/todos"))
+					.willReturn(aResponse()
+						.withHeader("Content-Type",MediaType.APPLICATION_JSON_VALUE)
+						.withBody("[]")));
 
-	// 	webTestClient.get().uri("/some/thing")
-	// 		.exchange()
-	// 		.expectStatus().isOk();
+		webTestClient.get().uri("/api/todos")
+			.exchange()
+			.expectStatus().isOk();
 		
-	// 	webTestClient.get().uri("/some/thing/else")
-	// 		.exchange()
-	// 		.expectStatus().is4xxClientError();
-	// }
+		webTestClient.get().uri("/api/todos/some/thing/else")
+			.exchange()
+			.expectStatus().is4xxClientError();
+	}
+
+	@Test
+	public void testPerStubRandomDelays() {
+		wireMockServer.stubFor(WireMock.get(urlEqualTo("/todos"))
+					.willReturn(aResponse()
+						.withHeader("Content-Type",MediaType.APPLICATION_JSON_VALUE)
+						.withLogNormalRandomDelay(90,0.1)
+						.withBody("[]")));
+
+		webTestClient.get().uri("/api/todos")
+			.exchange()
+			.expectStatus().isOk();
+		
+	}
 
 }

@@ -1,6 +1,7 @@
 package com.farhad.example.wiremockdemo;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
@@ -91,6 +92,54 @@ public class ManualSetupIT {
 			.uri("/api/todos")
 			.exchange()
 			.expectStatus().is5xxServerError();
+	}
+
+	@Test
+	public void basicWireMockExampleWithPriority() {
+		wireMockServer.stubFor(
+			WireMock.get(WireMock.urlEqualTo("/todos"))
+				.atPriority(1)
+				.willReturn(aResponse()
+					.withHeader(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE)
+					.withBodyFile("todo-api/response-200.json")
+					.withFixedDelay(1_000)));
+
+		stubFor(
+			WireMock.get(WireMock.urlEqualTo("/todos"))
+				.atPriority(10)
+				.willReturn(aResponse()
+					.withStatus(500)));
+
+		webTestClient
+			.get()
+			.uri("/api/todos")
+			.exchange()
+			.expectStatus().isOk()
+			.expectBody().jsonPath("$.length()").isEqualTo(3);
+	}
+
+	@Test
+	public void basicWireMockExampleWithData() {
+		wireMockServer.stubFor(
+			WireMock.get(WireMock.urlEqualTo("/todos"))
+				// .atPriority(1)
+				.willReturn(aResponse()
+					.withHeader(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE)
+					.withBodyFile("todo-api/response-200.json")
+					.withFixedDelay(1_000)));
+
+		// stubFor(
+		// 	WireMock.get(urlEqualTo("/todos"))
+		// 		.atPriority(10)
+		// 		.willReturn(aResponse()
+		// 			.withStatus(500)));
+
+		webTestClient
+			.get()
+			.uri("/api/todos")
+			.exchange()
+			.expectStatus().isOk()
+			.expectBody().jsonPath("$.length()").isEqualTo(3);
 	}
 
 

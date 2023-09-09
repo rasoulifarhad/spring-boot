@@ -1,5 +1,7 @@
 See https://www.happycoders.eu/software-craftsmanship/hexagonal-architecture-java/
 
+### Domain
+
  The application provides the (highly simplified) backend for an online store that includes the following functionalities:
 
 1. Searching for products
@@ -31,5 +33,31 @@ Finally, the Bootstrap component will instantiate the domain services and adapte
 
 The black arrows represent the method call directions, and the white arrows the source code dependency direction (“dependency rule”).
 
+### Application
+
+In the application hexagon, implement ports and domain services for the following use cases:
+
+1. Searching for products
+   
+> Use case description: The customer should be able to enter a text in a search field. The search text should be at least two characters long. The search should return all products where the search text appears in the title or the description.  
+
+
+2. Adding a product to the shopping cart
+
+> Use case description: The customer should be able to add a product in a certain quantity to their shopping cart.  
+
+
+3. Retrieving the shopping cart with the products, their respective quantity, and the total price
+
+> Use case description: The customer should be able to retrieve their shopping cart, including the products, their respective quantity, the total number of products, and the total price.  
+
+
+4. Emptying the shopping cart
+
+> Use case description: The customer should be able to empty their shopping cart.  
+
+
+
+![](hexagonal-architecture-java-ports-and-services.v5-800x465.png)
 
 

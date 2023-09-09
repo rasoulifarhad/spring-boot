@@ -3,6 +3,7 @@ package com.farhad.example.hexagonalorderdemo.shop.application.service.cart;
 import static com.farhad.example.hexagonalorderdemo.shop.model.money.TestMoneyFactory.euros;
 import static com.farhad.example.hexagonalorderdemo.shop.model.product.TestProductFactory.createTestProduct;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,7 @@ import com.farhad.example.hexagonalorderdemo.shop.model.cart.Cart;
 import com.farhad.example.hexagonalorderdemo.shop.model.cart.NotEnoughItemsInStockException;
 import com.farhad.example.hexagonalorderdemo.shop.model.customer.CustomerId;
 import com.farhad.example.hexagonalorderdemo.shop.model.product.Product;
+import com.farhad.example.hexagonalorderdemo.shop.model.product.ProductId;
 
 public class AddToCartServiceTest {
 
@@ -56,7 +58,41 @@ public class AddToCartServiceTest {
 		assertThat(cart.lineItems().get(0).quantity()).isEqualTo(1);
 		assertThat(cart.lineItems().get(1).product()).isEqualTo(TEST_PRODUCT_2);
 		assertThat(cart.lineItems().get(1).quantity()).isEqualTo(3);
+	}
+
+	@Test
+	public void given_noExistingCart_when_addToCart_then_cartWithAddedProductIsSavedAndReturned() throws NotEnoughItemsInStockException, ProductNotFoundException {
+		//given
+		
+		//when
+		Cart cart = addToCartService.addToCart(TEST_CUSTOMER_ID, TEST_PRODUCT_1.id(), 3);			
+
+		//then
+		verify(cartRepository).save(cart);
+		assertThat(cart.lineItems()).hasSize(1);
+		assertThat(cart.lineItems().get(0).product()).isEqualTo(TEST_PRODUCT_1);
+		assertThat(cart.lineItems().get(0).quantity()).isEqualTo(3);
+	}
+
+	@Test
+	public void given_anUnknownProductId_when_addToCart_then_throwsException() throws NotEnoughItemsInStockException, ProductNotFoundException {
+		//given
+		ProductId unKnownProductId = ProductId.randomProductId();
+
+		//then
+		assertThrows(
+			ProductNotFoundException.class, 
+			() -> addToCartService.addToCart(TEST_CUSTOMER_ID, unKnownProductId, 3));
+	}
 
 
+	@Test
+	public void given_quantityLessThan1_when_addToCart_then_throwsException() throws NotEnoughItemsInStockException, ProductNotFoundException {
+		//given
+		int quantity = 0;
+		//then
+		assertThrows(
+			IllegalArgumentException.class, 
+			() -> addToCartService.addToCart(TEST_CUSTOMER_ID, TEST_PRODUCT_1.id(), quantity));
 	}
 }

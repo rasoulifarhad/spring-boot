@@ -61,3 +61,24 @@ In the application hexagon, implement ports and domain services for the followin
 ![](hexagonal-architecture-java-ports-and-services.v5-800x465.png)
 
 
+### Adapters
+
+We still need adapters:
+
+- REST adapters to call the use cases, and
+- Persistence adapters to store shopping carts and products.
+
+
+We create a REST adapter for each of the primary ports (use cases) and an in-memory persistence adapter for each of the secondary ports (repositories):
+
+![](hexagonal-architecture-java-ports-services-adapters.v3-800x776.png)
+
+
+We could also create, for example, a cart REST adapter, a product REST adapter, and a single persistence adapter:
+
+
+![](hexagonal-architecture-java-ports-services-adapters-alternative.v2-800x776.png)
+
+
+
+

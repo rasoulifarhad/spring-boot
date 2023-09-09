@@ -1,8 +1,8 @@
 package com.farhad.example.hexagonalorderdemo.shop.model.customer;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class CustomerId {
 
 	private final int value;

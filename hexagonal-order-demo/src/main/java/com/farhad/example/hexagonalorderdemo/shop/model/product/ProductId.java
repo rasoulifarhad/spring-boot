@@ -3,6 +3,9 @@ package com.farhad.example.hexagonalorderdemo.shop.model.product;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
+import lombok.Value;
+
+@Value
 public class ProductId {
 
 	private static final String ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";

@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Objects;
 
+import lombok.Value;
+
+@Value
 public class Money {
 
 	private final Currency currency;

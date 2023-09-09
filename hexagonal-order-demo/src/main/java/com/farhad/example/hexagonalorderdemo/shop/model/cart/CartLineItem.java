@@ -6,12 +6,14 @@ import com.farhad.example.hexagonalorderdemo.shop.model.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
+@ToString
 public class CartLineItem {
 
 	private final Product product;

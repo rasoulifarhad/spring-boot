@@ -1,5 +1,8 @@
 package com.farhad.example.hexagonalorderdemo.shop.adapter.in.rest.cart;
 
+import static com.farhad.example.hexagonalorderdemo.shop.adapter.in.rest.common.CustomerIdParser.parseCustomerId;
+import static com.farhad.example.hexagonalorderdemo.shop.adapter.in.rest.common.ProductIdParser.parseProductId;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,22 +45,4 @@ public class AddToCartController {
 
 	}
 
-	private CustomerId parseCustomerId(String customerIdString) {
-		try {
-			return new CustomerId(Integer.parseInt(customerIdString));
-		} catch (IllegalArgumentException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid 'customerId'");
-		}
-	}
-
-	private ProductId parseProductId(String productIdString) {
-		if(productIdString == null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing 'productId'");
-		}
-		try {
-			return new ProductId(productIdString);
-		} catch (IllegalArgumentException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid 'productId'");
-		}
-	}
 }

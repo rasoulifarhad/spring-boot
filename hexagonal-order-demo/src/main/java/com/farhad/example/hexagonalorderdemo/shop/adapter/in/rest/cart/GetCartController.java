@@ -1,11 +1,11 @@
 package com.farhad.example.hexagonalorderdemo.shop.adapter.in.rest.cart;
 
-import org.springframework.http.HttpStatus;
+import static com.farhad.example.hexagonalorderdemo.shop.adapter.in.rest.common.CustomerIdParser.parseCustomerId;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.farhad.example.hexagonalorderdemo.shop.application.port.in.cart.GetCartUseCase;
 import com.farhad.example.hexagonalorderdemo.shop.model.cart.Cart;
@@ -27,13 +27,4 @@ public class GetCartController {
 		Cart cart = getCartUseCase.getCart(customerId);
 		return CartDto.fromDomainModel(cart);
 	}
-
-	private CustomerId parseCustomerId(String customerIdString) {
-		try {
-			return new CustomerId(Integer.parseInt(customerIdString));
-		} catch (IllegalArgumentException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid 'customerId'");
-		}
-	}
-
 }

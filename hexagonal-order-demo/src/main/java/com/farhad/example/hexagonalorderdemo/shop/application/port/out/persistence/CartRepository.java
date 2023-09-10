@@ -9,7 +9,7 @@ public interface CartRepository {
 
 	Optional<Cart> findByCustomerId(CustomerId customerId);
 
-	Cart save(Cart cart);
+	void save(Cart cart);
 
 	void deleteById(CustomerId customerId);
 

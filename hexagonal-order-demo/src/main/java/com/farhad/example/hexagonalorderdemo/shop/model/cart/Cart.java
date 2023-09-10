@@ -11,10 +11,8 @@ import com.farhad.example.hexagonalorderdemo.shop.model.money.Money;
 import com.farhad.example.hexagonalorderdemo.shop.model.product.Product;
 import com.farhad.example.hexagonalorderdemo.shop.model.product.ProductId;
 
-import lombok.Getter;
 import lombok.ToString;
 
-@Getter
 @ToString
 public class Cart {
 	

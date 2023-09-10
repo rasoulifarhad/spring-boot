@@ -12,6 +12,6 @@ public interface ProductRepository {
 
 	Optional<Product> findById(ProductId productId);
 
-	Product save(Product product);
+	void save(Product product);
 	
 }

@@ -27,7 +27,7 @@ public abstract class AbstractCartRepositoryTest<T extends CartRepository, U ext
 
 	protected abstract T createCartRepository();
 	protected abstract U createProductRepository();
-	
+
 	@BeforeEach
 	void initRepository() {
 		cartRepository = createCartRepository();
@@ -48,6 +48,31 @@ public abstract class AbstractCartRepositoryTest<T extends CartRepository, U ext
 		Optional<Cart> cart = cartRepository.findByCustomerId(customerId);
 		//then
 		assertThat(cart).isEmpty();
+	}
+
+	@Test
+	public void given_customerIdWithNoCart_when_deleteByCustomerId_then_doseNothing() {
+		//given
+		CustomerId customerId = createUniqieCustomerId();
+		assertThat(cartRepository.findByCustomerId(customerId)).isEmpty();
+		//when
+		cartRepository.deleteById(customerId);
+		//then
+		assertThat(cartRepository.findByCustomerId(customerId)).isEmpty();
+	}
+
+	@Test
+	public void given_customerIdWithCart_when_deleteByCustomerId_then_deleteThatCart() {
+		//given
+		CustomerId customerId = createUniqieCustomerId();
+		Cart cart = new Cart(customerId);
+		cartRepository.save(cart);
+		assertThat(cartRepository.findByCustomerId(customerId)).isNotEmpty();
+
+		//when
+		cartRepository.deleteById(customerId);
+		//then
+		assertThat(cartRepository.findByCustomerId(customerId)).isEmpty();
 	}
 
 	private CustomerId createUniqieCustomerId() {

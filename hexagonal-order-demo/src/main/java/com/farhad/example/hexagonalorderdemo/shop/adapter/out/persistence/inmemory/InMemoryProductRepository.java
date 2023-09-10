@@ -28,8 +28,10 @@ public class InMemoryProductRepository implements ProductRepository {
 	public List<Product> findByNameOrDescription(String query) {
 		return 
 			products.values().stream()
-				.filter(p -> p.name().toLowerCase().contains(query.toLowerCase()))
-				.filter(p -> p.description().toLowerCase().contains(query.toLowerCase()))
+				.filter(p -> 
+					p.name().toLowerCase().contains(query.toLowerCase()) || 
+					p.description().toLowerCase().contains(query.toLowerCase())
+				)
 				.collect(toList());
 	}
 

@@ -224,7 +224,7 @@ The following diagram shows a unit test that creates a test double for the datab
 ![](images/hexagonal-architecture-unit-test.v2-800x237.png)
 
 
-Not only can the business logic be tested in isolation from the adapters, but the adapters can also be tested in isolation from the business logic (e.g., in the Java ecosystem, primary REST adapters with REST Assured, secondary REST adapters with WireMock, and database adapters with TestContainers).
+Not only can the business logic be tested in isolation from the adapters, but the adapters can also be tested in isolation from the business logic (e.g., in the Java ecosystem, primary REST adapters with [REST Assured](https://rest-assured.io/), secondary REST adapters with [WireMock](https://wiremock.org/), and database adapters with [TestContainers](https://www.testcontainers.org/)).
 
 The following diagram shows an integration test that creates a test double for the primary port (“Arrange”), sends an HTTP POST request to the REST adapter via REST Assured (“Act”), and finally verifies the HTTP response and interaction with the test double (“Assert”):
 
@@ -285,3 +285,27 @@ The ports are not explicitly mentioned in clean architecture but are also presen
 ![](images/clean-architecture-dependency-inversion-principle-400x395.webp)
 
 In summary, both architectures are almost identical: the software is divided into layers, and all source code dependencies point from the outer to the inner layers. The application’s core knows no details of the outer layers and is implemented only against their interfaces. This creates a system whose technical details are interchangeable and which is fully testable without them.
+
+### Hexagonal Architecture vs. Onion Architecture
+
+Also, in the “onion architecture” presented by Jeffrey Palermo on his blog in 2008, business logic is at the center, in the so-called “application core.” The core has interfaces to the user interface and the infrastructure (database, file system, external systems, etc.) but does not know their concrete implementations. Thus, the core is also here isolated from the infrastructure.
+
+Just as in the hexagonal and clean architecture, all source code dependencies point in the direction of the core. Where the call direction goes opposite to the source code dependency, dependency inversion is applied.
+
+In the following figure, you can see the hexagonal architecture and the onion architecture compared:
+
+![](images/hexagonal-architecture-vs-onion-architecture-1.webp)
+
+
+If we again adjust the colors a bit and replace the user interface, tests, and infrastructure with placeholders in the onion architecture and hide the optional rings of the application core, we again get two very similar images:
+
+
+![](images/hexagonal-architecture-vs-onion-architecture-2.webp)
+
+The hexagons can be mapped almost one-to-one to the rings of the onion architecture:
+
+- The “external agencies” arranged around the outer hexagon are represented in the onion architecture by the infrastructure components at the bottom right.
+- The outer hexagon “adapters” corresponds to the ring containing “user interface,” “tests,” and “infrastructure.”
+- The application hexagon corresponds to the application core in the onion architecture. This is further subdivided into “application services,” “domain services,” and “domain model,” whereby only the “domain model” is a fixed component of the onion architecture. The other rings of the application core are explicitly marked as optional. The “domain model” defines the “enterprise business rules” and thus corresponds to the “entities” ring – i.e., the innermost circle – of the clean architecture.
+
+In the final analysis, therefore, the onion architecture is also almost identical to the hexagonal architecture – it differs only in the explicit “domain model” at the center of the application core.

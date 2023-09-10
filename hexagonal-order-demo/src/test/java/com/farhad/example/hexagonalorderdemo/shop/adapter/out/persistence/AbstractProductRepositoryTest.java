@@ -21,6 +21,17 @@ public abstract class AbstractProductRepositoryTest<T extends ProductRepository>
 	}
 
 	@Test
+	public void given_testProducts_when_findByNameOrDescriptionMatchingOneProduct_then_returnMatchingProduct() {
+		// given
+		final String query = "lights";
+		//when
+		List<Product> currentProducts = productRepository.findByNameOrDescription(query);
+
+		//then
+		assertThat(currentProducts).containsExactlyInAnyOrder(DemoProducts.LED_LIGHTS);
+	}
+
+	@Test
 	public void given_testProducts_when_findByNameOrDescription_then_returnMatchingProducts() {
 		// given
 		final String query = "monitor";
@@ -30,4 +41,16 @@ public abstract class AbstractProductRepositoryTest<T extends ProductRepository>
 		//then
 		assertThat(currentProducts).containsExactlyInAnyOrder(DemoProducts.COMPUTER_MONITOR, DemoProducts.MONITOR_DESK_MOUNT);
 	}
+
+	@Test
+	public void given_testProducts_when_findByNameOrDescriptionNotMatchingAnyProduct_then_returnEmptyList() {
+		// given
+		final String query = "not matching any products";
+		//when
+		List<Product> currentProducts = productRepository.findByNameOrDescription(query);
+
+		//then
+		assertThat(currentProducts).isEmpty();
+	}
+
 }

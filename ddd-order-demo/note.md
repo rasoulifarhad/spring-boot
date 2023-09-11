@@ -4,6 +4,8 @@ See https://www.w3computing.com/articles/implementing-domain-driven-design-java/
 
 ### Business Requirements
 
+online bookstore
+
 1. Users can search for books.
 2. Users can place books into a shopping cart.
 3. Users can place an order with the books in their shopping cart.

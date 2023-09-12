@@ -71,5 +71,19 @@ Created as @Bean manually
 - Databases, Caches, Microservice calls, Third Parties
 
 
+### Stock Keeping Unit (SKU)
+
+A Stock Keeping Unit (SKU) is a unique identifier for a product, typically assigned by a retailer or manufacturer. It is used 
+to track inventory and is typically associated with a product's barcode. An example of a SKU is XYZ12345. This would be the 
+unique identifier for a specific product, such as a T-shirt.
+
+### Product Variant
+
+When you shop online, you notice that the same product is available in various sizes, colors, materials and price points. These 
+purchasing options are product variants.
+
+A specific item that is bundled in with related variants to form one distinguishable product is known as a product variant.
+
+
 See https://github.com/spember/spring-shoestore
 See https://www.slideshare.net/StevePember/anatomy-of-a-spring-boot-app-with-clean-architecture-spring-io-2023

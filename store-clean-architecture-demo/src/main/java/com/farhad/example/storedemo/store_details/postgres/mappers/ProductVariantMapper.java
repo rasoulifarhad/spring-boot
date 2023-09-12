@@ -11,7 +11,7 @@ import com.farhad.example.storedemo.store_core.variants.Sku;
 import com.farhad.example.storedemo.store_core.variants.VariantColor;
 import com.farhad.example.storedemo.store_core.variants.VariantSize;
 
-public class ProductVariantMappers implements RowMapper<ProductVariant> {
+public class ProductVariantMapper implements RowMapper<ProductVariant> {
 
 	@Override
 	public ProductVariant mapRow(ResultSet rs, int rowNum) throws SQLException {

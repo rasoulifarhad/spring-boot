@@ -4,7 +4,9 @@ import java.util.UUID;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 
+@Value
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderId {
 	private final String value;

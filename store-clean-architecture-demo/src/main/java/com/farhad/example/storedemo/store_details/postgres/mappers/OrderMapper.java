@@ -16,7 +16,7 @@ import com.farhad.example.storedemo.store_core.variants.Sku;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-public class OrderMappers implements RowMapper<Order> {
+public class OrderMapper implements RowMapper<Order> {
 
 	@Override
 	public Order mapRow(ResultSet rs, int rowNum) throws SQLException {

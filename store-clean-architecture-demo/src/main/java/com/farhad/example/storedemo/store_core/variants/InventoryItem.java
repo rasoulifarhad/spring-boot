@@ -2,6 +2,9 @@ package com.farhad.example.storedemo.store_core.variants;
 
 import java.util.Objects;
 
+import lombok.Value;
+
+@Value
 public class InventoryItem {
 	private final String serialNumber;
 

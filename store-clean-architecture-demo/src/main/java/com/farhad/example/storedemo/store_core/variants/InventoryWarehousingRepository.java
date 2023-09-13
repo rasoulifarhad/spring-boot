@@ -3,7 +3,7 @@ package com.farhad.example.storedemo.store_core.variants;
 import java.util.List;
 import java.util.Optional;
 
-public interface InventoryWarehousingRepository {
+public interface 	InventoryWarehousingRepository {
 	
 	void stock(Sku sku, List<InventoryItem> items);
 	Long checkInventoryCount(Sku sku);

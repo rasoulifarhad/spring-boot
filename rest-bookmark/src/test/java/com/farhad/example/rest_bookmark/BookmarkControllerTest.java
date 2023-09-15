@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.matchesRegex;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertFalse;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -100,6 +103,7 @@ public class BookmarkControllerTest /*extends BaseIntegrationTest*/ {
 			   .body("url", equalTo("https://google.com"))
 			   .body("createdAt", notNullValue())
 			   .body("updatedAt", nullValue()); 
+
 	}
 
 	@Test
@@ -118,14 +122,45 @@ public class BookmarkControllerTest /*extends BaseIntegrationTest*/ {
 
 	@Test
 	void shouldGetBookmarkByIdSuccessfully() {
+
+		CreateBookmarkCommand cmd = new CreateBookmarkCommand("googleee", "https://google.com");
+		BookmarkDTO bookmark = bookmarkService.create(cmd);
+
+		given().contentType(ContentType.JSON)
+				.when()
+				.get("/api/bookmarks/{id}",bookmark.getId())
+				.then()
+				.statusCode(200)
+				.body("id", equalTo(bookmark.getId()))
+			    .body("title", equalTo("googleee"))
+			    .body("url", equalTo("https://google.com"))
+				.body("createdAt", notNullValue())
+				.body("updatedAt", nullValue());
 	}
 
 	@Test
 	void shouldGet404WhenBookmarkNotExists() {
+		Long nonExistingId = 99999L;
+		given().contentType(ContentType.JSON)
+				.when()
+				.get("/api/bookmarks/{id}", nonExistingId)
+				.then()
+				.statusCode(404);
 	}
 
 	@Test
 	void shouldDeleteBookmarkByIdSuccessfully() {
+		CreateBookmarkCommand cmd = new CreateBookmarkCommand("googleee", "https://google.com");
+		BookmarkDTO bookmark = bookmarkService.create(cmd);
+
+		given().contentType(ContentType.JSON)
+				.when()
+				.delete("/api/bookmarks/{id}",bookmark.getId())
+				.then()
+				.statusCode(200);
+
+		Optional<BookmarkDTO> optionalBookmark = bookmarkService.findById(bookmark.getId());
+		assertFalse(optionalBookmark.isPresent());
 	}
 
 }

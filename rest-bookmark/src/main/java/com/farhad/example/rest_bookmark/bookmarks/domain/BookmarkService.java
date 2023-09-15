@@ -34,5 +34,9 @@ public class BookmarkService {
 			page.hasPrevious());
 	}
 
+	public BookmarkDTO create(BookmarkDTO bookmark) {
+		return null;
+	}
+
 	
 }

@@ -58,4 +58,11 @@ public class BookmarkService {
 	public Optional<BookmarkDTO> findById(Long id) {
 		return bookmarkRepository.findBookmarkById(id);
 	}
+
+	public void delete(Long id) {
+		Bookmark bookmark = bookmarkRepository
+									.findById(id)
+									.orElseThrow(() -> BookmarkNotFpundException.of(id));
+		bookmarkRepository.delete(bookmark);
+	}
 }

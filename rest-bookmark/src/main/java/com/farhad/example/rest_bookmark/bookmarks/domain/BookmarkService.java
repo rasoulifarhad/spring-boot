@@ -59,6 +59,7 @@ public class BookmarkService {
 		return bookmarkRepository.findBookmarkById(id);
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		Bookmark bookmark = bookmarkRepository
 									.findById(id)

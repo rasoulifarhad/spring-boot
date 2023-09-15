@@ -115,4 +115,17 @@ public class BookmarkControllerTest /*extends BaseIntegrationTest*/ {
 			   .then()
 			   .statusCode(200);
 	}
+
+	@Test
+	void shouldGetBookmarkByIdSuccessfully() {
+	}
+
+	@Test
+	void shouldGet404WhenBookmarkNotExists() {
+	}
+
+	@Test
+	void shouldDeleteBookmarkByIdSuccessfully() {
+	}
+
 }

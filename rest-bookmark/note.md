@@ -26,3 +26,7 @@ curl --location 'http://localhost:8080/api/bookmarks/1'
 ```sh
 curl --location --request DELETE 'http://localhost:8080/api/bookmarks/1'
 ```
+
+```sh
+curl --location --request DELETE 'http://localhost:8080/api/bookmarks/99999'
+```

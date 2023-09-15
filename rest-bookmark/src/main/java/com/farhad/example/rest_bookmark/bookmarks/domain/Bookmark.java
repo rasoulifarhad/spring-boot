@@ -9,9 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,10 +34,10 @@ class Bookmark {;
 	@Column(nullable = false)
 	private String url;
 	@Column(name =  "created_at",nullable = false, updatable = false)
-	@CreatedDate
+	// @CreatedDate
 	private Instant createdAt;
 	@Column(name = "updated_at", insertable = false )
-	@LastModifiedDate
+	// @LastModifiedDate
 	private Instant updatedAt;
 
 	// @PreUpdate

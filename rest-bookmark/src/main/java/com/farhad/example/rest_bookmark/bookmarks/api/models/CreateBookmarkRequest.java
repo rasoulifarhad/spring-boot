@@ -2,7 +2,8 @@ package com.farhad.example.rest_bookmark.bookmarks.api.models;
 
 import javax.validation.constraints.NotEmpty;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 // When I look at the request payload, I have a bunch of questions:
 //
@@ -20,7 +21,8 @@ import lombok.Value;
 // To avoid the confusion and bring more clarity to what is the expected payload, it is better to create a request class for this 
 // specific API endpoint as follows.
 
-@Value
+@Data
+@AllArgsConstructor
 public class CreateBookmarkRequest {
 	@NotEmpty(message = "Title is required")
 	private String title;

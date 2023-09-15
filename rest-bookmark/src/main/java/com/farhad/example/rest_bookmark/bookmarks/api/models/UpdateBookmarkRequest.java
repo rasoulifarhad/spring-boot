@@ -2,9 +2,11 @@ package com.farhad.example.rest_bookmark.bookmarks.api.models;
 
 import javax.validation.constraints.NotEmpty;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Value
+@Data
+@AllArgsConstructor
 public class UpdateBookmarkRequest {
 	@NotEmpty(message = "Title is required")
 	private String title;

@@ -1,8 +1,10 @@
 package com.farhad.example.rest_bookmark.bookmarks.domain;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Value
+@Data
+@AllArgsConstructor
 public class UpdateBookmarkCommand {
 	private Long id;
 	private String title;

@@ -60,7 +60,7 @@ class BookmarkController {
 		return ResponseEntity.created(location).body(bookmark);
 	}
 
-	@PutMapping("{/id}")
+	@PutMapping("/{id}")
 	public void update(@PathVariable(name = "id") Long id,
 			@RequestBody @Validated UpdateBookmarkRequest request) {
 		UpdateBookmarkCommand cmd = new UpdateBookmarkCommand(id, request.getTitle(), request.getUrl());

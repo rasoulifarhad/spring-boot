@@ -36,9 +36,11 @@ public class BookmarkService {
 			page.hasPrevious());
 	}
 
+	@Transactional
 	public BookmarkDTO create(CreateBookmarkCommand cmd) {
 		Bookmark bookmark = new Bookmark(cmd.getTitle(), cmd.getUrl(), Instant.now());
-		return BookmarkDTO.from(bookmarkRepository.save(bookmark));
+		bookmark = bookmarkRepository.save(bookmark);
+		return BookmarkDTO.from(bookmark);
 	}
 
 	@Transactional

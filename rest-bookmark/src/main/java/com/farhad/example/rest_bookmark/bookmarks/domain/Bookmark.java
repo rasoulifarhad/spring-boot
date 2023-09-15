@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "bookmarks")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Bookmark {;
+class Bookmark {;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -18,3 +18,7 @@ curl -v --location --request PUT 'http://localhost:8080/api/bookmarks/{id}' \
        "url": "https://google.com"
    }'
 ```
+
+```sh
+curl --location 'http://localhost:8080/api/bookmarks/1'
+```

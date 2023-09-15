@@ -1,6 +1,8 @@
 package com.farhad.example.rest_bookmark.bookmarks.domain;
 
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -53,4 +55,7 @@ public class BookmarkService {
 		bookmarkRepository.save(bookmark);
 	}
 	
+	public Optional<BookmarkDTO> findById(Long id) {
+		return bookmarkRepository.findBookmarkById(id);
+	}
 }

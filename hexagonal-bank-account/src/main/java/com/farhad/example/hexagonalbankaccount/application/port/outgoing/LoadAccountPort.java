@@ -6,5 +6,5 @@ import com.farhad.example.hexagonalbankaccount.application.domain.AccountId;
 import com.farhad.example.hexagonalbankaccount.application.domain.BankAccount;
 
 public interface LoadAccountPort {
-	Optional<BankAccount> findById(AccountId id);	
+	Optional<BankAccount> load(AccountId id);	
 }

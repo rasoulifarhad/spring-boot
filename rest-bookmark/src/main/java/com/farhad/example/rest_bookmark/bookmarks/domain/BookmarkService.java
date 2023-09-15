@@ -41,5 +41,15 @@ public class BookmarkService {
 		return BookmarkDTO.from(bookmarkRepository.save(bookmark));
 	}
 
+	@Transactional
+	public void update(UpdateBookmarkCommand cmd) {
+		Bookmark bookmark = 
+			bookmarkRepository.findById(cmd.getId())
+				.orElseThrow(() -> BookmarkNotFpundException.of(cmd.getId()));
+		bookmark.setTitle(cmd.getTitle());
+		bookmark.setUrl(cmd.getUrl());
+		bookmark.setUpdatedAt(Instant.now());
+		bookmarkRepository.save(bookmark);
+	}
 	
 }

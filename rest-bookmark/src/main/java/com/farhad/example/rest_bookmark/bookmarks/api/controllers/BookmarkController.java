@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.farhad.example.rest_bookmark.bookmarks.api.models.CreateBookmarkRequest;
+import com.farhad.example.rest_bookmark.bookmarks.api.models.UpdateBookmarkRequest;
 import com.farhad.example.rest_bookmark.bookmarks.domain.BookmarkDTO;
 import com.farhad.example.rest_bookmark.bookmarks.domain.BookmarkService;
 import com.farhad.example.rest_bookmark.bookmarks.domain.CreateBookmarkCommand;
 import com.farhad.example.rest_bookmark.bookmarks.domain.FindBookmarkQuery;
 import com.farhad.example.rest_bookmark.bookmarks.domain.PagedResult;
+import com.farhad.example.rest_bookmark.bookmarks.domain.UpdateBookmarkCommand;
 
 import lombok.RequiredArgsConstructor;
 
@@ -54,5 +58,12 @@ class BookmarkController {
 						.path("/api/bookmarks/{id}")
 						.buildAndExpand(bookmark.getId()).toUri();
 		return ResponseEntity.created(location).body(bookmark);
+	}
+
+	@PutMapping("{/id}")
+	public void update(@PathVariable(name = "id") Long id,
+			@RequestBody @Validated UpdateBookmarkRequest request) {
+		UpdateBookmarkCommand cmd = new UpdateBookmarkCommand(id, request.getTitle(), request.getUrl());
+		bookmarkService.update(cmd);
 	}
 }

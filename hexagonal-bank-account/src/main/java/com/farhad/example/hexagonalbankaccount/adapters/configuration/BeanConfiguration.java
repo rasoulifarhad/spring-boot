@@ -12,6 +12,6 @@ public class BeanConfiguration {
 
 	@Bean
 	BankAccountService bankAccountService(BankAccountRepository bankAccountRepository) {
-		return new BankAccountService(bankAccountRepository, bankAccountRepository);
+		return new BankAccountService(bankAccountRepository, bankAccountRepository);	
 	}
 }

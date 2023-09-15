@@ -25,14 +25,14 @@ public class BankAccountController {
 	@PostMapping("/{id}/withdraw/{amount}")
 	public void withdraw(@PathVariable(name = "id") final Long id, 
 						@PathVariable(name = "amount") final BigDecimal amount) {
-		withdrawUseCase.withdraw(new AccountId(id), new Money("EUR", amount));
+		withdrawUseCase.withdraw(new AccountId(id), new Money(amount));
 
 	}
 
 	@PostMapping("/{id}/deposit/{amount}")
 	public void deposit(@PathVariable(name = "id") final Long id, 
 						@PathVariable(name = "amount") final BigDecimal amount) {
-		depositUseCase.deposit(new AccountId(id), new Money("EUR", amount));
+		depositUseCase.deposit(new AccountId(id), new Money(amount));
 
 	}
 

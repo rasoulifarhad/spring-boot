@@ -20,7 +20,7 @@ public class BankAccountService implements DepositUseCase, WithdrawUseCase {
 	
 	@Override
 	public boolean withdraw(AccountId id, Money amount) {
-		BankAccount bankAccount = loadAccountPort.load(id)
+		BankAccount bankAccount = loadAccountPort.findById(id)
 												.orElseThrow(NoSuchElementException::new);
 		boolean hasWithdrawn = bankAccount.withdraw(amount);
 		if(hasWithdrawn) {
@@ -31,7 +31,7 @@ public class BankAccountService implements DepositUseCase, WithdrawUseCase {
 	
 	@Override
 	public void deposit(AccountId id, Money amount) {
-		BankAccount bankAccount = loadAccountPort.load(id)
+		BankAccount bankAccount = loadAccountPort.findById(id)
 												.orElseThrow(NoSuchElementException::new);
 		bankAccount.deposit(amount);
 		persistAccountPort.save(bankAccount);

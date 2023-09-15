@@ -1,8 +1,19 @@
 package com.farhad.example.hexagonalbankaccount.application.domain;
 
-import lombok.Value;
+import java.io.Serializable;
 
-@Value
-public class AccountId {
+import javax.persistence.Embeddable;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@Embeddable
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class AccountId implements Serializable{
 	private Long value;
+
 }

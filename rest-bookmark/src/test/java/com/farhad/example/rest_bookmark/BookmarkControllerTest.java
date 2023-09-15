@@ -131,7 +131,7 @@ public class BookmarkControllerTest /*extends BaseIntegrationTest*/ {
 				.get("/api/bookmarks/{id}",bookmark.getId())
 				.then()
 				.statusCode(200)
-				.body("id", equalTo(bookmark.getId()))
+				.body("id", equalTo(bookmark.getId().intValue()))
 			    .body("title", equalTo("googleee"))
 			    .body("url", equalTo("https://google.com"))
 				.body("createdAt", notNullValue())

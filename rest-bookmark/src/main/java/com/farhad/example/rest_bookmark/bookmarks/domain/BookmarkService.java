@@ -33,4 +33,6 @@ public class BookmarkService {
 			page.hasNext(), 
 			page.hasPrevious());
 	}
+
+	
 }

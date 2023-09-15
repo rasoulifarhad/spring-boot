@@ -1,0 +1,8 @@
+com/farhad/example/rest_bookmark/bookmarks/domain/BookmarkRepository.class
+com/farhad/example/rest_bookmark/bookmarks/domain/Bookmark.class
+com/farhad/example/rest_bookmark/Application.class
+com/farhad/example/rest_bookmark/bookmarks/api/controllers/BookmarkController.class
+com/farhad/example/rest_bookmark/bookmarks/domain/BookmarkService.class
+com/farhad/example/rest_bookmark/bookmarks/domain/PagedResult.class
+com/farhad/example/rest_bookmark/bookmarks/domain/BookmarkDTO.class
+com/farhad/example/rest_bookmark/bookmarks/domain/FindBookmarkQuery.class

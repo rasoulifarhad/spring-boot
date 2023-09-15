@@ -1,0 +1,8 @@
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/bookmarks/domain/BookmarkDTO.java
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/bookmarks/domain/BookmarkRepository.java
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/bookmarks/domain/Bookmark.java
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/bookmarks/domain/BookmarkService.java
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/bookmarks/domain/PagedResult.java
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/Application.java
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/bookmarks/api/controllers/BookmarkController.java
+/home/farhad/apps/my-examples/spring-boot/rest-bookmark/src/main/java/com/farhad/example/rest_bookmark/bookmarks/domain/FindBookmarkQuery.java

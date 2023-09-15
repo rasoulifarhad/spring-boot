@@ -1,8 +1,6 @@
 package com.farhad.example.rest_bookmark.bookmarks.domain;
 
 
-import java.time.Instant;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +36,8 @@ public class BookmarkService {
 
 	@Transactional
 	public BookmarkDTO create(CreateBookmarkCommand cmd) {
-		Bookmark bookmark = new Bookmark(cmd.getTitle(), cmd.getUrl(), Instant.now());
+		// Bookmark bookmark = new Bookmark(cmd.getTitle(), cmd.getUrl(), Instant.now());
+		Bookmark bookmark = new Bookmark(cmd.getTitle(), cmd.getUrl());
 		bookmark = bookmarkRepository.save(bookmark);
 		return BookmarkDTO.from(bookmark);
 	}
@@ -50,7 +49,7 @@ public class BookmarkService {
 				.orElseThrow(() -> BookmarkNotFpundException.of(cmd.getId()));
 		bookmark.setTitle(cmd.getTitle());
 		bookmark.setUrl(cmd.getUrl());
-		bookmark.setUpdatedAt(Instant.now());
+		// bookmark.setUpdatedAt(Instant.now());
 		bookmarkRepository.save(bookmark);
 	}
 	

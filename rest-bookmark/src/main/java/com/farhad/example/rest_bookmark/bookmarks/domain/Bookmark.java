@@ -4,13 +4,13 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -28,7 +28,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "bookmarks")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-class Bookmark {;
+@EntityListeners(AuditingEntityListener.class)
+class Bookmark extends Auditable {;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,12 +37,12 @@ class Bookmark {;
 	private String title;
 	@Column(nullable = false)
 	private String url;
-	@Column(name =  "created_at",nullable = false, updatable = false)
-	@CreatedDate
-	private Instant createdAt;
-	@Column(name = "updated_at", insertable = false )
-	@LastModifiedDate
-	private Instant updatedAt;
+	// @Column(name =  "created_at",nullable = false, updatable = false)
+	// @CreatedDate
+	// private Instant createdAt;
+	// @Column(name = "updated_at", insertable = false )
+	// @LastModifiedDate
+	// private Instant updatedAt;
 
 	// @PreUpdate
 	// @PrePersist
@@ -58,5 +59,9 @@ class Bookmark {;
 		this.createdAt = createdAt;
 	}
 	
+	public Bookmark(String title, String url) {
+		this.title = title;
+		this.url = url;
+	}
 	
 }

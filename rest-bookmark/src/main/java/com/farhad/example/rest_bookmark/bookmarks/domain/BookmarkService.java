@@ -1,6 +1,8 @@
 package com.farhad.example.rest_bookmark.bookmarks.domain;
 
 
+import java.time.Instant;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,8 +36,9 @@ public class BookmarkService {
 			page.hasPrevious());
 	}
 
-	public BookmarkDTO create(BookmarkDTO bookmark) {
-		return null;
+	public BookmarkDTO create(CreateBookmarkCommand cmd) {
+		Bookmark bookmark = new Bookmark(cmd.getTitle(), cmd.getUrl(), Instant.now());
+		return BookmarkDTO.from(bookmarkRepository.save(bookmark));
 	}
 
 	

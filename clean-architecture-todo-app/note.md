@@ -36,3 +36,38 @@ A handler that returns a response implements the `java.util.Function` interface.
 One question remains: who creates these handlers?
 
 The answer: a class implementing the [BehaviorModel](https://github.com/bertilmuth/requirementsascode/blob/master/requirementsascodecore/src/main/java/org/requirementsascode/BehaviorModel.java) interface. The behavior model maps each request class to the request handler for this kind of request.
+
+
+So, where are all the controllers?
+
+Well, there aren’t any that you have to create. At least if you only handle POST requests. (For the handling of GET requests, see the Q&A later.)
+
+The spring-behavior-web library is part of the Modern Clean Architecture libraries. We define a single endpoint for requests. We specify the URL of that endpoint in the application.properties:
+
+behavior.endpoint = /todolist
+
+ If that property exists, spring-behavior-web sets up a controller for the endpoint in the background. That controller receives POST requests.
+
+We don’t need to write Spring specific code to add new behavior. And we don’t need to add or change a controller.
+
+Here’s what happens when the endpoint receives a POST request:
+
+1. spring-behavior-web deserializes the request,
+2. spring-behavior-web passes the request to a behavior configured by the behavior model,
+3. the behavior passes the request to the appropriate request handler (if there is one),
+4. spring-behavior-web serializes the response and passes it back to the endpoint (if there is one).
+
+By default, spring-behavior-web wraps every call to a request handler in a transaction.
+
+How to send POST requests
+
+Once we start the Spring Boot application, we can send POST requests to the endpoint.
+
+We include a @type property in the JSON content so that spring-behavior-web can determine the right request class during deserialization.
+
+For example, this is a valid curl command of the To Do List application. It sends a FindOrCreateListRequest to the endpoint.
+
+```sh
+curl -H "Content-Type: application/json" -X POST -d '{"@type": "FindOrCreateListRequest"}' http://localhost:8080/todolist
+```
+

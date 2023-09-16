@@ -71,3 +71,30 @@ For example, this is a valid curl command of the To Do List application. It send
 curl -H "Content-Type: application/json" -X POST -d '{"@type": "FindOrCreateListRequest"}' http://localhost:8080/todolist
 ```
 
+… I want the web layer to evolve separately from the behavior?
+
+Reasons why this may make sense include:
+
+    the granularity of web requests is different from behavior model requests
+    the web layer needs special processing of the requests
+
+Remove the behavior.endpoint property in application.properties to turn off auto-configuration of the Controller in the background.
+
+Follow the strategy described for GET requests for the other kinds of requests you need as well.
+
+… I want to use a different framework than Spring?
+
+To move away from Spring, remove the dependency to the spring-behavior-web library in your build script. All your behavior models with stay intact.
+
+Create an instance of a behavior on your own:
+
+Behavior behavior = StatelessBehavior.of(behaviorModel);
+
+After that, you can call its reactTo(…) method.
+
+
+See [ Modern Clean Architecture ](https://github.com/bertilmuth/modern-clean-architecture/)
+See [Requirements as code](https://github.com/bertilmuth/requirementsascode)
+
+See [jmolecules](https://github.com/xmolecules/jmolecules)
+

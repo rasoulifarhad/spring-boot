@@ -30,3 +30,5 @@ Next, we define the behavior of the application that is visible to the end user.
 3. The request handler may return a response.
 
 Rquest handler implement with a Java 8 functional interface.
+
+A handler that returns a response implements the `java.util.Function` interface.

@@ -97,4 +97,5 @@ See [ Modern Clean Architecture ](https://github.com/bertilmuth/modern-clean-arc
 See [Requirements as code](https://github.com/bertilmuth/requirementsascode)
 
 See [jmolecules](https://github.com/xmolecules/jmolecules)
+See [jmolecules-spring-data-jpa](https://github.com/xmolecules/jmolecules-examples/tree/main/jmolecules-spring-data-jpa)
 

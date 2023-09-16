@@ -32,3 +32,7 @@ Next, we define the behavior of the application that is visible to the end user.
 Rquest handler implement with a Java 8 functional interface.
 
 A handler that returns a response implements the `java.util.Function` interface.
+
+One question remains: who creates these handlers?
+
+The answer: a class implementing the [BehaviorModel](https://github.com/bertilmuth/requirementsascode/blob/master/requirementsascodecore/src/main/java/org/requirementsascode/BehaviorModel.java) interface. The behavior model maps each request class to the request handler for this kind of request.

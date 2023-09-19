@@ -1,4 +1,8 @@
 See https://reflectoring.io/java-components-clean-boundaries/
+See https://github.com/thombergs/code-examples/tree/master/spring-boot/boundaries
+
+See https://github.com/thombergs/fortune-cookie-shop
+
 
 The billing component exposes an invoice calculator to the outside. The invoice calculator generates an invoice for a certain customer and time period.
 

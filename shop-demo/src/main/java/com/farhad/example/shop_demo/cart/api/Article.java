@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import lombok.Data;
 
+
 @Data
 public class Article {
    

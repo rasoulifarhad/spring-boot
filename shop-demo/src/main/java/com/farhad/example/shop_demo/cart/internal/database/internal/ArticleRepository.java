@@ -1,5 +1,7 @@
 package com.farhad.example.shop_demo.cart.internal.database.internal;
 
-public interface ArticleRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface ArticleRepository  extends CrudRepository<ArticleDatabaseEntity, Long>{
     
 }

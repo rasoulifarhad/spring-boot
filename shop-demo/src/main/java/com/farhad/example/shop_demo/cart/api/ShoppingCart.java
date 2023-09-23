@@ -20,7 +20,7 @@ public class ShoppingCart {
     public ShoppingCart(ShoppingCartId id, UserId userId, List<ShoppingCartItem> items) {
         this.id = Objects.requireNonNull(id);
         this.userId = Objects.requireNonNull(userId);
-        Objects.requireNonNull(shoppingCartItems)
+        Objects.requireNonNull(items);
         this.shoppingCartItems = items.stream()
                                     .collect(toMap(ShoppingCartItem::getArticleId, identity()));
     }

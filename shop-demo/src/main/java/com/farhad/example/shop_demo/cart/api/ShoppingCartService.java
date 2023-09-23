@@ -6,5 +6,5 @@ public interface ShoppingCartService {
     void removeArticle(UserId userId, ArticleId articleId);
     void resetCart(UserId userId);
     void checkout(UserId userId);
-    ShoppingCart geShoppingCart(UserId userId);
+    ShoppingCart getShoppingCart(UserId userId);
 }

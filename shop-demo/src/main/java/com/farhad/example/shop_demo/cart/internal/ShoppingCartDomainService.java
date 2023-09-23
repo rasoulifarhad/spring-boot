@@ -79,7 +79,7 @@ public class ShoppingCartDomainService implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart geShoppingCart(UserId userId) {
+    public ShoppingCart getShoppingCart(UserId userId) {
         requireNonNull(userId);
         return database.loadShoppingCartByUserId(userId)
                                 .orElseThrow(() -> new RuntimeException("Cart not found for user: " + userId));

@@ -1,41 +1,36 @@
-create table article 
-(
-    id integer auto_increment,
-    name varchar(50),
-    price_in_cents  integer,
-    primary key (id)
+CREATE SCHEMA IF NOT EXISTS public;
+--
+DROP TABLE IF EXISTS voter_ref;
+DROP TABLE IF EXISTS candidate_ref;
+DROP TABLE IF EXISTS voter;
+DROP TABLE IF EXISTS candidate;
+DROP TABLE IF EXISTS election;
+--
+CREATE TABLE voter (
+    id UUID NOT NULL DEFAULT RANDOM_UUID(),
+    name VARCHAR(255) NOT NULL,
+    CONSTRAINT voter_pk PRIMARY KEY (id)
 );
-
-create table shopping_cart
-(
-    id      integer auto_increment,
-    user_id integer,
-    primary key (id)
+--
+CREATE TABLE candidate (
+    id UUID NOT NULL DEFAULT RANDOM_UUID(),
+    name VARCHAR(255) NOT NULL,
+    CONSTRAINT candidate_pk PRIMARY KEY (id)
 );
-
-create table shopping_cart_article
-(
-    article_id       integer,
-    shopping_cart_id integer,
-    constraint fk_article foreign key (article_id) references article (id),
-    constraint fk_shopping_cart foreign key (shopping_cart_id) references shopping_cart (id)
+CREATE TABLE voter_ref (
+    voter UUID NOT NULL,
+    candidate UUID NOT NULL,
+    candidate_key BIGINT NOT NULL
 );
-
-create table orders
-(
-    id         integer auto_increment,
-    user_id    integer,
-    order_date timestamp,
-    primary key (id)
+--
+CREATE TABLE election (
+    id UUID NOT NULL DEFAULT RANDOM_UUID(),
+    name VARCHAR(255) NOT NULL,
+    CONSTRAINT election_pk PRIMARY KEY (id)
 );
-
-create table order_item
-(
-    id             integer auto_increment,
-    order_id       integer,
-    article_id     integer,
-    amount         integer,
-    price_in_cents integer,
-    constraint fk_order_article foreign key (article_id) references article (id),
-    constraint fk_order foreign key (order_id) references orders (id)
+CREATE TABLE candidate_ref (
+    candidate UUID NOT NULL,
+    election UUID NOT NULL,
+    election_key BIGINT NOT NULL
 );
+--

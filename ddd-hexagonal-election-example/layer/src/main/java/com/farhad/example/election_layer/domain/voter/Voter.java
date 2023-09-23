@@ -16,11 +16,30 @@ import lombok.With;
 public class Voter {
     
     @Id
-    private final UUID id;
+    // private final UUID id;
+    private final VoterId id;
+
     private final String name;
+
     
     public Voter(String name) {
         this(null, name);
+    }
+
+    @With
+    @Value
+    @AllArgsConstructor
+    public static class VoterId {
+        private final UUID value;
+
+        public static VoterId id() {
+            return new VoterId(UUID.randomUUID());
+        }
+
+        public static VoterId fromString(String uuidString) {
+            return new VoterId(UUID.fromString(uuidString));
+        }
+
     }
 
     

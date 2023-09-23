@@ -25,11 +25,27 @@ import lombok.With;
 public class Candidate implements Comparable<Candidate> {
 
     @Id
-    private final UUID id;
+    // private final UUID id;
+    private final CandidateId id;
+
     private final String name;
     private final Collection<VoterRef> voters;
 
-    
+    @With
+    @Value
+    @AllArgsConstructor
+    public static class CandidateId {
+        private final UUID value;
+
+        public static CandidateId id() {
+            return new CandidateId(UUID.randomUUID());
+        }
+
+        public static CandidateId fromString(String uuidString) {
+            return new CandidateId(UUID.fromString(uuidString));
+        }
+
+    }
 
     public Candidate(String name) {
         this(null, name, new CopyOnWriteArrayList<>());
@@ -39,7 +55,7 @@ public class Candidate implements Comparable<Candidate> {
         return receiveVotes(Arrays.stream(voters).collect(toList()));
     }
 
-    private Candidate receiveVotes(Iterable<Voter> iterableVoters) {
+    public Candidate receiveVotes(Iterable<Voter> iterableVoters) {
         requireNonNull(iterableVoters);
         StreamSupport.stream(iterableVoters.spliterator(), false)
                 .map(Voter::getId)

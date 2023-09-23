@@ -24,10 +24,28 @@ import lombok.With;
 public class Election {
     
     @Id
-    private final UUID id;
+    // private final UUID id;
+    private final ElectionId id;
+
     private final String name;
     private final Collection<CandidateRef> candidates;
     
+    @With
+    @Value
+    @AllArgsConstructor
+    public static class ElectionId {
+        private final UUID value;
+
+        public static ElectionId id() {
+            return new ElectionId(UUID.randomUUID());
+        }
+
+        public static ElectionId fromString(String uuidString) {
+            return new ElectionId(UUID.fromString(uuidString));
+        }
+
+    }
+
     public Election(String name) {
         this(null, name, new CopyOnWriteArrayList<>());
     }

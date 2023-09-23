@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,13 @@ import com.farhad.example.election_layer.application.dto.CandidateDTO;
 import com.farhad.example.election_layer.application.dto.ElectionDTO;
 import com.farhad.example.election_layer.application.dto.VoterDTO;
 import com.farhad.example.election_layer.domain.candidate.Candidate;
+import com.farhad.example.election_layer.domain.candidate.Candidate.CandidateId;
 import com.farhad.example.election_layer.domain.candidate.CandidateRepository;
 import com.farhad.example.election_layer.domain.election.Election;
+import com.farhad.example.election_layer.domain.election.Election.ElectionId;
 import com.farhad.example.election_layer.domain.election.ElectionRepository;
 import com.farhad.example.election_layer.domain.voter.Voter;
+import com.farhad.example.election_layer.domain.voter.Voter.VoterId;
 import com.farhad.example.election_layer.domain.voter.VoterRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,16 +33,29 @@ public class ElectionService {
     private final ElectionRepository electionRepository;
     private final CandidateRepository candidateRepository;
 
-    public Iterable<Election> getElections() {
-        return electionRepository.findAll();
+    public Iterable<ElectionDTO> getElections() {
+        return StreamSupport.stream(electionRepository
+                                        .findAll()
+                                        .spliterator(), false)
+                                .map(ElectionDTO::of)
+                                .collect(toList());
+                    
     }
 
-    public Iterable<Candidate> getCandidates() {
-        return candidateRepository.findAll();
+    public Iterable<CandidateDTO> getCandidates() {
+        return StreamSupport.stream(candidateRepository
+                                        .findAll()
+                                        .spliterator(), false)
+                                .map(CandidateDTO::of)
+                                .collect(toList());
     }
 
-    public Iterable<Voter> getVoters() {
-        return voterRepository.findAll();
+    public Iterable<VoterDTO> getVoters() {
+        return StreamSupport.stream(voterRepository
+                                        .findAll()
+                                        .spliterator(), false)
+                                .map(VoterDTO::of)
+                                .collect(toList());
     }
 
     public ElectionDTO beginElection(String name) {
@@ -49,7 +65,7 @@ public class ElectionService {
         return ElectionDTO.of(election);
     }
 
-    public CandidateDTO registerCandidate(UUID electionId, String name){
+    public CandidateDTO registerCandidate(ElectionId electionId, String name){ 
         requireNonNull(electionId);
         requireNonNull(name);
         Election election = getElection(electionId);
@@ -59,7 +75,7 @@ public class ElectionService {
         return CandidateDTO.of(candidate)        ;
     }
 
-    public VoterDTO registerVoter(UUID electionId, String name){
+    public VoterDTO registerVoter(ElectionId electionId, String name){
         requireNonNull(electionId);
         requireNonNull(name);
         getElection(electionId);
@@ -67,7 +83,7 @@ public class ElectionService {
         return VoterDTO.of(voter);
     }
 
-    public void vote(UUID electionId, UUID candidateId, UUID voterId) {
+    public void vote(ElectionId electionId, CandidateId candidateId, VoterId voterId) {
         requireNonNull(electionId);
         requireNonNull(candidateId);
         requireNonNull(voterId);
@@ -90,7 +106,7 @@ public class ElectionService {
         candidateRepository.save(candidate.receiveVotes(voter));
     }
 
-    public List<String> getStatistics(UUID electionId) {
+    public List<String> getStatistics(ElectionId electionId) {
         requireNonNull(electionId);
         getElection(electionId);
         return candidateRepository.findStatistics(electionId)
@@ -99,7 +115,7 @@ public class ElectionService {
                                     .collect(toList());
     }
 
-    private Election getElection(UUID electionId) {
+    private Election getElection(ElectionId electionId) {
         return electionRepository.findById(electionId)
                         .orElseThrow(() -> new IllegalArgumentException(
                             String.format("Election %s not found.", electionId)));

@@ -13,6 +13,6 @@ public class ElectionDTO {
     private final String name;
 
     public static ElectionDTO of(Election election) {
-        return new ElectionDTO(election.getId(), election.getName());
+        return new ElectionDTO(election.getId().getValue(), election.getName());
     }
 }

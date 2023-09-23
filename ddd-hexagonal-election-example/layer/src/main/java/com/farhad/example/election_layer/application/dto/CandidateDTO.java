@@ -13,6 +13,6 @@ public class CandidateDTO {
     private final String name;
 
     public static CandidateDTO of(Candidate candidate) {
-        return new CandidateDTO(candidate.getId(), candidate.getName());
+        return new CandidateDTO(candidate.getId().getValue(), candidate.getName());
     }
 }

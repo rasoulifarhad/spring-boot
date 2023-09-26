@@ -1,4 +1,4 @@
-package com.farhad.example.clean_architecture_demo;
+package com.farhad.example.eventdrivenclub.chairfront;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

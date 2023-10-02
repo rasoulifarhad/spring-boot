@@ -3,8 +3,8 @@ package com.farhad.example.ddd_hexagonal_spring_data.infrastructure.config.sprin
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.farhad.example.ddd_hexagonal_spring_data.application.repository.UserRepository;
 import com.farhad.example.ddd_hexagonal_spring_data.application.service.UserService;
+import com.farhad.example.ddd_hexagonal_spring_data.domain.model.user.UserRepository;
 
 @Configuration
 public class SpringBootServiceConfig {

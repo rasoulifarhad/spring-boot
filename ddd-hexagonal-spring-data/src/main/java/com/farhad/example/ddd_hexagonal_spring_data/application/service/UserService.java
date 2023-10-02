@@ -1,7 +1,7 @@
 package com.farhad.example.ddd_hexagonal_spring_data.application.service;
 
-import com.farhad.example.ddd_hexagonal_spring_data.application.repository.UserRepository;
 import com.farhad.example.ddd_hexagonal_spring_data.domain.model.user.User;
+import com.farhad.example.ddd_hexagonal_spring_data.domain.model.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

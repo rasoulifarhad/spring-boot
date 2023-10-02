@@ -1,4 +1,4 @@
-create table users 
+create table IF NOT EXISTS users 
 (
     id bigint not null ,
     name varchar(255) not null,

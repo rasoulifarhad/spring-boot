@@ -1,4 +1,4 @@
-package com.farhad.example.ddd_hexagonal_spring_data.infrastructure.db.springdata.repository;
+package com.farhad.example.ddd_hexagonal_spring_data.infrastructure.db.springdata.repository.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

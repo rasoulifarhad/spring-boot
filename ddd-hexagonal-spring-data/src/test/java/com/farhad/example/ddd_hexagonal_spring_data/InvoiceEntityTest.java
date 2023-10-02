@@ -54,10 +54,10 @@ public class InvoiceEntityTest {
         invoice02.addItem(new LineItem(productC, 40));
         invoice02 = invoiceRepository.save(invoice02);
 
-        System.out.println("Invoice-01: ");
+        System.out.println("Invoice-01: =============================================================");
         System.out.println(invoiceRepository.findById(invoice01.getId()));
 
-        System.out.println("Invoice-02: ");
+        System.out.println("Invoice-02: +==========================================================");
         System.out.println(invoiceRepository.findById(invoice02.getId()));
 
         springDataInvoiceRepository.deleteAll();

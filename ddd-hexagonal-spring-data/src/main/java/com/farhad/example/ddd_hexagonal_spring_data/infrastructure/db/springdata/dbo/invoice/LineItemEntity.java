@@ -4,10 +4,12 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Embeddable
+@Data
 @NoArgsConstructor
 public class LineItemEntity {
     

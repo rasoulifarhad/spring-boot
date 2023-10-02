@@ -3,6 +3,7 @@ See https://www.dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_20
 See https://www.dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_3.pdf
 See https://github.com/citerus/dddsample-core
 
+See https://www.callicoder.com/hibernate-spring-boot-jpa-element-collection-demo/
 ```
 curl -X POST -H "Content-Type: application/json" -d'{"id": 1, "name": "name 1", "address": "address 1"}' http://localhost:8080/users
 ```

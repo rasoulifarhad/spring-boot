@@ -1,1 +1,9 @@
 See https://github.com/peholmst/DDDExample/tree/master
+See https://github.com/christophknabe/spring-ddd-bank/tree/master
+See https://github.com/swa-ds/ddd-repo-demo/tree/master
+See https://www.amazon.de/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577
+See https://ress.infoq.com/downloads/pdfdownloads/presentations/SpringOne2019-JensSchauder-DomainDrivenDesignwithRelationalDatabasesUsingSpringDataJDBC.pdf?Expires=1696272024&Signature=hKc1j~MeJM9~anqssMAI1nn1zzmF-kR8SmdEFrXijpS-OsfvcZ~s85rLT~~tgpVE~hBonnOPtARAGuTLiJ-YewYq~O~MdvFFqyArgcFgqamh3yfP~kZmkjqc72Y9j91eCMHrjCMaFj3xXXTB3Rd5nyG3KKQw7vCj9LIJ0NVT4nY_&Key-Pair-Id=APKAIMZVI7QH4C5YKH6Q
+See https://dev.to/kirekov/spring-data-power-of-domain-events-2okm
+See https://github.com/refactorizando-web/spring-data-hexagonal-architecture
+See https://refactorizando.com/en/example-hexagonal-architecture-spring-data/
+See https://thesolidsnake.wordpress.com/2014/03/07/implementing-aggregate-root-in-jpa-onetomany-or-elementcollection/

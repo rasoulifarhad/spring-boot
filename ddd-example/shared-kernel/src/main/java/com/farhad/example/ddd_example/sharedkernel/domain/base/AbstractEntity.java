@@ -31,4 +31,8 @@ public abstract class AbstractEntity<ID extends DomainObjectId> implements Ident
         this.id = id;
     }
 
+    public boolean sameIdentityAs(@NonNull final AbstractEntity<ID> that) {
+        return this.equals(that);
+    }
+
 }

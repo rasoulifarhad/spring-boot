@@ -1,4 +1,4 @@
-create table IF NOT EXISTS produts 
+create table IF NOT EXISTS products 
 (
     id bigint not null ,
     name varchar(255) not null,
@@ -21,12 +21,12 @@ create table IF NOT EXISTS invoice_line_items
 );
 
 ALTER TABLE invoice_line_items ADD FOREIGN KEY (invoice_id) REFERENCES invoices;
-ALTER TABLE invoice_line_items ADD FOREIGN KEY (product_id) REFERENCES produts;
+ALTER TABLE invoice_line_items ADD FOREIGN KEY (product_id) REFERENCES products;
 
 insert into products(id, name) values (1, 'ProductA');
 insert into products(id, name) values (2, 'ProductB');
 
-insert into invoices(id, name) values (1, 'Invoice-01');
+insert into invoices(id, number) values (1, 'Invoice-01');
 
 
 insert into invoice_line_items(invoice_id, product_id, line_items_row, quantity) 

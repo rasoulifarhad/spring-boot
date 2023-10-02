@@ -1,4 +1,4 @@
-package com.farhad.example.ddd_hexagonal_spring_data.domain;
+package com.farhad.example.ddd_hexagonal_spring_data.domain.model.user;
 
 import lombok.Data;
 

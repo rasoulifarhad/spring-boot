@@ -2,7 +2,7 @@ package com.farhad.example.ddd_hexagonal_spring_data.infrastructure.rest.spring.
 
 import org.mapstruct.Mapper;
 
-import com.farhad.example.ddd_hexagonal_spring_data.domain.User;
+import com.farhad.example.ddd_hexagonal_spring_data.domain.model.user.User;
 import com.farhad.example.ddd_hexagonal_spring_data.infrastructure.rest.spring.dto.UserDto;
 
 @Mapper(componentModel = "spring")

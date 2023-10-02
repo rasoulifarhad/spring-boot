@@ -3,7 +3,7 @@ package com.farhad.example.ddd_hexagonal_spring_data.infrastructure.db.springdat
 import org.springframework.stereotype.Service;
 
 import com.farhad.example.ddd_hexagonal_spring_data.application.repository.UserRepository;
-import com.farhad.example.ddd_hexagonal_spring_data.domain.User;
+import com.farhad.example.ddd_hexagonal_spring_data.domain.model.user.User;
 import com.farhad.example.ddd_hexagonal_spring_data.infrastructure.db.springdata.mapper.UserEntityMapper;
 
 import lombok.RequiredArgsConstructor;

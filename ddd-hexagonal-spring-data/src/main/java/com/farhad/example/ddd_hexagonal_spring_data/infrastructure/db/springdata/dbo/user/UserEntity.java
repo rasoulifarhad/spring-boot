@@ -1,4 +1,4 @@
-package com.farhad.example.ddd_hexagonal_spring_data.infrastructure.db.springdata.dbo;
+package com.farhad.example.ddd_hexagonal_spring_data.infrastructure.db.springdata.dbo.user;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

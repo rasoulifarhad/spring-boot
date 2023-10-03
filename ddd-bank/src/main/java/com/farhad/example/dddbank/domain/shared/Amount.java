@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -17,6 +18,7 @@ public class Amount implements Comparable<Amount>{
     
     public static final Amount ZERO = new Amount(0, 0);
 
+    @Getter
     private long value;
 
     public Amount(final int mayor, final int minor) {

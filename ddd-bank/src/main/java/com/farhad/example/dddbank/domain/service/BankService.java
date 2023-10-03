@@ -9,7 +9,11 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
+import com.farhad.example.dddbank.domain.model.Account;
+import com.farhad.example.dddbank.domain.model.AccountAccess;
 import com.farhad.example.dddbank.domain.model.AccountAccessRepository;
+import com.farhad.example.dddbank.domain.model.AccountNo;
+import com.farhad.example.dddbank.domain.model.AccountRepository;
 import com.farhad.example.dddbank.domain.model.Client;
 import com.farhad.example.dddbank.domain.model.ClientRepository;
 import com.farhad.example.dddbank.domain.shared.Amount;
@@ -22,6 +26,8 @@ public class BankService {
     
     private final ClientRepository clientRepository;
 	private final AccountAccessRepository accountAccessRepository;
+	private final AccountRepository accountRepository;
+
 
     public Client createClient(final String username, final LocalDate birthDate) {
         requireNonNull(username);
@@ -49,6 +55,10 @@ public class BankService {
         return clientRepository.findAll();
     }
 
+    public List<Client> findClients(final LocalDate fromBirth, final Amount minBalance) {
+        return null;
+    }
+
     public List<Client> findYoungClients(final LocalDate fromBirth) {
         return clientRepository.findAllBornFrom(fromBirth);
     }
@@ -58,5 +68,35 @@ public class BankService {
                     .stream()
                         .map(acc -> acc.getClient())
                         .collect(toList());
+    }
+
+    public AccountAccess  createAccount(String username, String accountName){
+        final Client client = findClient(username);
+        return client.createAccount(accountName, accountAccessRepository, accountRepository);
+
+    }
+
+    public void deposit(String username, Long accountNo, double amount) {
+        final Client client = findClient(username);
+        client.deposit(new AccountNo(accountNo), 
+                new Amount(amount), 
+                accountAccessRepository, 
+                accountRepository);
+    }
+
+    public void transfer(String username, 
+                        Long srcAccountNo, 
+                        Long destAccountNo, 
+                        double amount) {
+        final Client client = findClient(username);
+        final Account sourceAccount = client.findMyAccount(new AccountNo(srcAccountNo), 
+                                                accountAccessRepository, 
+                                                accountRepository);
+        client.transfer(sourceAccount, 
+                    new AccountNo(destAccountNo), 
+                    new Amount(amount), 
+                    accountAccessRepository, 
+                    accountRepository);
+
     }
 }

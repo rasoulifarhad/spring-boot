@@ -5,9 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import com.farhad.example.dddbank.domain.model.Client;
 
 public class Converter {
@@ -26,10 +23,10 @@ public class Converter {
 		return result;
 	}
 
-	ResponseEntity<ClientResource[]> clientsToResources(final List<Client> clients) {
+	ClientResource[] clientsToResources(final List<Client> clients) {
 		final Stream<ClientResource> result = clients.stream().map(this::toClientResource);
-		final ClientResource[] resultArray = result.toArray(ClientResource[]::new);
-		return new ResponseEntity<>(resultArray, HttpStatus.OK);
+		return result.toArray(ClientResource[]::new);
+		
 	}
 
 }

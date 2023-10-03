@@ -58,3 +58,59 @@ Failing all but one of their requests on an ongoing basis is completely unaccept
 ![](image_02.png)
 
 Each of the dependencies is associated by inference using a common ProductId, which is the identity of Product considered the parent of the other three.
+
+With the large cluster aggregate design the method signatures looked like this:
+
+```java
+public class Product ... {
+...
+    public void planBacklogItem(String aSummary, String aCategory,
+            BacklogItemType aType, StoryPoints aStoryPoints) {
+    }
+    public void scheduleRelease(String aName, String aDescription,
+            Date aBegins, Date anEnds) {
+    ...
+    }
+    public void scheduleSprint(String aName, String aGoals,
+        Date aBegins, Date anEnds) {
+    ...
+    }
+...
+}    
+...
+```
+
+All of these methods are [CQS] commands. That is, they
+modify the state of the Product by adding the new ele-
+ment to a collection, so they have a void return type. But
+with the multiple aggregate design, we have:
+
+```java
+public class Product ... {
+    ...
+    public BacklogItem planBacklogItem(String aSummary, String aCategory,
+        BacklogItemType aType, StoryPoints aStoryPoints) {
+        ...
+    }
+    public Release scheduleRelease(String aName, String aDescription,
+                Date aBegins, Date anEnds) {
+        ...
+    }
+    public Sprint scheduleSprint(String aName, String aGoals,
+            Date aBegins, Date anEnds) {
+        ...
+    }
+    ...
+}
+
+```
+
+These redesigned methods have a [CQS] query contract,
+and act as factories. That is, they each respectively create a
+new aggregate instance and return a reference to it. Now
+when a client wants to plan a backlog item, the transaction-
+al application service must do the following:
+
+```java
+
+```

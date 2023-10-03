@@ -2,6 +2,7 @@ See https://www.dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_20
 See https://www.dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_2.pdf
 See https://www.dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_3.pdf
 
+See https://www.mirkosertic.de/blog/2013/04/domain-driven-design-example/
 
 ## Designing a Scrum Management Application
 
@@ -112,5 +113,28 @@ when a client wants to plan a backlog item, the transaction-
 al application service must do the following:
 
 ```java
+@RequiredArgsConstructor
+public class ProductBacklogItemService {
 
+    private final ProductRepository productRepository;
+    private final BacklogItemRepository backlogItemRepository;
+
+    @Transactional
+    public void planProductBacklogItem(String aTenantId, String aProductId,
+            String aSummary, String aCategory,
+            String aBacklogItemType, String aStoryPoints) {
+
+        Product product = productRepository.productOfId(
+                new TenantId(aTenantId),
+                new ProductId(aProductId));
+
+        BacklogItem plannedBacklogItem = product.planBacklogItem(
+                aSummary,
+                aCategory,
+                BacklogItemType.valueOf(aBacklogItemType),
+                StoryPoints.valueOf(aStoryPoints));
+
+        backlogItemRepository.add(plannedBacklogItem);
+    }
+}
 ```

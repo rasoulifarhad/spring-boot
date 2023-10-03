@@ -13,17 +13,18 @@ public class Product extends ConcurrencySafeEntity {
     private String name;
     private TenantId tenantId;
 
-    public void planBacklogItem( String aSummary, String aCategory,
+    public BacklogItem planBacklogItem( String aSummary, String aCategory,
             BacklogItemType aType, StoryPoints aStoryPoints) {
+        return null;
     }
 
-    public void scheduleRelease(String aName, String aDescription,
+    public Release scheduleRelease(String aName, String aDescription,
                     LocalDate aBegins, LocalDate anEnds) {
-
+        return null;
     }
 
-    public void scheduleSprint(String aName, String aGoals, 
+    public Sprint scheduleSprint(String aName, String aGoals, 
                     LocalDate aBegins, LocalDate anEnds){
-
+        return null;
     }
 }

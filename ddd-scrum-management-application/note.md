@@ -138,3 +138,98 @@ public class ProductBacklogItemService {
     }
 }
 ```
+
+### Rule: Model True Invariants In Consistency Boundaries
+
+When trying to discover the **aggregates** in a **bounded context**, we must understand the model's true invariants. Only with that knowledge can we determine which objects should be clustered into a given **aggregate**.
+
+**An invariant is a business rule that must always be consistent.**
+
+> There are different kinds of consistency.  
+
+
+>> One is transactional, which is considered immediate and atomic.  
+
+>> There is also eventual consistency.  
+
+**When discussing invariants, we are referring to transactional consistency.**
+
+We might have the invariant:
+
+```
+c = a + b
+```
+
+Therefore, when a is 2 and b is 3, c must be 5.
+
+**According to that rule and conditions, if c is anything but 5, a system invariant is violated.** 
+
+To ensure that c is consistent, we model a boundary around these specific attributes of the model:
+
+```java
+AggregateType1 {
+    int a;
+    int b;
+    int c;
+
+    operations...
+}
+```
+
+**The consistency boundary logically asserts that everything inside adheres to a specific set of business invariant rules no matter what operations are performed.**
+
+The consistency of everything outside this boundary is irrelevant to the **aggregate**. 
+
+Thus, **aggregate** is synonymous with transactional consistency boundary.
+
+When employing a typical persistence mechanism we use a single transaction3 to manage consistency.
+
+**When the transaction commits, everything inside one boundary must be consistent.**
+
+A properly designed **aggregate** is one that can be modified in any way required by the business with its invariants completely consistent within a single transaction.
+
+**And a properly designed bounded context modifies only one aggregate instance per transaction in all cases.**
+
+**Since aggregates must be designed with a consistency focus, it implies that the user interface should concentrate each request to execute a single command on just one aggregate instance.** 
+
+If user requests try to accomplish too much, it will force the application to modify multiple instances at once.
+
+**Therefore, aggregates are chiefly about consistency boundaries and not driven by a desire to design object graphs.**
+
+### Rule: Design Small Aggregates
+
+![](image_03.png)
+
+If we are going to design small **aggregates**, what does **small** mean? 
+
+The extreme would be an **aggregate** with only its globally unique identity and one additional attribute, which is not what's being recommended (unless that is truly what one specific **aggregate** requires). Rather, limit the **aggregate** to just the **root entity** and a minimal number of attributes and/or **value**-typed properties.4 The correct minimum is the ones necessary, and no more.
+
+**Which ones are necessary?** The simple answer is: **those that must be consistent with others**, even if domain experts don't specify them as rules.
+
+For example, `Product` has `name` and `description` attributes.  We can't imagine `name` and `description` being inconsistent, modeled in separate **aggregates**. 
+
+When you change the `name` you probably also change the `description`. If you change one and not the other, it's probably because you are fixing a spelling error or making the `description` more fitting to the `name`.
+
+Even though domain experts will probably not think of this as an explicit business rule, it is an implicit one.
+
+What if you think you should model a contained part as an **entity**? 
+
+First ask whether that part must itself change over time, or whether it can be completely replaced when change is necessary. 
+
+ **If instances can be completely replaced, it points to the use of a value object rather than an entity.**
+
+ **At times entity parts are necessary.**
+
+ Favoring **value** types as **aggregate** parts doesn't mean the **aggregate** is immutable since the root entity itself mutates when one of its **value**-typed properties is replaced.
+
+ There are important advantages to limiting internal parts to **values**. Depending on your persistence mechanism, **values** can be serialized with the **root entity**, whereas **entities** usually require separately tracked storage.
+
+ **a high percentage of aggregates can be limited to a single entity, the root.**
+
+ The [DDD] discussion of **aggregates** gives an example where multiple **entities** makes sense. 
+ 
+ A purchase order is assigned a maximum allowable total, and the sum of all line items must not surpass the total.  The rule becomes tricky to enforce when multiple users simultaneously add line items. Any one addition is not permitted to exceed the limit, but concurrent additions by multiple users could collectively do so.  most of the time the invariants of business models are simpler to manage than that example. Recognizing this helps us to model **aggregates** with as few properties as possible.
+
+ Smaller **aggregates** not only perform and scale better, they are also biased toward transactional success, meaning that conflicts preventing a commit are rare.
+
+ Your domain will not often have true invariant constraints that force you into large composition design situations. When you occasionally encounter a true consistency rule, then add another few **entities**, or possibly a collection, as necessary, but continue to push yourself to keep the overall size as small as possible

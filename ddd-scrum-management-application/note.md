@@ -233,3 +233,12 @@ First ask whether that part must itself change over time, or whether it can be c
  Smaller **aggregates** not only perform and scale better, they are also biased toward transactional success, meaning that conflicts preventing a commit are rare.
 
  Your domain will not often have true invariant constraints that force you into large composition design situations. When you occasionally encounter a true consistency rule, then add another few **entities**, or possibly a collection, as necessary, but continue to push yourself to keep the overall size as small as possible
+
+ A common issue that arises is a particular use case that calls for
+the modification of multiple aggregate instances. In such a
+case we must determine whether the specified large user
+goal is spread across multiple persistence transactions, or if
+it occurs within just one. If it is the latter, it pays to be
+skeptical. No matter how well it is written, such a use case
+may not accurately reflect the true aggregates of our
+model.

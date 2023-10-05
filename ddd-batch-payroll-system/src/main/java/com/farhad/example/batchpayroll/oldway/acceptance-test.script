@@ -1,0 +1,3 @@
+AddEmp 1429 "Name Family" 321588
+Payday
+Verify Paycheck EmpId 1429 GrossPay 3215.88

@@ -168,3 +168,62 @@ selected payment method.
 ```
 Payday <date>
 ```
+
+Remember the definition of abstraction: 
+  
+> **the amplification of the essential and the elimination of the irrelevant.**
+
+<br/>
+
+### Analysis by Use Cases
+
+> One way to capture and analyze the behavior of a system is to create **use cases**.
+
+>> A **use case** is like a **user story** that has been elaborated with a little more detail.
+
+<br/>
+
+>> For use case analysis, we look to the user stories and acceptance tests to find out the kinds of stimuli that the users of this system provide.
+
+<br/>
+
+>> Then we try to figure out how the system responds to those stimuli.
+
+<br/>
+
+> user stories that our customer has chosen for the next iteration:
+
+<br/>
+
+1. Add a new employee
+2. Delete an employee
+3. Post a time card
+4. Post a sales receipt
+5. Post a union service charge
+6. Change employee details (e.g., hourly rate, dues rate.)
+7. Run the payroll for today
+
+
+Note:
+
+Developers tend to underestimate large stories and overestimate small ones:
+
+For example, consider the story, 'Users can securely transfer money into, out of, and between their accounts.' This is a big story. Estimating will be hard and probably inaccurate. However, we can split it as follow, into many stories that are much easier to estimate:
+
+- Users can log in.
+- Users can log out.
+- Users can deposit money into their account.
+- Users can withdraw money from their account.
+- Users can transfer money from their account to another account.
+
+Relative estimates don’t tell us the absolute size of the stories. In order to know the true size of a story, we need a factor that we call **velocity**.
+
+If we have an accurate velocity, we can multiply the estimate of any story by the velocity to get the actual time estimate for that story.
+
+For example, if our velocity is `2 days per story point`, and we have a story with a relative estimate of `four points`, then the story should take `eight days` to implement.
+
+Let’s convert each of these user stories into an elaborated use case.
+
+#### Adding Employees
+
+

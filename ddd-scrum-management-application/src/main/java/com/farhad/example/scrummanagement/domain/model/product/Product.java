@@ -1,6 +1,14 @@
-package com.farhad.example.scrummanagement.domain.model;
+package com.farhad.example.scrummanagement.domain.model.product;
 
 import java.time.LocalDate;
+
+import com.farhad.example.scrummanagement.domain.model.StoryPoints;
+import com.farhad.example.scrummanagement.domain.model.backlog.BacklogItem;
+import com.farhad.example.scrummanagement.domain.model.backlog.BacklogItemType;
+import com.farhad.example.scrummanagement.domain.model.base.ConcurrencySafeEntity;
+import com.farhad.example.scrummanagement.domain.model.release.Release;
+import com.farhad.example.scrummanagement.domain.model.sprint.Sprint;
+import com.farhad.example.scrummanagement.domain.model.tenant.TenantId;
 
 import lombok.Data;
 

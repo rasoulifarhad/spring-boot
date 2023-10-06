@@ -2,14 +2,14 @@ package com.farhad.example.scrummanagement.domain.service;
 
 import javax.transaction.Transactional;
 
-import com.farhad.example.scrummanagement.domain.model.BacklogItem;
-import com.farhad.example.scrummanagement.domain.model.BacklogItemRepository;
-import com.farhad.example.scrummanagement.domain.model.BacklogItemType;
-import com.farhad.example.scrummanagement.domain.model.Product;
-import com.farhad.example.scrummanagement.domain.model.ProductId;
-import com.farhad.example.scrummanagement.domain.model.ProductRepository;
 import com.farhad.example.scrummanagement.domain.model.StoryPoints;
-import com.farhad.example.scrummanagement.domain.model.TenantId;
+import com.farhad.example.scrummanagement.domain.model.backlog.BacklogItem;
+import com.farhad.example.scrummanagement.domain.model.backlog.BacklogItemRepository;
+import com.farhad.example.scrummanagement.domain.model.backlog.BacklogItemType;
+import com.farhad.example.scrummanagement.domain.model.product.Product;
+import com.farhad.example.scrummanagement.domain.model.product.ProductId;
+import com.farhad.example.scrummanagement.domain.model.product.ProductRepository;
+import com.farhad.example.scrummanagement.domain.model.tenant.TenantId;
 
 import lombok.RequiredArgsConstructor;
 

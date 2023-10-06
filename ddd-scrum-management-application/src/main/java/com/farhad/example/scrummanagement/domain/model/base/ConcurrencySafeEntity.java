@@ -1,4 +1,4 @@
-package com.farhad.example.scrummanagement.domain.model;
+package com.farhad.example.scrummanagement.domain.model.base;
 
 import javax.persistence.MappedSuperclass;
 

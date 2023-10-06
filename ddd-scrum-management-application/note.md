@@ -263,3 +263,36 @@ But that is overly limiting since domain models always require some associative 
 ![](image_05.png)
 
 
+**Rule: Reference Other Aggregates By Identity**
+
+Reference by identity doesn't completely prevent navigation through the model. Some will use a **repository** from inside an **aggregate** for look up. This technique is called **disconnected domain model**, and it's actually a form of lazy loading.
+
+There's a different recommended approach, however: Use a **repository** or **domain service** to look up dependent objects ahead of invoking the **aggregate** behavior. A client **application service** may control this, then dispatch to the **aggregate**:
+
+```java
+public class ProductBacklogItemService ... {
+...
+    @Transactional
+    public void assignTeamMemberToTask(
+        String aTenantId,
+        String aBacklogItemId,
+        String aTaskId,
+        String aTeamMemberId) {
+        BacklogItem backlogItem =
+            backlogItemRepository.backlogItemOfId(
+                new TenantId(aTenantId),
+                new BacklogItemId(aBacklogItemId));
+        Team ofTeam =
+            teamRepository.teamOfId(
+                backlogItem.tenantId(),
+                backlogItem.teamId());
+
+        backlogItem.assignTeamMemberToTask(
+                new TeamMemberId(aTeamMemberId),
+                ofTeam,
+                new TaskId(aTaskId));
+    }
+    ...
+}
+```
+

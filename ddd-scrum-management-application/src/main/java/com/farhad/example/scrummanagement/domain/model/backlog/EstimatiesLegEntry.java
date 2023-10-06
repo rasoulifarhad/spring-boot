@@ -1,4 +1,4 @@
-package com.farhad.example.scrummanagement.domain.model;
+package com.farhad.example.scrummanagement.domain.model.backlog;
 
 public class EstimatiesLegEntry {
 

@@ -1,6 +1,8 @@
-package com.farhad.example.scrummanagement.domain.model;
+package com.farhad.example.scrummanagement.domain.model.backlog.task;
 
 import java.util.List;
+
+import com.farhad.example.scrummanagement.domain.model.backlog.EstimatiesLegEntry;
 
 public class Task {
 

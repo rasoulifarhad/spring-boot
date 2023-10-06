@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class CommisionedClassification implements PaymentClassification {
     
-    private double monthlySalary;
+    private double salary;
     private double commissionRate;
     private List<SalesReceipt> salesReceipts = new ArrayList<>();
 

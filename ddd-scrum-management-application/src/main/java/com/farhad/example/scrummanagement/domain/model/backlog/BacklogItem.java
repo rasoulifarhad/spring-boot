@@ -23,6 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BacklogItem extends ConcurrencySafeEntity{
+    
     private BacklogItemId backlogItemId;
     private TenantId tenantId;
     private TeamId teamId;

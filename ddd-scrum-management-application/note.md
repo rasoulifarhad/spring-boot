@@ -369,4 +369,31 @@ public class BacklogItem extends ConcurrencySafeEntity {
 }
 ```
 
+These subscribers each then retrieve a different yet corresponding **aggregate** instance and execute their behavior based on it. Each of the subscribers executes in a separate transaction, obeying the rule of **aggregate** to modify just one instance per transaction.
+
+What happens if the subscriber experiences concurrency contention with another client, causing its modification to fail?
+
+- The modification can be retried if the subscriber does not acknowledge success to the messaging mechanism.
+  - The message will be redelivered, 
+  - a new transaction started, 
+  - a new attempt made to execute the necessary command, and 
+  - a corresponding commit.
+  - This retry process can continue until consistency is achieved, 
+  - or until a retry limit is reached.
+  - If complete failure occurs it may be necessary to compensate, 
+  - or at a minimum to report the failure for pending intervention.
+
+
+What is accomplished by publishing the `BacklogItemCommitted` **event** in this specific example? **Recalling that `BacklogItem` already holds the identity of the `Sprint` it is committed to, we are in no way interested in maintaining a meaningless bidirectional association. Rather, the **event** allows for the eventual creation of a `CommittedBacklogItem` so the `Sprint` can make a record of work commitment. Since each `CommittedBacklogItem` has an `ordering` attribute, it allows the `Sprint` to give each `BacklogItem` an ordering different than `Product` and `Release` have, and that is not tied to the `BacklogItem` instance's own recorded estimation of `BusinessPriority`. Thus, `Product` and `Release` each hold similar associations, namely `ProductBacklogItem` and `ScheduledBacklogItem`, respectively.**
+
+Eric Evans revealed a very simple and sound guideline. When examining the use case (or story), ask whether **it's the job of the user executing the use case to make the data consistent**. If it is, try to make it transactionally consistent, but only by adhering to the other rules of aggregate. **If it is another user's job, or the job of the system**, allow it to be eventually consistent. That bit of wisdom not only provides a convenient tie breaker, it helps us gain a deeper understanding of our domain. I**t exposes the real system invariants: the ones that must be kept transactionally consistent**. That understanding is much more valuable than defaulting to a technical leaning.
+
+### Reasons To Break the Rules
+
+- Reason One: User Interface Convenience
+- Reason Two: Lack of Technical Mechanisms
+- Reason Three: Global Transactions
+- Reason Four: Query Performance
+
+
 

@@ -242,3 +242,24 @@ it occurs within just one. If it is the latter, it pays to be
 skeptical. No matter how well it is written, such a use case
 may not accurately reflect the true aggregates of our
 model.
+
+### Making Aggregates Work Together
+
+![](image_04)
+
+this has a few implications:
+
+1. Both the referencing **aggregate** (`BacklogItem`) and the referenced **aggregate** (`Product`) must not be modified in the same transaction. Only one or the other may be modified in a single transaction.
+
+2. If you are modifying multiple instances in a single transaction, it may be a strong indication that your consistency boundaries are wrong. If so, it is possibly a missed modeling opportunity; a concept of your **ubiquitous languag**e has not yet been discovered although it is waving its hands and shouting at you.
+
+3. If you are attempting to apply point #2, and doing so influences a large cluster **aggregate** with all the previously stated caveats, it may be an indication that you need to use eventual consistency instead of atomic consistency.
+
+
+If you don't hold any reference, you can't modify another **aggregate**. So the temptation to modify multiple **aggregates** in the same transaction could be squelched by avoiding the situation in the first place.
+
+But that is overly limiting since domain models always require some associative connections. What might we do to facilitate necessary associations, protect from transaction misuse or inordinate failure, and allow the model to perform and scale?
+
+![](image_05.png)
+
+

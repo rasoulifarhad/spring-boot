@@ -296,3 +296,77 @@ public class ProductBacklogItemService ... {
 }
 ```
 
+Having an **application service** resolve dependencies frees the **aggregate** from relying on either a **repository** or a **domain service**. Again, referencing multiple **aggregates** in one request does not give license to cause modification on two or more of them.
+
+Limiting a model to using reference only by identity could make it more difficult to serve clients that assemble and render **user interface** views. You may have to use multiple **repositories** in a single use case to populate views. If query overhead causes performance issues, it may be worth considering the use of **CQRS** [Dahan, Fowler, Young]. Or you may need to strike a balance between inferred and direct object reference.
+
+#### Scalability and Distribution
+
+Since aggregates don't use direct references to other ag-
+gregates, but reference by identity, their persistent state can
+be moved around to reach large scale. Almost-infinite
+scalability is achieved by allowing for continuous reparti-
+tioning of aggregate data storage, as explained by
+Amazon.com's Pat [Helland] in his position paper, Life
+Beyond Distributed Transactions: an Apostate's Opinion.
+What we call aggregate he calls entity. But what he de-
+scribes is still aggregate by any other name; a unit of com-
+position that has transactional consistency. Some NoSql
+persistence mechanisms support the Amazon-inspired dis-
+tributed storage. These provide much of what [Helland]
+refers to as the lower, scale-aware layer. When employing a
+distributed store, or even when using a SQL database with
+similar motivations, reference by identity plays an import-
+ant role.
+
+Distribution extends beyond storage. Since there are always
+multiple bounded contexts at play in a given core domain
+initiative, reference by identity allows distributed domain
+models to have associations from afar. When an event-driv-
+en approach is in use, message-based domain events con-
+taining aggregate identities are sent around the enterprise.
+Message subscribers in foreign bounded contexts use the
+identities to carry out operations in their own domain mod-
+els. Reference by identity forms remote associations or
+partners. Distributed operations are managed by what
+[Helland] calls two-party activities; but in publish-
+subscribe [POSA1, GoF] terms it's multi-party (two or
+more). Transactions across distributed systems are not
+atomic. The various systems bring multiple aggregates into
+a consistent state eventually.
+
+
+**Rule: Use Eventual Consistency Outside the Boundary**
+
+There is a frequently overlooked statement found in the
+[DDD] **aggregate** pattern definition. It bears heavily on
+what we must do to achieve model consistency when mul-
+tiple **aggregates** must be affected by a single client request.
+
+Thus, if executing a command on one **aggregate** instance
+requires that additional business rules execute on one or
+more other **aggregates**, use eventual consistency. Accept-
+ing that all **aggregate** instances in a large-scale, high-traffic
+enterprise are never completely consistent helps us accept
+that eventual consistency also makes sense in the smaller
+scale where just a few instances are involved.
+
+There is a practical way to support eventual consistency in a DDD model. An **aggregate** command method publishes a **domain event** that is in time delivered to one or more asynchronous subscribers:
+
+```java
+public class BacklogItem extends ConcurrencySafeEntity {
+...
+    public void commitTo(Sprint aSprint) {
+    ...
+    DomainEventPublisher
+        .instance()
+            .publish(new BacklogItemCommitted(
+                this.tenantId(),
+                this.backlogItemId(),
+                this.sprintId()));
+    }
+    ...
+}
+```
+
+

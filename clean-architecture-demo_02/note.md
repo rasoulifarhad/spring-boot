@@ -32,3 +32,4 @@ See https://github.com/mploed/reactive-matchday
 See https://www.linkedin.com/pulse/server-sent-events-sse-spring-boot-aliaksandr-liakh?trk=portfolio_article-card_title
 
 See https://github.com/jbogard/presentations/blob/master/DomainDrivenRefactoring/DomainDrivenRefactoring.pptx
+https://java-design-patterns.com/patterns/serialized-entity/#explanation

@@ -33,3 +33,13 @@ See https://www.linkedin.com/pulse/server-sent-events-sse-spring-boot-aliaksandr
 
 See https://github.com/jbogard/presentations/blob/master/DomainDrivenRefactoring/DomainDrivenRefactoring.pptx
 https://java-design-patterns.com/patterns/serialized-entity/#explanation
+
+Event Sourcing & CQRS Using Kafka:
+
+See https://github.com/MetaArivu/ms-cart-service#event-sourcing--cqrs-using-kafka
+See https://github.com/MetaArivu/ms-order-service
+See https://github.com/MetaArivu/ms-payment-service
+See https://github.com/MetaArivu/ms-product-review-service
+See https://github.com/MetaArivu/ms-product-service
+See https://github.com/MetaArivu/ms-user-service
+

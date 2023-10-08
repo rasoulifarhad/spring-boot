@@ -9,3 +9,5 @@ See https://github.com/danielwisky/clean-arch/tree/main
 See https://huongdanjava.com/introduction-about-clean-architecture-part-2.html
 
 See https://reflectoring.io/java-components-clean-boundaries/
+
+See https://spring.io/blog/2018/04/11/event-storming-and-spring-with-a-splash-of-ddd

@@ -396,4 +396,36 @@ Eric Evans revealed a very simple and sound guideline. When examining the use ca
 - Reason Four: Query Performance
 
 
+### Rethinking the Design, Again
+
+
+![](image_06)
+
+Is there a true invariant between `BacklogItem` and `Task` that this relationship must maintain? 
+
+Or is this yet another case where the association can be further broken apart, with two separate **aggregates** being safely formed? 
+
+What is the total cost of keeping the design as it is?
+
+A key to making a proper determination lies in the **ubiquitous language**. Here is where an invariant is stated:
+
+- When progress is made on a backlog item task, the team member will estimate task hours remaining.
+- When a team member estimates that zero hours are remaining on a specific task, the backlog item checks all tasks for any remaining hours. If no hours remain on any tasks, the backlog item status is automatically changed to done.
+- When a team member estimates that one or more hours are remaining on a specific task and the backlog item's status is already done, the status is automatically regressed.
+
+
+This sure seems like a true invariant. The backlog item's
+correct status is automatically adjusted and completely de-
+pendent on the total number of hours remaining on all its
+tasks. If the total number of task hours and the backlog item
+status are to remain consistent, it seems as if Figure 7 does
+stipulate the correct aggregate consistency boundary.
+However, the team should still determine what the current
+cluster could cost in terms of performance and scalability.
+That would be weighed against what they might save if the
+backlog item status could be eventually consistent with the
+total task hours remaining.
+
+Let's analyze a transactional consistency approach, then investigate what could be accomplished using eventual consistency. We can then each draw our own conclusion as to which approach is preferred.
+
 

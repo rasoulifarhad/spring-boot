@@ -35,6 +35,7 @@ public class BacklogItem extends ConcurrencySafeEntity{
     private String status;
     private String story;
     private StoryPoints storyPoints;
+    private String type;
 
     public void assignTeamMemberToTask(TeamMemberId teamMemberId, 
                                         Team ofTeam, 

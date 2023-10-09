@@ -429,3 +429,243 @@ total task hours remaining.
 Let's analyze a transactional consistency approach, then investigate what could be accomplished using eventual consistency. We can then each draw our own conclusion as to which approach is preferred.
 
 
+#### Estimating Aggregate Cost
+
+each `Task` holds a collection of a series of `EstimationLogEntry` instances. These logs model the specific occasions when a team member enters a
+new estimation of hours remaining.
+
+In practical terms, how many `Task` elements will each `BacklogItem` hold, and how many `EstimationLogEntry` elements will a given `Task` hold?
+
+It's hard to say exactly. It's largely a measure of how complex any one task is and how long a sprint lasts. But some back-of-the-envelope calculations (BOTE) might help [Pearls].
+
+Task hours are usually re-estimated each day after a team member works on a given task. Let's say that most sprints are either two or three weeks in length. There will be longer sprints, but a two-to-three-week timespan is common enough. So let's select a number of days somewhere in between 10 days and 15 days. Without being too precise, 12 days works well since there may actually be more two week than three-week sprints.
+
+Next consider the number of hours assigned to each task.
+Remembering that since tasks must be broken down into
+manageable units, we generally use a number of hours
+between 4 and 16. Normally if a task exceeds a 12-hour
+estimate, Scrum experts suggest breaking it down further.
+But using 12 hours as a first test makes it easier to simulate
+work evenly. We can say that tasks are worked on for one
+hour each of the 12 days of the sprint. Doing so favors
+more complex tasks. So we'll figure 12 re-estimations per
+task, assuming that each task starts out with 12 hours
+allocated to it.
+
+The question remains: How many tasks would be required
+per backlog item? That too is a difficult question to answer.
+What if we thought in terms of there being two or three
+tasks required per layer or hexagonal port-adapter
+[Cockburn] for a given feature slice? For example, we
+might count three for user interface layer, two for the ap-
+plication layer, three for the domain layer, and three for
+the infrastructure layer. That would bring us to 11 total
+tasks. It might be just right or a bit slim, but we've already
+erred on the side of numerous task estimations. Let's bump
+it up to 12 tasks per backlog item to be more liberal. With
+that we are allowing for 12 tasks, each with 12 estimation
+logs, or 144 total collected objects per backlog item. While
+this may be more than the norm, it gives us a chunky BOTE
+calculation to work with.
+
+There is another variable to be considered. If Scrum expert
+advice to define smaller tasks is commonly followed, it
+would change things somewhat. Doubling the number of
+tasks (24) and halving the number of estimation log entries
+(6) would still produce 144 total objects. However, it would
+cause more tasks to be loaded (24 rather than 12) during all
+estimation requests, consuming more memory on each. The
+team will try various combinations to see if there was any
+significant impact on their performance tests. But to start
+they will use 12 tasks of 12 hours each.
+
+#### Common Usage Scenarios
+
+Now it's important to consider common usage scenarios. How often will one user request need to load all 144 objects into memory at once? Would that ever happen? It seems not, but they need to check. If not, what's the likely high end count of objects? Also, will there typically be multi-client usage that causes concurrency contention on backlog items? Let's see.
+
+The following scenarios are based on the use of Hibernate
+for persistence. Also, each entity type has its own optimist-
+ic concurrency version attribute. This is workable because
+the changing status invariant is managed on the Backlog-
+Item root entity. When the status is automatically altered
+(to done or back to committed) the root's version is
+bumped. Thus, changes to tasks can happen independently
+of each other and without impacting the root each time one
+is modified, unless it results in a status change.
+
+When a backlog item is first created, there are zero con-
+tained tasks. Normally it is not until sprint planning that
+tasks are defined. During that meeting tasks are identified
+by the team. As each one is called out, a team member adds
+it to the corresponding backlog item. There is no need for
+two team members to contend with each other for the ag-
+gregate, as if racing to see who can enter new tasks the
+quickest. That would cause collision and one of the two re-
+quests would fail (for the same reason adding various parts
+to Product simultaneously previously failed). However,
+the two team members would probably soon figure out how
+counterproductive their redundant work is.
+
+If the developers learned that multiple users do indeed
+regularly want to add tasks together, it would change the
+analysis significantly. That understanding could immedi-
+ately tip the scales in favor of breaking BacklogItem
+and Task into two separate aggregates. On the other hand,
+this could also be a perfect time to tune the Hibernate map-
+ping by setting optimistic-lock option to false.
+Allowing tasks to grow simultaneously could make sense in
+this case, especially if they don't pose performance and
+scalability issues.
+
+#### Memory Consumption
+
+Now to address the memory consumption. Important here is
+that estimations are logged by date as value objects. If a
+team member re-estimates any number of times on a single
+day, only the most recent estimation is retained. The latest
+value of the same date replaces the previous one in the col-
+lection. At this point there's no requirement to track task es-
+timation mistakes. There is the assumption that a task will
+never have more estimation log entries than the number of
+days the sprint is in progress. That assumption changes if
+tasks were defined one or more days before the sprint plan-
+ning meeting, and hours were re-estimated on any of those
+earlier days. There would be one extra log for each day that
+occurred.
+
+#### Exploring Another Alternative Design
+
+To be thorough, the team wants to think through what they
+would have to do to make Task an independent aggregate,
+and if that would actually work to their benefit. What they
+envision is seen in Figure 7. Doing this would reduce part
+composition overhead by 12 objects and reduce lazy load
+overhead. In fact, this design gives them the option to
+eagerly load estimation log entries in all cases if that would
+perform best.
+
+
+
+![](image_07.png)
+
+
+
+The developers agree not to modify separate aggregates,
+both the Task and the BacklogItem, in the same trans-
+action. They must determine if they can perform a neces-
+sary automatic status change within an acceptable time
+frame. They'd be weakening the invariant's consistency
+since the status can't be consistent by transaction. Would
+that be acceptable? They discuss the matter with the do-
+main experts and learn that some delay between the final
+zero-hour estimate and the status being set to done, and visa
+versa, would be acceptable.
+
+#### Implementing Eventual Consistency
+
+Here is how it could work. When a Task processes an
+estimateHoursRemaining() command it publishes
+a corresponding domain event. It does that already, but the
+team would now leverage the event to achieve eventual
+consistency. The event is modeled with the following
+properties:
+
+```java
+
+public class TaskHoursRemainingEstimated implements DomainEvent {
+    private Date occurredOn;
+    private TenantId tenantId;
+    private BacklogItemId backlogItemId;
+    private TaskId taskId;
+    private int hoursRemaining;
+    ...
+}
+```
+
+A specialized subscriber would now listen for these and
+delegate to a domain service to coordinate the consistency
+processing. The service would:
+
+- Use the BacklogItemRepository to retrieve the identified BacklogItem.
+- Use the TaskRepository to retrieve all Task instances associated with the identified BacklogItem.
+- Execute the BacklogItem command named s   estimateTaskHoursRemaining() passing the domain event's hoursRemaining and the retrieved Task instances. The BacklogItem may transition its status depending on parameters.
+
+The team should find a way to optimize this. The three-step
+design requires all Task instances to be loaded every time
+a re-estimation occurs. When using our BOTE and advan-
+cing continuously toward done, 143 out of 144 times that's
+unnecessary. This could be optimized this pretty easily. In-
+stead of using the repository to get all Task instances,
+they could simply ask it for the sum of all Task hours as
+calculated by the database:
+
+```java
+public class TaskRepositoryImpl implements TaskRepository {
+    ...
+    public int totalBacklogItemTaskHoursRemaining(
+        TenantId aTenantId,
+        BacklogItemId aBacklogItemId) {
+        Query query = session.createQuery(
+                "select sum(task.hoursRemaining) from Task task "
+            +   "where task.tenantId = ? and "
+            +   "task.backlogItemId = ?");
+            ...
+    }
+}
+```
+
+Eventual consistency complicates the user interface a bit.
+Unless the status transition can be achieved within a few
+hundred milliseconds, how would the user interface display
+the new state? Should they place business logic in the view
+to determine the current status? That would constitute a
+smart UI anti-pattern. Perhaps the view would just display 
+the stale status and allow users to deal with the visual in-
+consistency. That could easily be perceived as a bug, or at
+least be pretty annoying.
+
+
+Next, one of the developers made a very practical sugges-
+tion as an alternative to this whole analysis. If they are
+chiefly concerned with the possible overhead of the story
+attribute, why not do something about that specifically?
+They could reduce the total storage capacity for the story
+and in addition create a new useCaseDefinition
+property too. They could design it to lazy load, since much
+of the time it would never be used. Or they could even
+design it as a separate aggregate, only loading it when
+needed. With that idea they realized this could be a good
+time to break the rule to reference external aggregates only
+by identity. It seems like a suitable modeling choice to use
+a direct object reference, and declare its object-relational
+mapping so as to lazily load it. Perhaps that makes sense.
+
+
+#### Time for DecisionsAcknowledgments
+
+Based on all this analysis, currently the team is shying
+away from splitting Task from BacklogItem. They
+can't be certain that splitting it now is worth the extra effort,
+the risk of leaving the true invariant unprotected, or allow-
+ing users to experience a possible stale status in the view.
+The current aggregate, as they understand it, is fairly small
+as is. Even if their common worse case loaded 50 objects
+rather than 25, it's still a reasonably sized cluster. For now
+they will plan around the specialized use case definition
+holder. Doing that is a quick win with lots of benefits. It
+adds little risk, because it will work now, and in the future
+if they decide to split Task from BacklogItem.Eric Evans and Paul Rayner did several detailed reviews of
+this essay. I also received feedback from Udi Dahan, Greg
+Young, Jimmy Nilsson, Niclas Hedhman, and Rickard
+Öberg.
+The option to split it in two remains in their hip pocket just
+in case. After further experimentation with the current
+design, running it through performance and load tests, as
+well investigating user acceptance with an eventually con-
+sistent status, it will become more clear which approach is
+best. The BOTE numbers could prove to be wrong if in
+production the aggregate is larger than imagined. If so, the
+team will no doubt split it into two.
+If you were a member of the ProjectOvation team, which
+modeling option would you have chosen?
+

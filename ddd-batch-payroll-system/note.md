@@ -226,4 +226,72 @@ Let’s convert each of these user stories into an elaborated use case.
 
 #### Adding Employees
 
+### Finding the Underlying Abstractions
 
+What are the underlying abstractions of the Payroll application? Let’s look again at the requirements. We see statements such as
+
+- Some employees work by the hour,
+- Some employees are paid a flat salary, and 
+- Some [...] employees are paid a commission. 
+  
+  This hints at the following generalization: **All employees are paid, but they are paid by different schemes**.
+
+> The abstraction here is that **All employees are paid.**  
+
+<br/>
+
+#### The Schedule Abstraction
+
+Looking for other abstractions, we find 
+
+- They are paid every Friday,
+- They are paid on the last working day of the month, and 
+- They are paid every other Friday.
+
+This leads us to another generality: **All employees are paid according to some schedule.**
+
+The abstraction here is the notion of the `schedule`. It should be possible to ask an `Employee` object whether a certain date is its payday.
+
+The requirements associate an employee’s schedule with his payment classification 
+
+- hourly employees are paid weekly, 
+- salaried employees are paid monthly, and 
+- employees receiving commissions are paid biweekly; 
+  
+however, is this association essential?
+
+Might not the policy change one day so that employees could select a particular schedule or so that employees belonging to different departments or different divisions could have different schedules?
+
+Might not the schedule policy change independently of the payment policy?
+
+If we delegated the issue of schedule to the ‍‍‍`PaymentClassification` class, then our class could not be closed against issues of change in schedule. When we **changed payment policy**, we would also have to **test schedule**. When we **changed schedules**, we would also have to **test payment policy**. **Both the OCP and the SRP would be violated.**
+
+The `Employee` class contains the abstract `PaymentSchedule` class. There are three varieties of `PaymentSchedule` that correspond to the three known schedules by which employees are paid.
+
+#### Payment Methods
+
+Another generalization that we can make from the requirements is 
+
+- All employees receive their pay by some method. 
+
+The abstraction is the `PaymentMethod` class. 
+
+#### Affiliations
+
+The requirements imply that employees may have affiliations with a union; however, the union may not be the only organization that has a claim to some of an employee’s pay. Employees might want to make automatic contributions to certain charities or have their dues to professional associations paid automatically.
+
+The generalization therefore becomes 
+
+- **The employee may be affiliated with many organizations that should be automatically paid from the employee’s paycheck.**
+
+The corresponding abstraction is the `Affiliation` class.that is shown in below Figure. That figure, however, does not show the `Employee` containing more than one `Affiliation` , and it shows the presence of a `NoAffiliation` class. This design does not quite fit the abstraction we now think we need. 
+
+![](payroll_core_model.png)
+
+
+
+below Figure show the static and dynamic models that represent the `Affiliation` abstraction.
+
+![](Employee_Pay_05.png)
+
+The list of `Affiliation` objects has obviated the need to use the **NULL OBJECT pattern** for unaffiliated employees. Now, if the employee has no affiliation, his or her list of affiliations will simply be empty.

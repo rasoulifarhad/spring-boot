@@ -268,5 +268,30 @@ If we delegated the issue of schedule to the ‍‍‍`PaymentClassification` cl
 
 The `Employee` class contains the abstract `PaymentSchedule` class. There are three varieties of `PaymentSchedule` that correspond to the three known schedules by which employees are paid.
 
+#### Payment Methods
+
+Another generalization that we can make from the requirements is 
+
+- All employees receive their pay by some method. 
+
+The abstraction is the `PaymentMethod` class. 
+
+#### Affiliations
+
+The requirements imply that employees may have affiliations with a union; however, the union may not be the only organization that has a claim to some of an employee’s pay. Employees might want to make automatic contributions to certain charities or have their dues to professional associations paid automatically.
+
+The generalization therefore becomes 
+
+- **The employee may be affiliated with many organizations that should be automatically paid from the employee’s paycheck.**
+
+The corresponding abstraction is the `Affiliation` class.that is shown in below Figure. That figure, however, does not show the `Employee` containing more than one `Affiliation` , and it shows the presence of a `NoAffiliation` class. This design does not quite fit the abstraction we now think we need. 
+
+![](payroll_core_model.png)
 
 
+
+below Figure show the static and dynamic models that represent the `Affiliation` abstraction.
+
+![](Employee_Pay_05.png)
+
+The list of `Affiliation` objects has obviated the need to use the **NULL OBJECT pattern** for unaffiliated employees. Now, if the employee has no affiliation, his or her list of affiliations will simply be empty.

@@ -1,8 +1,9 @@
 package com.farhad.example.newsfeed.domain;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import lombok.Data;
@@ -14,7 +15,7 @@ public class Item {
     private List<Tag> description;
     private String link;
     private String picture;
-    private Date pubDate;
+    private Instant pubDate;
     private String pubDateAsString;
 
     private String approxTraffic;
@@ -23,16 +24,18 @@ public class Item {
     private List<NewsItem> items;
     private Country country;
 
-    public Date convertStringToDate(String pubDateAsString) throws ParseException {
-        SimpleDateFormat parder = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z"); // Wed, 21 Dec 2023 13:00:00 +0200
-        return parder.parse(pubDateAsString);
+    public Instant convertStringToDate(String pubDateAsString) throws ParseException {
+        DateTimeFormatter formatter = 
+            DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss Z"); 
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(pubDateAsString, formatter);
+        return zonedDateTime.toInstant();
     }
 
-    public Long convertStringToLong(String approxTrafficAsNumber) throws ParseException {
+    public Long convertStringToLong(String approxTrafficAsNumber) {
         return new Long(
             approxTrafficAsNumber
                 .replaceAll(",", "")
-                .replaceAll("+", ""));
+                .replace("+", ""));
     }
 
 }

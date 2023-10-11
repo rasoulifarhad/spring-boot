@@ -2,11 +2,14 @@ package com.farhad.example.newsfeed.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.text.ParseException;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ItemTest {
 
@@ -48,12 +51,32 @@ public class ItemTest {
 
     @Test
     public void convertStringToLongTest() {
-
+        String approxTraffic = "900,000+";
+        item.setApproxTraffic(approxTraffic);
+        item.setApproxTrafficAsNumber(item.convertStringToLong(approxTraffic));
+        assertEquals(900000, item.getApproxTrafficAsNumber().longValue());
     }
 
     @Test
     public void convertStringToDateTest() {
-        
+        String pubDateAsString = "Mon, 1 Jun 2020 20:40:00 +0330";
+        item.setPubDateAsString(pubDateAsString);
+        try {
+            item.setPubDate(item.convertStringToDate(pubDateAsString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ZonedDateTime zonedDateTime = 
+            ZonedDateTime.of(
+                    2020, 
+                    6, 
+                    1, 
+                    20, 
+                    40, 
+                    0, 
+                    0, 
+                    ZoneOffset.ofHoursMinutes(3, 30));
+        assertEquals(item.getPubDate(), zonedDateTime.toInstant());
     }
 
 }

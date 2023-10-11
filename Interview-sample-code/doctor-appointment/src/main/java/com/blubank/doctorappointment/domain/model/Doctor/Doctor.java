@@ -10,6 +10,7 @@ import com.blubank.doctorappointment.domain.shared.ddd.BaseAggregateRoot;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.Value;
@@ -26,6 +27,9 @@ public class Doctor extends BaseAggregateRoot<DoctorId>{
 	public static class DoctorId implements Identifier {
 
 		private final UUID uuid;
+		public DoctorId(@NonNull String uuidString) {
+			this(UUID.fromString(uuidString));
+		}
 
 		public static DoctorId newId() {
 			return new DoctorId(UUID.randomUUID());

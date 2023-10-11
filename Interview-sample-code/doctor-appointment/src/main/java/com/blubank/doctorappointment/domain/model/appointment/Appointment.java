@@ -9,6 +9,7 @@ import com.blubank.doctorappointment.domain.shared.ddd.BaseAggregateRoot;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.Value;
@@ -18,10 +19,23 @@ import lombok.Value;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Appointment extends BaseAggregateRoot<AppointmentId> {
 
-	@RequiredArgsConstructor
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Value
 	public static class AppointmentId implements Identifier {
 
 		private final UUID uuid;
+
+		
+		public AppointmentId(@NonNull String uuidString) {
+			this(UUID.fromString(uuidString));
+		}
+
+		public static AppointmentId newId() {
+			return new AppointmentId(UUID.randomUUID());
+		}
+
+		public static AppointmentId from(String uuid) {
+			return new AppointmentId(UUID.fromString(uuid));
+		}
 	}
 }

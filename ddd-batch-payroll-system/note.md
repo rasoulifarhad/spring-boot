@@ -295,3 +295,9 @@ below Figure show the static and dynamic models that represent the `Affiliation`
 ![](Employee_Pay_05.png)
 
 The list of `Affiliation` objects has obviated the need to use the **NULL OBJECT pattern** for unaffiliated employees. Now, if the employee has no affiliation, his or her list of affiliations will simply be empty.
+
+
+#### Adding Employees
+
+
+![](Employee_Pay_06.png)

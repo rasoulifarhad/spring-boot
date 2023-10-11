@@ -1,16 +1,12 @@
 package com.farhad.example.batchpayroll.domain.model.employee;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import com.farhad.example.batchpayroll.domain.model.Pay;
-
+@Getter
+@AllArgsConstructor
 public class SalariedClassification implements PaymentClassification {
     
     private double salary;
 
-    @Override
-    public Pay calculatePay(Date date) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculatePay'");
-    }
 }

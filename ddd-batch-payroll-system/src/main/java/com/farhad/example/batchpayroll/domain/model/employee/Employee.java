@@ -3,7 +3,6 @@ package com.farhad.example.batchpayroll.domain.model.employee;
 import java.util.Date;
 import java.util.List;
 
-import com.farhad.example.batchpayroll.domain.model.Pay;
 import com.farhad.example.batchpayroll.domain.model.affiliation.Affiliation;
 import com.farhad.example.batchpayroll.domain.model.payment.PaymentMethod;
 
@@ -21,11 +20,11 @@ public class Employee {
     private List<Affiliation> itsAffiliations;
     private PaymentSchedule itsSchedule;
 
-    public Pay calculatePay(Date date) {
-        Pay pay =  paymentClassification.calculatePay(date);
+    public double calculatePay(Date date) {
+        double pay =  paymentClassification.getSalary();
         for (Affiliation affiliation : itsAffiliations) {
             Fee fee = affiliation.getFee(date);
-            pay = pay.apply(fee);
+            pay = fee.apply(pay);
         }
         return pay;
     }

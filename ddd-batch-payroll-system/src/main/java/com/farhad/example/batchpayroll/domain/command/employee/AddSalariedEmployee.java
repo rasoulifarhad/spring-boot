@@ -2,9 +2,11 @@ package com.farhad.example.batchpayroll.domain.command.employee;
 
 public class AddSalariedEmployee extends AddEmployeeTransaction {
 
-    
-    public AddSalariedEmployee(Integer employeeId, String name, String address) {
+    private double salary;
+
+    public AddSalariedEmployee(Integer employeeId, String name, String address, double salary) {
         super(employeeId, name, address);
+        this.salary = salary;
     }
 
     @Override

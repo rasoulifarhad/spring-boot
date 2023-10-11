@@ -2,8 +2,16 @@ package com.farhad.example.batchpayroll.domain.command.employee;
 
 public class AddHourlyEmployee extends AddEmployeeTransaction{
 
-    public AddHourlyEmployee(Integer employeeId, String name, String address) {
+    private double hourlyRate;
+
+
+    public AddHourlyEmployee(
+                    Integer employeeId, 
+                    String name, 
+                    String address, 
+                    double hourlyRate) {
         super(employeeId, name, address);
+        this.hourlyRate = hourlyRate;
     }
 
     @Override

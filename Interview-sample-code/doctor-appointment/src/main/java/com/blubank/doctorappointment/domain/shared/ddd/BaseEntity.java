@@ -7,7 +7,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.lang.Nullable;
 
 @MappedSuperclass

@@ -8,8 +8,8 @@ import com.blubank.doctorappointment.domain.shared.Name;
 import com.blubank.doctorappointment.domain.shared.ddd.BaseAggregateRoot;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,7 +17,8 @@ import lombok.Value;
 
 @Getter
 @Setter(value = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+// @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Doctor extends BaseAggregateRoot<DoctorId>{
 	
 	private Name name;

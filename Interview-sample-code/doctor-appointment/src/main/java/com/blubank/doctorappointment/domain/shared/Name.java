@@ -5,16 +5,15 @@ import javax.validation.constraints.NotBlank;
 
 import com.blubank.doctorappointment.domain.shared.ddd.ValueObject;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Embeddable
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Value
+@Builder
 public class Name implements ValueObject<Name> {
 
 	@NonNull

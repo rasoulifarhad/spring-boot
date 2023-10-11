@@ -1,24 +1,26 @@
-package com.blubank.doctorappointment.infrastructure.persistence.jpa;
+package com.blubank.doctorappointment.infrastructure.persistence.jpa.appointment;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "patients")
+@Table(name = "appointments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientJpaEntity {
+@Builder
+public class AppointmentJpaEntity {
 	
+
 	@Id
-	@GeneratedValue
+	@Column(name = "appointment_id")
 	private String id;
-	private String name;
-	private String phoneNumber;
+
 }

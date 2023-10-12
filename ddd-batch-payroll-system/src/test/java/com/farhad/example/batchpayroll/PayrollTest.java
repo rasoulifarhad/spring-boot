@@ -1,6 +1,8 @@
 package com.farhad.example.batchpayroll;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import com.farhad.example.batchpayroll.domain.command.employee.AddCommissionedEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddHourlyEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddSalariedEmployee;
+import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
 import com.farhad.example.batchpayroll.domain.model.employee.BiweeklySchedule;
 import com.farhad.example.batchpayroll.domain.model.employee.CommisionedClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.Employee;
@@ -21,14 +24,13 @@ import com.farhad.example.batchpayroll.domain.model.employee.WeeklySchedule;
 import com.farhad.example.batchpayroll.domain.model.payment.HoldMethod;
 import com.farhad.example.batchpayroll.domain.model.payment.PaymentMethod;
 import com.farhad.example.batchpayroll.infrastructure.persistence.PayrollDatabase;
-import com.farhad.example.batchpayroll.infrastructure.persistence.memory.InMemoryPayrollDatabase;
 
 public class PayrollTest {
     PayrollDatabase payrollDatabase ;
 
     @BeforeEach
     public void setup() {
-        payrollDatabase = new InMemoryPayrollDatabase();
+        payrollDatabase = PayrollDatabase.inmemory();
     }
 
     @Test
@@ -99,6 +101,26 @@ public class PayrollTest {
 
         PaymentMethod paymentMethod = employee.getPaymentMethod();
         assertTrue(paymentMethod instanceof HoldMethod);
+    }
+
+    @Test
+    public void deleteEmployeeTest() {
+        int empId = 3;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+            empId, 
+            "name #" + empId, 
+            "address #" + empId , 
+            2500, 
+            0.032);
+        t.execute();
+
+        assertNotNull(payrollDatabase.getEmployee(empId));
+        assertEquals(empId, payrollDatabase.getEmployee(empId).getEmployeeId());
+
+        DeleteEmployee dt = new DeleteEmployee(empId);
+        dt.execute();
+
+        assertNull(payrollDatabase.getEmployee(empId));
     }
 
 }

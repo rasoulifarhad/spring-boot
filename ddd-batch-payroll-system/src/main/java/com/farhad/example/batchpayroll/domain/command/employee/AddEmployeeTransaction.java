@@ -22,7 +22,7 @@ public abstract class AddEmployeeTransaction  implements Transaction {
         employee.setPaymentClassification(getClassification());
         employee.setItsSchedule(getSchedule());
         employee.setPaymentMethod(new HoldMethod());
-        PayrollDatabase.inmemory().addEmployee(0, employee);
+        PayrollDatabase.inmemory().addEmployee(employeeId, employee);
     }
 
     protected abstract PaymentSchedule getSchedule();

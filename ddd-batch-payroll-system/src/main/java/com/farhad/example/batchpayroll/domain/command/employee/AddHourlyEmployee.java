@@ -1,7 +1,9 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
+import com.farhad.example.batchpayroll.domain.model.employee.HourlyClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.PaymentClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.PaymentSchedule;
+import com.farhad.example.batchpayroll.domain.model.employee.WeeklySchedule;
 
 public class AddHourlyEmployee extends AddEmployeeTransaction{
 
@@ -18,21 +20,13 @@ public class AddHourlyEmployee extends AddEmployeeTransaction{
     }
 
     @Override
-    public void execute() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
-    }
-
-    @Override
     protected PaymentSchedule getSchedule() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSchedule'");
+        return new WeeklySchedule();
     }
 
     @Override
     protected PaymentClassification getClassification() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getClassification'");
+        return new HourlyClassification();
     }
     
 }

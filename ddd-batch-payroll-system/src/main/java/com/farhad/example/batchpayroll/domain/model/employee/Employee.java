@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class Employee {
     
-    private String employeeId;
+    private Integer employeeId;
     private String name;
     private String address;
 
@@ -19,6 +19,14 @@ public class Employee {
     private PaymentMethod paymentMethod;
     private List<Affiliation> itsAffiliations;
     private PaymentSchedule itsSchedule;
+
+    
+
+    public Employee(Integer employeeId, String name, String address) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.address = address;
+    }
 
     public double calculatePay(Date date) {
         double pay =  paymentClassification.getSalary();

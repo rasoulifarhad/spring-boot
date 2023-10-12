@@ -5,11 +5,13 @@ import com.farhad.example.batchpayroll.infrastructure.persistence.memory.InMemor
 
 public interface PayrollDatabase {
 
+    static final PayrollDatabase INMEMORY = new InMemoryPayrollDatabase();
+
     Employee getEmployee(int empId);
     void addEmployee(int id, Employee employee);
     void clear();
     
     public static PayrollDatabase inmemory() {
-        return new InMemoryPayrollDatabase();
+        return INMEMORY;
     }
 }

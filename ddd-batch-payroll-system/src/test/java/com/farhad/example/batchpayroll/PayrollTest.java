@@ -3,6 +3,7 @@ package com.farhad.example.batchpayroll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.farhad.example.batchpayroll.domain.command.employee.AddCommissionedEmployee;
@@ -20,15 +21,22 @@ import com.farhad.example.batchpayroll.domain.model.employee.WeeklySchedule;
 import com.farhad.example.batchpayroll.domain.model.payment.HoldMethod;
 import com.farhad.example.batchpayroll.domain.model.payment.PaymentMethod;
 import com.farhad.example.batchpayroll.infrastructure.persistence.PayrollDatabase;
+import com.farhad.example.batchpayroll.infrastructure.persistence.memory.InMemoryPayrollDatabase;
 
 public class PayrollTest {
-    
+    PayrollDatabase payrollDatabase ;
+
+    @BeforeEach
+    public void setup() {
+        payrollDatabase = new InMemoryPayrollDatabase();
+    }
+
     @Test
     public void AddSalariedEmployeeTest() {
         int empId = 1;
         AddSalariedEmployee t = new AddSalariedEmployee(empId, "name #1", "address #1", 1000.00);
         t.execute();
-        Employee employee =PayrollDatabase.inmemory().getEmployee(empId);
+        Employee employee = payrollDatabase.getEmployee(empId);
         assertEquals("name #1", employee.getName());
 
         PaymentClassification paymentClassification = employee.getPaymentClassification();
@@ -53,7 +61,7 @@ public class PayrollTest {
                             "address #1", 
                             hourlyRate);
         t.execute();
-        Employee employee =PayrollDatabase.inmemory().getEmployee(empId);
+        Employee employee = payrollDatabase.getEmployee(empId);
         assertEquals("name #1", employee.getName());
 
         PaymentClassification paymentClassification = employee.getPaymentClassification();
@@ -79,7 +87,7 @@ public class PayrollTest {
                             salary,
                             commissionRate);
         t.execute();
-        Employee employee =PayrollDatabase.inmemory().getEmployee(empId);
+        Employee employee = payrollDatabase.getEmployee(empId);
         assertEquals("name #1", employee.getName());
 
         PaymentClassification paymentClassification = employee.getPaymentClassification();

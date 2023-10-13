@@ -17,6 +17,14 @@ public class Order {
 	private Status status = Status.PAYMENT_EXPECTED;
 
 	public Order markPaid() {
+		if(status != Status.PAYMENT_EXPECTED) {
+			throw new IllegalStateException("Order is Already paid");
+		}
+		status = Status.PAID;
+		return this;
+	}
+
+	public Order markBeingPrepared() {
 		return null;
 	}
 }

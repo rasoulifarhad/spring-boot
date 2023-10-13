@@ -1,5 +1,6 @@
 package com.farhad.example.coffeeorder.application;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import com.farhad.example.coffeeorder.application.in.OrderingCoffee;
@@ -12,7 +13,7 @@ import com.farhad.example.coffeeorder.application.payment.Receipt;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor	
 public class CoffeeShop implements OrderingCoffee {
 
 	private final Orders orders;
@@ -32,14 +33,14 @@ public class CoffeeShop implements OrderingCoffee {
 
 	@Override
 	public void cancelOrder(UUID orderId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'cancelOrder'");
+
 	}
 
 	@Override
 	public Payment payOrder(UUID orderId, CreditCard creditCard) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'payOrder'");
+		Order order = orders.findByOrderId(orderId);
+		orders.save(order.markPaid());
+		return payments.save(new Payment(orderId, creditCard, LocalDate.now()));
 	}
 
 	@Override

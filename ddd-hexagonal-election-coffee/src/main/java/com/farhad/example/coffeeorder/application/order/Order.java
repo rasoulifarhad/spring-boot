@@ -15,4 +15,8 @@ public class Order {
 	private final List<LineItem> items;
 
 	private Status status = Status.PAYMENT_EXPECTED;
+
+	public Order markPaid() {
+		return null;
+	}
 }

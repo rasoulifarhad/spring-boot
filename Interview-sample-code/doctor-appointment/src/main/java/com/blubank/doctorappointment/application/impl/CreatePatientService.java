@@ -6,6 +6,7 @@ import com.blubank.doctorappointment.api.assembler.PatientDtoMapper;
 import com.blubank.doctorappointment.api.dto.CreatePatientRequestDTO;
 import com.blubank.doctorappointment.api.dto.CreatePatientResponseDTO;
 import com.blubank.doctorappointment.application.CreatePatientUseCase;
+import com.blubank.doctorappointment.domain.model.Patient.Patient.PatientId;
 import com.blubank.doctorappointment.domain.model.Patient.PatientRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class CreatePatientService implements CreatePatientUseCase {
 	public CreatePatientResponseDTO createPatient(CreatePatientRequestDTO request) {
 		return mapper.fromPatient(
 							patientRepository.save(
-									mapper.toPatient(request)));
+									mapper.toPatient(request, PatientId.newId())));
 
 	}
 	

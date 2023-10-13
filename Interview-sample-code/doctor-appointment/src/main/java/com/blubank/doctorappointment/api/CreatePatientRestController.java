@@ -14,9 +14,9 @@ import com.blubank.doctorappointment.application.CreatePatientUseCase;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/patients")
+@RequestMapping("/api/patients")
 @RequiredArgsConstructor
-public class PatientRestController {
+public class CreatePatientRestController {
 	
 
 	private final CreatePatientUseCase createPatientUseCase;

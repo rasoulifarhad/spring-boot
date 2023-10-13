@@ -9,18 +9,19 @@ import com.blubank.doctorappointment.api.dto.CreatePatientRequestDTO;
 import com.blubank.doctorappointment.api.dto.CreatePatientResponseDTO;
 import com.blubank.doctorappointment.domain.CommonMapStructConverters;
 import com.blubank.doctorappointment.domain.model.Patient.Patient;
+import com.blubank.doctorappointment.domain.model.Patient.Patient.PatientId;
 
 @Mapper(componentModel = "spring", uses = CommonMapStructConverters.class,nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface PatientDtoMapper {
 	
     PatientDtoMapper MAPPER = Mappers.getMapper( PatientDtoMapper.class );	
 
-	@Mapping(target = "id", ignore = true)
+	@Mapping(source = "id", target = "id")
 	@Mapping(target = "version", ignore = true)
-	@Mapping(source = "name", target = "name.firstname")
-	@Mapping(source = "family", target = "name.lastname")
-	@Mapping(source = "phoneNumber", target = "phoneNumber")
-	Patient toPatient(CreatePatientRequestDTO createPatientRequestDTO) ;
+	@Mapping(source = "dto.name", target = "name.firstname")
+	@Mapping(source = "dto.family", target = "name.lastname")
+	@Mapping(source = "dto.phoneNumber", target = "phoneNumber")
+	Patient toPatient(CreatePatientRequestDTO dto, PatientId id) ;
 
 
 	@Mapping(target = "name", source =  "name.firstname")

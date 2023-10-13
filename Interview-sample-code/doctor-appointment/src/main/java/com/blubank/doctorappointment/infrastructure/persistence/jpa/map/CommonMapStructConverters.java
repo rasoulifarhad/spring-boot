@@ -9,43 +9,45 @@ import com.blubank.doctorappointment.domain.model.appointment.Appointment.Appoin
 @Mapper(componentModel = "spring")
 public class CommonMapStructConverters {
 	
-	public PatientId mapIdToPatientId(String id) {
+	public PatientId toPatientId(String id) {
 		if(id == null || id.trim() == null) {
 			return null;
 		}
 		return PatientId.from(id);
 	}
 
-	public String mapPatientIdToId(PatientId id) {
-		if(id == null) {
+	public String fromPatientId(PatientId id) {
+
+		if(id == null || id.getUuid() == null) {
 			return null;
 		}
 		return id.getUuid().toString();
 	}
 
-	public DoctorId mapIdToDoctorId(String id) {
+
+	public DoctorId toDoctorId(String id) {
 		if(id == null || id.trim() == null) {
 			return null;
 		}
 		return DoctorId.from(id);
 	}
 
-	public String mapDoctorIdToId(DoctorId id) {
-		if(id == null) {
+	public String fromDoctorId(DoctorId id) {
+		if(id == null || id.getUuid() == null) {
 			return null;
 		}
 		return id.getUuid().toString();
 	}
 
-	public AppointmentId mapIdToAppointmentId(String id) {
+	public AppointmentId toAppointmentId(String id) {
 		if(id == null || id.trim() == null) {
 			return null;
 		}
 		return AppointmentId.from(id);
 	}
 
-	public String mapAppointmentIdToId(AppointmentId id) {
-		if(id == null) {
+	public String fromAppointmentId(AppointmentId id) {
+		if(id == null || id.getUuid() == null) {
 			return null;
 		}
 		return id.getUuid().toString();

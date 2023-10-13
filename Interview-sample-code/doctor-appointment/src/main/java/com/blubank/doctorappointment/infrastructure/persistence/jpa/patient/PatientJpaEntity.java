@@ -3,27 +3,26 @@ package com.blubank.doctorappointment.infrastructure.persistence.jpa.patient;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.blubank.doctorappointment.domain.shared.PhoneNumber;
 import com.blubank.doctorappointment.domain.shared.converter.PhoneNumberConverter;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "patients")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientJpaEntity {
+@Builder
+public class PatientJpaEntity extends AbstractPersistable<String> {
 	
-	@Id
-	@Column(name = "patient_id")
-	private String id;
-
 	@Column(name = "name_first")
 	private String firstname;
 

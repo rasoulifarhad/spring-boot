@@ -22,8 +22,10 @@ import lombok.Value;
 @Builder
 public class Patient extends BaseAggregateRoot<PatientId>{
 	
+	@NonNull
 	private PhoneNumber phoneNumber;
 	
+	@NonNull
 	private Name name;
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)

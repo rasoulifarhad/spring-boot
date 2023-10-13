@@ -3,13 +3,11 @@ package com.blubank.doctorappointment.domain.shared.ddd;
 import java.io.Serializable;
 import java.util.Optional;
 
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
-@MappedSuperclass
 public class BaseEntity<Id extends Serializable> extends AbstractPersistable<Id> {
 
 	@Version

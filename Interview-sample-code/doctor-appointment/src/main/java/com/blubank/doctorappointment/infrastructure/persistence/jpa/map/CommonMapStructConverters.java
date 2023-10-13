@@ -1,13 +1,18 @@
 package com.blubank.doctorappointment.infrastructure.persistence.jpa.map;
 
+import java.util.Optional;
+
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.blubank.doctorappointment.domain.model.Doctor.Doctor.DoctorId;
 import com.blubank.doctorappointment.domain.model.Patient.Patient.PatientId;
 import com.blubank.doctorappointment.domain.model.appointment.Appointment.AppointmentId;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+// @Mapper
 public class CommonMapStructConverters {
+	
 	
 	public PatientId toPatientId(String id) {
 		if(id == null || id.trim() == null) {
@@ -51,6 +56,13 @@ public class CommonMapStructConverters {
 			return null;
 		}
 		return id.getUuid().toString();
+	}
+
+	public Long fromOptional(Optional<Long> optional) {
+		if(optional.isPresent()) {
+			return optional.get();
+		} 
+		return null;
 	}
 
 }

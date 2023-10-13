@@ -7,17 +7,17 @@ import com.blubank.doctorappointment.domain.shared.Identifier;
 import com.blubank.doctorappointment.domain.shared.ddd.BaseAggregateRoot;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.Value;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 // @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@SuperBuilder
 public class Appointment extends BaseAggregateRoot<AppointmentId> {
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -36,6 +36,9 @@ public class Appointment extends BaseAggregateRoot<AppointmentId> {
 		}
 
 		public static AppointmentId from(String uuid) {
+			if(uuid == null || uuid.trim() == null ) {
+				return null;
+			}
 			return new AppointmentId(UUID.fromString(uuid));
 		}
 	}

@@ -7,12 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @ToString
 @EqualsAndHashCode(of = "id")
-public class AbstractPersistable<Id extends Serializable>  implements Persistable<Id>{
+@SuperBuilder
+public abstract class AbstractPersistable<Id extends Serializable>  implements Persistable<Id>{
 	
 	Id id;
 

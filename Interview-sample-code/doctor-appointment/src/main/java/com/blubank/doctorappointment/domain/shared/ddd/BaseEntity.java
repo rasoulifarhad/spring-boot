@@ -8,7 +8,14 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
-public class BaseEntity<Id extends Serializable> extends AbstractPersistable<Id> {
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@Setter
+@SuperBuilder
+public abstract class BaseEntity<Id extends Serializable> extends AbstractPersistable<Id> {
 
 	@Version
 	private Long version;

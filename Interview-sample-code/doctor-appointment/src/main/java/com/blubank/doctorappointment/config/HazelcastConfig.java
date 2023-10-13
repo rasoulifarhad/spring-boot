@@ -1,12 +1,19 @@
 package com.blubank.doctorappointment.config;
 
-import com.hazelcast.config.*;
-import com.hazelcast.spi.merge.PutIfAbsentMergePolicy;
-import org.hibernate.internal.util.collections.BoundedConcurrentHashMap;
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Collections;
+import com.hazelcast.config.Config;
+import com.hazelcast.config.EvictionConfig;
+import com.hazelcast.config.EvictionPolicy;
+import com.hazelcast.config.InMemoryFormat;
+import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.MaxSizePolicy;
+import com.hazelcast.config.MergePolicyConfig;
+import com.hazelcast.config.TcpIpConfig;
+import com.hazelcast.spi.merge.PutIfAbsentMergePolicy;
 
 @Configuration
 public class HazelcastConfig {

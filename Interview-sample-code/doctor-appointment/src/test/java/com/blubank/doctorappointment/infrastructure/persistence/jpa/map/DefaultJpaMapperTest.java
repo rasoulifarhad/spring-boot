@@ -18,7 +18,7 @@ import com.blubank.doctorappointment.infrastructure.persistence.jpa.patient.Pati
 public class DefaultJpaMapperTest {
 
 	@Autowired
-	DefaultJpaMapper mapper;
+	private PatientJpaMapper mapper;
 
 	@Test
 	public void mapJpaToPatientTest() {
@@ -31,7 +31,6 @@ public class DefaultJpaMapperTest {
 			.build();
 
 		System.out.println(p);
-		// Patient patient = DefaultJpaMapper.MAPPER.toPatient(p);
 		Patient patient = mapper.toPatient(p);
 				
 		assertThat(patient.getName().getFirstname()).isEqualTo("first #1");
@@ -50,7 +49,6 @@ public class DefaultJpaMapperTest {
 						.build())
 			.phoneNumber(PhoneNumber.of("123456"))
 			.build();
-		// PatientJpaEntity patientJpaEntity = DefaultJpaMapper.MAPPER.fromPatient(patient);
 		PatientJpaEntity patientJpaEntity = mapper.fromPatient(patient);
 				
 		assertThat(patientJpaEntity.getFirstname()).isEqualTo("first #1");

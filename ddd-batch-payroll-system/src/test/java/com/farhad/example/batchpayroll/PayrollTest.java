@@ -1,9 +1,12 @@
 package com.farhad.example.batchpayroll;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,7 @@ import com.farhad.example.batchpayroll.domain.command.employee.AddCommissionedEm
 import com.farhad.example.batchpayroll.domain.command.employee.AddHourlyEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddSalariedEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
+import com.farhad.example.batchpayroll.domain.command.employee.TimeCardTransaction;
 import com.farhad.example.batchpayroll.domain.model.employee.BiweeklySchedule;
 import com.farhad.example.batchpayroll.domain.model.employee.CommisionedClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.Employee;
@@ -20,6 +24,7 @@ import com.farhad.example.batchpayroll.domain.model.employee.MonthlySchedule;
 import com.farhad.example.batchpayroll.domain.model.employee.PaymentClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.PaymentSchedule;
 import com.farhad.example.batchpayroll.domain.model.employee.SalariedClassification;
+import com.farhad.example.batchpayroll.domain.model.employee.TimeCard;
 import com.farhad.example.batchpayroll.domain.model.employee.WeeklySchedule;
 import com.farhad.example.batchpayroll.domain.model.payment.HoldMethod;
 import com.farhad.example.batchpayroll.domain.model.payment.PaymentMethod;
@@ -121,6 +126,29 @@ public class PayrollTest {
         dt.execute();
 
         assertNull(payrollDatabase.getEmployee(empId));
+    }
+
+    @Test
+    public void timeCardTransactionTest() {
+        int empId = 2;
+        AddHourlyEmployee hourlyEmployee = new AddHourlyEmployee(
+                    empId, 
+                    "name #" + empId, "address #" + empId, 12.25);
+        hourlyEmployee.execute();
+
+        TimeCardTransaction timeCardTransaction = 
+                new TimeCardTransaction(LocalDate.now(), 8.0 , empId);
+        timeCardTransaction.execute();
+
+        Employee employee = payrollDatabase.getEmployee(empId);
+        assertNotNull(employee);
+        PaymentClassification pc = employee.getPaymentClassification();
+        assertTrue(pc instanceof HourlyClassification);
+
+        HourlyClassification hc = (HourlyClassification) pc;
+        TimeCard tc = hc.getTimeCard(LocalDate.now());
+        assertNotNull(tc);
+        assertThat(Double.valueOf(tc.getHours())).isEqualTo(Double.valueOf(8.0));
     }
 
 }

@@ -301,3 +301,5 @@ The list of `Affiliation` objects has obviated the need to use the **NULL OBJECT
 
 
 ![](Employee_Pay_06.png)
+
+![](Employee_Pay_07.png)

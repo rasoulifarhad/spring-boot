@@ -1,9 +1,9 @@
 package com.farhad.example.coffeeorder.infrastructure.adapter.out.persistance;
 
+import static com.farhad.example.coffeeorder.application.order.OrderTestFactory.aPaidOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class OrdersJpaAdapterTest {
 	void creatingOrderReturnsPersistedOrder() {
 		Order order = new Order(
 			Location.TAKE_AWAY, 
-			Arrays.asList(
+			Arrays.asList(	
 				new LineItem(
 					Drink.LATTE, 
 					Milk.WHOLE, 
@@ -51,10 +51,10 @@ public class OrdersJpaAdapterTest {
     @Test
 	@Sql("classpath:data/order.sql")
     void findingPreviouslyPersistedOrderReturnsDetails() {
-
-		Order order = orders.findByOrderId(UUID.fromString("757d9c0f-400f-4137-9aea-83e64ba3efb2"));
-        assertThat(order.getLocation()).isEqualTo(Location.IN_STORE);
-        assertThat(order.getItems()).containsExactly(new LineItem(Drink.ESPRESSO, Milk.SKIMMED, Size.LARGE, 1));
+		Order savedOrder = orders.save(aPaidOrder());
+		Order order = orders.findByOrderId(savedOrder.getId());
+        assertThat(order.getLocation()).isEqualTo(Location.TAKE_AWAY);
+        assertThat(order.getItems()).containsExactly(new LineItem(Drink.LATTE, Milk.WHOLE, Size.LARGE, 1));
 
     }
 
@@ -65,8 +65,9 @@ public class OrdersJpaAdapterTest {
     @Test
     @Sql("classpath:data/order.sql")
     void deletesPreviouslyPersistedOrder() {
-		orders.deleteById(UUID.fromString("757d9c0f-400f-4137-9aea-83e64ba3efb2"));
+		Order savedOrder = orders.save(aPaidOrder());
+		orders.deleteById(savedOrder.getId());
 
-        assertThat(orderJpaRepository.findById(UUID.fromString("757d9c0f-400f-4137-9aea-83e64ba3efb2"))).isEmpty();
+        assertThat(orderJpaRepository.findById(savedOrder.getId())).isEmpty();
     }	
 }

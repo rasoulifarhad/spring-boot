@@ -12,10 +12,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class TimeSlot implements ValueObject<TimeSlot>{
+public class TimeSlot implements ValueObject<TimeSlot>, Comparable<TimeSlot> {
 
 	DayOfWeek dayOfWeek;
 	LocalTime startTime;
 	LocalTime endTime;
+	@Override
+	public int compareTo(TimeSlot o) {
+		return this.getStartTime().compareTo(o.getStartTime());
+	}
+
+
 
 }

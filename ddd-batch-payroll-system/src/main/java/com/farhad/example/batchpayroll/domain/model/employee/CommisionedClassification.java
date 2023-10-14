@@ -17,5 +17,9 @@ public class CommisionedClassification implements PaymentClassification {
         return salary - (salary * commissionRate);
     }
 
+    public void addSalesReceipt(SalesReceipt salesReceipt) {
+        salesReceipts.add(salesReceipt);
+    }
+
     
 }

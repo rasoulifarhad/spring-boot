@@ -12,7 +12,10 @@ public interface PayrollDatabase {
     Employee getEmployee(int employeeId);
     void addEmployee(int employeeId, Employee employee);
     void deleteEmployee(int employeeId);
+    
     void clear();
+    void addUnionMember(int memberId, Employee employee);    
+    Employee getEmployeeByMemberId(int memberId);
     
     public static PayrollDatabase inmemory() {
         return INMEMORY;
@@ -47,8 +50,21 @@ public interface PayrollDatabase {
         public void deleteEmployee(int employeeId) {
             employees.remove(employeeId);
         }
+
+        @Override
+        public void addUnionMember(int memberId, Employee employee) {
+            membersIdtoEmployeeIdMap.put(memberId, employee.getEmployeeId());
+        }
+
+        @Override
+        public Employee getEmployeeByMemberId(int memberId) {
+            Integer employeeId = membersIdtoEmployeeIdMap.get(memberId);
+            return employeeId == null ? null : employees.get(employeeId);
+        }
         
-    }    
+
+    }
+
 }
 
 

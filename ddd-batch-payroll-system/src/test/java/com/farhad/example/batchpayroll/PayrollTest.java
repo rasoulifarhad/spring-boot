@@ -15,7 +15,10 @@ import com.farhad.example.batchpayroll.domain.command.employee.AddCommissionedEm
 import com.farhad.example.batchpayroll.domain.command.employee.AddHourlyEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddSalariedEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
+import com.farhad.example.batchpayroll.domain.command.employee.ServiceChargeTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.TimeCardTransaction;
+import com.farhad.example.batchpayroll.domain.model.ServiceCharge;
+import com.farhad.example.batchpayroll.domain.model.affiliation.UnionAffiliation;
 import com.farhad.example.batchpayroll.domain.model.employee.BiweeklySchedule;
 import com.farhad.example.batchpayroll.domain.model.employee.CommisionedClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.Employee;
@@ -151,4 +154,23 @@ public class PayrollTest {
         assertThat(Double.valueOf(tc.getHours())).isEqualTo(Double.valueOf(8.0));
     }
 
+    @Test
+    public void addServiceChargeTest() {
+        int empId = 2;
+        AddHourlyEmployee hourlyEmployee = new AddHourlyEmployee(
+                    empId, 
+                    "name #" + empId, "address #" + empId, 12.25);
+        hourlyEmployee.execute();
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        UnionAffiliation unionAffiliation = new UnionAffiliation(12.25);
+        employee.addAffiliation(unionAffiliation);
+        int memberId = 86;
+        PayrollDatabase.inmemory().addUnionMember(memberId, employee);
+        ServiceChargeTransaction serviceChargeTransaction = new ServiceChargeTransaction(memberId, LocalDate.now(), 12.25);
+        serviceChargeTransaction.execute();
+        ServiceCharge serviceCharge = unionAffiliation.getServiceCharge(LocalDate.now());
+        assertNotNull(serviceCharge);
+        assertThat(12.25).isEqualTo(serviceCharge.getCharge());
+    }
 }

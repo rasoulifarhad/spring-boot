@@ -6,8 +6,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.jdbc.Sql;
 
 import com.farhad.example.coffeeorder.application.order.LineItem;
 import com.farhad.example.coffeeorder.application.order.Order;
@@ -17,8 +16,7 @@ import com.farhad.example.coffeeorder.shared.Location;
 import com.farhad.example.coffeeorder.shared.Milk;
 import com.farhad.example.coffeeorder.shared.Size;
 
-@DataJpaTest
-@ComponentScan("com.farhad.example.coffeeorder.infrastructure.adapter.out.persistance")
+@PersistenceTest
 public class OrdersJpaAdapterTest {
 
 	@Autowired
@@ -47,4 +45,18 @@ public class OrdersJpaAdapterTest {
 													Size.SMALL,
 													1));		
 	}
+
+
+    @Test
+    void findingPreviouslyPersistedOrderReturnsDetails() {
+    }
+
+    @Test
+    void findingNonExistingOrderThrowsException() {
+    }
+
+    @Test
+    @Sql("classpath:data/order.sql")
+    void deletesPreviouslyPersistedOrder() {
+    }	
 }

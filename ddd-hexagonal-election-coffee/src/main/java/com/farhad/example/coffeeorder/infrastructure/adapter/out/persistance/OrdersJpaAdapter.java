@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.farhad.example.coffeeorder.application.order.Order;
 import com.farhad.example.coffeeorder.application.out.OrderNotFound;
 import com.farhad.example.coffeeorder.application.out.Orders;
+import com.farhad.example.coffeeorder.infrastructure.adapter.out.persistance.entity.OrderEntity;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +18,7 @@ public class OrdersJpaAdapter implements Orders {
 
 	private final OrderJpaRepository orderJpaRepository;
 
-	
+
 	@Override
 	public Order save(Order order) {
 		// TODO Auto-generated method stub
@@ -26,8 +27,9 @@ public class OrdersJpaAdapter implements Orders {
 
 	@Override
 	public Order findByOrderId(UUID orderId) throws OrderNotFound {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'findByOrderId'");
+		return orderJpaRepository.findById(orderId)
+					.map(OrderEntity::toDomain)
+					.orElseThrow(() -> new IllegalStateException("Order find error"));
 	}
 
 	@Override

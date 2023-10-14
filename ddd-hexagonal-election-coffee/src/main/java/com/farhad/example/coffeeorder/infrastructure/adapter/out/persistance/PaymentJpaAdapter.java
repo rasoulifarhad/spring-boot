@@ -24,7 +24,7 @@ public class PaymentJpaAdapter implements Payments {
 	public Payment findPaymentByOrderId(UUID orderId) {
 		return paymentJpaRepository.findById(orderId)
 					.map(PaymentEntity::toDomain)
-					.orElseThrow(() -> new IllegalStateException("payment find error")) ;
+				.orElseThrow(() -> new IllegalStateException("payment find error")) ;
 	}
 	
 }

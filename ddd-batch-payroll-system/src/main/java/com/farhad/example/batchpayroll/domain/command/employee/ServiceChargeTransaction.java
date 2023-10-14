@@ -1,7 +1,6 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import com.farhad.example.batchpayroll.domain.model.ServiceCharge;
 import com.farhad.example.batchpayroll.domain.model.affiliation.Affiliation;
@@ -26,12 +25,8 @@ public class ServiceChargeTransaction implements Transaction {
 
         Employee employee = PayrollDatabase.inmemory().getEmployeeByMemberId(memberId);
         if(employee != null) {
-            List<Affiliation> affiliations = employee.getItsAffiliations();
-            Affiliation affiliation = affiliations.stream()
-                .filter(a -> a instanceof UnionAffiliation)
-                .findFirst()
-                .orElse(null);
-            if(affiliation != null ){
+            Affiliation affiliation = employee.getAffiliation();
+            if(affiliation instanceof UnionAffiliation ){
                 ServiceCharge serviceCharge = new ServiceCharge(date, charge);
                 ((UnionAffiliation) affiliation).addServiceCharge(serviceCharge);
             } else {

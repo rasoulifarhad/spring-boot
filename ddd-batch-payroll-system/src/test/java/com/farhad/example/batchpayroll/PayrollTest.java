@@ -164,7 +164,7 @@ public class PayrollTest {
         Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
         assertNotNull(employee);
         UnionAffiliation unionAffiliation = new UnionAffiliation(12.25);
-        employee.addAffiliation(unionAffiliation);
+        employee.setAffiliation(unionAffiliation);
         int memberId = 86;
         PayrollDatabase.inmemory().addUnionMember(memberId, employee);
         ServiceChargeTransaction serviceChargeTransaction = new ServiceChargeTransaction(memberId, LocalDate.now(), 12.25);

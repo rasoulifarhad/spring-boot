@@ -36,6 +36,13 @@ public class Order {
 				.orElse(BigDecimal.ZERO);
     }	
 
+    public Order update(Order order) {
+        if (status == Status.PAID) {
+            throw new IllegalStateException("Order is already paid");
+        }
+        return new Order(id, order.getLocation(), order.getItems(), status);
+    }	
+
 	public Order markPaid() {
 		if(status != Status.PAYMENT_EXPECTED) {
 			throw new IllegalStateException("Order is Already paid");

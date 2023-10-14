@@ -6,9 +6,11 @@ import java.util.UUID;
 import com.farhad.example.coffeeorder.shared.Location;
 import com.farhad.example.coffeeorder.shared.Status;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@Data
+@RequiredArgsConstructor
+@Getter
 public class Order {
 	
 	private UUID id = UUID.randomUUID();

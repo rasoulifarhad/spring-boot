@@ -1,5 +1,6 @@
 package com.farhad.example.coffeeorder.shared;
 
-public class Location {
-	
+public enum Location {
+	TAKE_AWAY,
+    IN_STORE
 }

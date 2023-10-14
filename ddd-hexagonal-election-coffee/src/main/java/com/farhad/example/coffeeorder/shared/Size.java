@@ -1,5 +1,7 @@
 package com.farhad.example.coffeeorder.shared;
 
-public class Size {
+public enum Size {
 	
+	SMALL,
+	LARGE
 }

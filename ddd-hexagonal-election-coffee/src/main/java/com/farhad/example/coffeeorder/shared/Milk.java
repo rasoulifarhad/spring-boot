@@ -1,5 +1,7 @@
 package com.farhad.example.coffeeorder.shared;
 
-public class Milk {
-	
+public enum Milk {
+	WHOLE,
+    SKIMMED,
+    SOY
 }

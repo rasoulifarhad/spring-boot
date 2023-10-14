@@ -1,5 +1,7 @@
 package com.farhad.example.coffeeorder.shared;
 
-public class Drink {
-	
+public enum Drink {
+	LATTE,
+    ESPRESSO,
+    CAPPUCCINO
 }

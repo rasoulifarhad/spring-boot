@@ -21,8 +21,9 @@ public class OrdersJpaAdapter implements Orders {
 
 	@Override
 	public Order save(Order order) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'save'");
+		return orderJpaRepository.save(
+									OrderEntity.fromDomain(order))
+								.toDomain();
 	}
 
 	@Override
@@ -34,8 +35,7 @@ public class OrdersJpaAdapter implements Orders {
 
 	@Override
 	public void deleteById(UUID orderId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+		orderJpaRepository.deleteById(orderId);
 	}
 	
 }

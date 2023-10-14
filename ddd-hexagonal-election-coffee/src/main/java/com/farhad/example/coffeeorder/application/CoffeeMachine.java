@@ -22,8 +22,9 @@ public class CoffeeMachine implements PreparingCoffee {
 
 	@Override
 	public Order finishPreparingOrder(UUID orderId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'finishPreparingOrder'");
+		Order order = orders.findByOrderId(orderId);
+
+		return orders.save(order.markPrepared());
 	}
 	
 }

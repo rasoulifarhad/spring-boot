@@ -7,12 +7,8 @@ import java.util.UUID;
 import com.farhad.example.coffeeorder.shared.Location;
 import com.farhad.example.coffeeorder.shared.Status;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Getter
 public class Order {
 	
@@ -23,6 +19,18 @@ public class Order {
 	private final List<LineItem> items;
 
 	private Status status = Status.PAYMENT_EXPECTED;
+
+    public Order(Location location, List<LineItem> items) {
+        this.location = location;
+        this.items = items;
+    }
+
+    public Order(UUID id, Location location, List<LineItem> items, Status status) {
+        this.id = id;
+        this.location = location;
+        this.items = items;
+        this.status = status;
+    }
 
     public boolean canBeCancelled() {
         return status == Status.PAYMENT_EXPECTED;

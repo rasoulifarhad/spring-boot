@@ -21,19 +21,21 @@ public class CoffeeShop implements OrderingCoffee {
 
 	@Override
 	public Order placeOrder(Order order) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'placeOrder'");
+		return orders.save(order);
 	}
 
 	@Override
 	public Order updateOrder(UUID orderId, Order order) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'updateOrder'");
+		Order existingOrder = orders.findByOrderId(orderId);
+		return orders.save(existingOrder.update(order));
 	}
 
 	@Override
 	public void cancelOrder(UUID orderId) {
-
+		Order order = orders.findByOrderId(orderId);
+		if (!order.canBeCancelled()) {
+			throw new IllegalStateException("Order is already paid");
+		}
 	}
 
 	@Override
@@ -45,14 +47,16 @@ public class CoffeeShop implements OrderingCoffee {
 
 	@Override
 	public Receipt readReceipt(UUID orderId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'readReceipt'");
+		Order order = orders.findByOrderId(orderId);
+		Payment payment = payments.findPaymentByOrderId(orderId);
+		return new Receipt(order.getCost(), payment.getPaid());
 	}
 
 	@Override
 	public Order takeOrder(UUID orderId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'takeOrder'");
+		Order order = orders.findByOrderId(orderId);
+
+		return orders.save(order.markTaken());
 	}
 	
 

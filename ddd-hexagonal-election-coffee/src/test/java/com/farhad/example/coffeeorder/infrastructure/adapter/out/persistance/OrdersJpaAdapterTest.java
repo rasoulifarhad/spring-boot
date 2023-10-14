@@ -3,6 +3,7 @@ package com.farhad.example.coffeeorder.infrastructure.adapter.out.persistance;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,13 @@ public class OrdersJpaAdapterTest {
 
 
     @Test
+	@Sql("classpath:data/order.sql")
     void findingPreviouslyPersistedOrderReturnsDetails() {
+
+		Order order = orders.findByOrderId(UUID.fromString("757d9c0f-400f-4137-9aea-83e64ba3efb2"));
+        assertThat(order.getLocation()).isEqualTo(Location.IN_STORE);
+        assertThat(order.getItems()).containsExactly(new LineItem(Drink.ESPRESSO, Milk.SKIMMED, Size.LARGE, 1));
+
     }
 
     @Test
@@ -58,5 +65,8 @@ public class OrdersJpaAdapterTest {
     @Test
     @Sql("classpath:data/order.sql")
     void deletesPreviouslyPersistedOrder() {
+		orders.deleteById(UUID.fromString("757d9c0f-400f-4137-9aea-83e64ba3efb2"));
+
+        assertThat(orderJpaRepository.findById(UUID.fromString("757d9c0f-400f-4137-9aea-83e64ba3efb2"))).isEmpty();
     }	
 }

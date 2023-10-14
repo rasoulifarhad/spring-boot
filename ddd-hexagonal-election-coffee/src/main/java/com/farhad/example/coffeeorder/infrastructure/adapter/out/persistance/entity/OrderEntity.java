@@ -34,14 +34,13 @@ public class OrderEntity {
 	@NotNull
 	private Location location;
 
+	@Enumerated
+	@NotNull
+	private Status status;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id")
 	private List<LineItemEntity> items;
-
-	@Enumerated
-	@NotNull
-	private Status status;
 
 	public Order toDomain() {
 		return new Order(

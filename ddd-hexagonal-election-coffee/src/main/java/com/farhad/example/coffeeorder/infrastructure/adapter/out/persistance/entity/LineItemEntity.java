@@ -31,11 +31,11 @@ public class LineItemEntity {
 
 	@Enumerated
 	@NotNull
-	private Milk milk;
+	private Size size;
 
 	@Enumerated
 	@NotNull
-	private Size size;
+	private Milk milk;
 
 	@NotNull
 	private Integer quantity;

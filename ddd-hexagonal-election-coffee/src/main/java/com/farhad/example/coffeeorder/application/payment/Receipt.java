@@ -8,11 +8,11 @@ import lombok.Value;
 @Value
 public class Receipt {
 
-	private BigDecimal cost;
+	private BigDecimal amount;
 	private LocalDate paid;
 
-	public Receipt(BigDecimal cost, LocalDate paid) {
-		this.cost = cost;
+	public Receipt(BigDecimal amount, LocalDate paid) {
+		this.amount = amount;
 		this.paid = paid;
 	}
 	

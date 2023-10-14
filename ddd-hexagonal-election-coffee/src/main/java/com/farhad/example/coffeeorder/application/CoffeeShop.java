@@ -10,10 +10,12 @@ import com.farhad.example.coffeeorder.application.out.Payments;
 import com.farhad.example.coffeeorder.application.payment.CreditCard;
 import com.farhad.example.coffeeorder.application.payment.Payment;
 import com.farhad.example.coffeeorder.application.payment.Receipt;
+import com.farhad.example.coffeeorder.architecture.UseCase;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor	
+@UseCase
 public class CoffeeShop implements OrderingCoffee {
 
 	private final Orders orders;

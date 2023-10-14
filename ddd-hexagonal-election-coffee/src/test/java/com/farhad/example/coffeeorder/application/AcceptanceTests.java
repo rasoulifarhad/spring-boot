@@ -1,5 +1,6 @@
 package com.farhad.example.coffeeorder.application;
 
+import static com.farhad.example.coffeeorder.application.order.OrderTestFactory.aPaidOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
@@ -55,5 +56,15 @@ public class AcceptanceTests {
 															1));
 		
 		assertThat(order.getStatus()).isEqualTo(Status.PAYMENT_EXPECTED);
+	}
+
+	@Test
+	public void baristaCanStartPreparingTheOrderWhenItIsPaid() {
+
+		Order existingOrder = orders.save(aPaidOrder());
+
+		Order orderInPreparation = barista.startPreparingOrder(existingOrder.getId());
+
+		assertThat(orderInPreparation.getStatus()).isEqualTo(Status.PREPARING);
 	}
 }

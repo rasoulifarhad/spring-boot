@@ -1,8 +1,8 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
-public class ChangeMailTransaction extends ChangeMethodTransaction{
+public class ChangeUnaffiliatedTransaction extends ChangeAffiliationTransaction {
 
-    public ChangeMailTransaction(int empId) {
+    public ChangeUnaffiliatedTransaction(int empId) {
         super(empId);
         //TODO Auto-generated constructor stub
     }

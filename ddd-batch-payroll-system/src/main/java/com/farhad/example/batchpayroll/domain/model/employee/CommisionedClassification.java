@@ -12,6 +12,12 @@ public class CommisionedClassification implements PaymentClassification {
     private double commissionRate;
     private List<SalesReceipt> salesReceipts = new ArrayList<>();
     
+    public CommisionedClassification(double salary, double commissionRate) {
+        this.salary = salary;
+        this.commissionRate = commissionRate;
+    }
+
+    
     @Override
     public double getSalary() {
         return salary - (salary * commissionRate);
@@ -20,6 +26,7 @@ public class CommisionedClassification implements PaymentClassification {
     public void addSalesReceipt(SalesReceipt salesReceipt) {
         salesReceipts.add(salesReceipt);
     }
+
 
     
 }

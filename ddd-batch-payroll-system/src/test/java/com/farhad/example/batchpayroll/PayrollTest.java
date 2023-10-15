@@ -15,8 +15,10 @@ import com.farhad.example.batchpayroll.domain.command.employee.AddCommissionedEm
 import com.farhad.example.batchpayroll.domain.command.employee.AddHourlyEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddSalariedEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeAddressTransaction;
+import com.farhad.example.batchpayroll.domain.command.employee.ChangeCommissionedTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeHourlyTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeNameTransaction;
+import com.farhad.example.batchpayroll.domain.command.employee.ChangeSalariedTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.ServiceChargeTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.TimeCardTransaction;
@@ -221,6 +223,44 @@ public class PayrollTest {
         assertTrue(employee.getItsSchedule() instanceof WeeklySchedule);
     }
 
+    @Test
+    public void changeSalariedTransactionTest() {
+        int empId = 4;
+        AddCommissionedEmployee t = aCommissionedEmp(empId, 2500, 3.2);
+        t.execute();
+
+        ChangeSalariedTransaction cst = new ChangeSalariedTransaction(empId, 1000.0);
+        cst.execute();
+
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        assertNotNull(employee.getPaymentClassification());
+        assertTrue(employee.getPaymentClassification() instanceof SalariedClassification);
+        SalariedClassification sc = (SalariedClassification)employee.getPaymentClassification();
+        assertThat(sc.getSalary()).isEqualTo(1000.0);
+        assertTrue(employee.getItsSchedule() instanceof MonthlySchedule);
+    }
+
+    @Test
+    public void changeCommissionedTransactionTest() {
+        int empId = 5;
+        AddSalariedEmployee t = aSalariedEmp(empId, 1000.0);
+        t.execute();
+
+        ChangeCommissionedTransaction cst = new ChangeCommissionedTransaction(empId,1000.0, 3.2);
+        cst.execute();
+
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        assertNotNull(employee.getPaymentClassification());
+        assertTrue(employee.getPaymentClassification() instanceof CommisionedClassification);
+        CommisionedClassification cc = (CommisionedClassification)employee.getPaymentClassification();
+        // assertThat(cc.getSalary()).isEqualTo(1000.0);
+        assertThat(cc.getCommissionRate()).isEqualTo(3.2);
+        assertTrue(employee.getItsSchedule() instanceof BiweeklySchedule);
+    }
+
+
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {
         return new AddHourlyEmployee(
             empId, 
@@ -236,5 +276,13 @@ public class PayrollTest {
             "address #" + empId, 
             salary, 
             commissionRate);
+    }
+
+    private static AddSalariedEmployee aSalariedEmp(int empId,double salary) {
+        return new AddSalariedEmployee(
+            empId, 
+            "name #" + empId, 
+            "address #" + empId, 
+            salary);
     }
 }

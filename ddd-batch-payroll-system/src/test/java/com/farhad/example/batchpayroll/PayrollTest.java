@@ -16,7 +16,9 @@ import com.farhad.example.batchpayroll.domain.command.employee.AddHourlyEmployee
 import com.farhad.example.batchpayroll.domain.command.employee.AddSalariedEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeAddressTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeCommissionedTransaction;
+import com.farhad.example.batchpayroll.domain.command.employee.ChangeDirectTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeHourlyTransaction;
+import com.farhad.example.batchpayroll.domain.command.employee.ChangeMailTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeNameTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeSalariedTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
@@ -34,7 +36,9 @@ import com.farhad.example.batchpayroll.domain.model.employee.PaymentSchedule;
 import com.farhad.example.batchpayroll.domain.model.employee.SalariedClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.TimeCard;
 import com.farhad.example.batchpayroll.domain.model.employee.WeeklySchedule;
+import com.farhad.example.batchpayroll.domain.model.payment.DirectMethod;
 import com.farhad.example.batchpayroll.domain.model.payment.HoldMethod;
+import com.farhad.example.batchpayroll.domain.model.payment.MailMethod;
 import com.farhad.example.batchpayroll.domain.model.payment.PaymentMethod;
 import com.farhad.example.batchpayroll.infrastructure.persistence.PayrollDatabase;
 
@@ -260,7 +264,37 @@ public class PayrollTest {
         assertTrue(employee.getItsSchedule() instanceof BiweeklySchedule);
     }
 
+    @Test
+    public void changeDirectTransactionTest() {
+        int empId = 2;
+        AddSalariedEmployee t = aSalariedEmp(empId, 1000.0);
+        t.execute();
+        
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        assertTrue(employee.getPaymentMethod() instanceof HoldMethod );
+        
+        ChangeDirectTransaction cdt = new ChangeDirectTransaction(empId);
+        cdt.execute();
+        assertTrue(employee.getPaymentMethod() instanceof DirectMethod );
+    }
 
+    @Test
+    public void changeMailTransactionTest() {
+        int empId = 2;
+        AddSalariedEmployee t = aSalariedEmp(empId, 1000.0);
+        t.execute();
+        
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        assertTrue(employee.getPaymentMethod() instanceof HoldMethod );
+        
+        ChangeMailTransaction cmt = new ChangeMailTransaction(empId);
+        cmt.execute();
+        assertTrue(employee.getPaymentMethod() instanceof MailMethod );
+    }
+    
+   
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {
         return new AddHourlyEmployee(
             empId, 

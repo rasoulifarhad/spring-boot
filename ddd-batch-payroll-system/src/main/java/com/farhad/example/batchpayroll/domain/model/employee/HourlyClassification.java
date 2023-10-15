@@ -12,6 +12,10 @@ public class HourlyClassification implements PaymentClassification{
     private double hourlyRate;
     private List<TimeCard>  timeCards = new ArrayList<>();
     
+    public HourlyClassification(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
     @Override
     public double getSalary() {
         double sumOhHours = timeCards.stream().mapToDouble(TimeCard::getHours).sum();

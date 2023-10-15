@@ -1,25 +1,28 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
+import com.farhad.example.batchpayroll.domain.model.employee.HourlyClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.PaymentClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.PaymentSchedule;
+import com.farhad.example.batchpayroll.domain.model.employee.WeeklySchedule;
 
 public class ChangeHourlyTransaction extends ChangeClassificationTransaction {
 
-    public ChangeHourlyTransaction(int empId) {
+    private double hourlyRate;
+
+
+    public ChangeHourlyTransaction(int empId, double hourlyRate) {
         super(empId);
-        //TODO Auto-generated constructor stub
+        this.hourlyRate = hourlyRate;
     }
 
     @Override
     PaymentSchedule getSchedule() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSchedule'");
+        return new WeeklySchedule();
     }
 
     @Override
     PaymentClassification getPaymentClassification() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPaymentClassification'");
+        return new HourlyClassification(hourlyRate);
     }
     
 }

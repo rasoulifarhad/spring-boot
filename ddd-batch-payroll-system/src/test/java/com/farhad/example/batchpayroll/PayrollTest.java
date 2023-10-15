@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import com.farhad.example.batchpayroll.domain.command.employee.AddCommissionedEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddHourlyEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddSalariedEmployee;
+import com.farhad.example.batchpayroll.domain.command.employee.ChangeNameTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.ServiceChargeTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.TimeCardTransaction;
@@ -172,5 +173,26 @@ public class PayrollTest {
         ServiceCharge serviceCharge = unionAffiliation.getServiceCharge(LocalDate.now());
         assertNotNull(serviceCharge);
         assertThat(12.25).isEqualTo(serviceCharge.getCharge());
+    }
+
+    @Test
+    public void changeNameTransactionTest() {
+        int empId = 2;
+        anHourlyEmployee(empId, 12.25).execute();
+        ChangeNameTransaction cnt = new ChangeNameTransaction(empId, "changed name #" + empId);
+        cnt.execute();
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        final String expectedName = "changed name #" + empId;
+        assertThat(employee.getName()).isEqualTo(expectedName);
+        
+    }
+
+    private static AddHourlyEmployee anHourlyEmployee(int empId, double hourlyRate) {
+        return new AddHourlyEmployee(
+            empId, 
+            "name #" + empId, 
+            "address #" + empId, 
+            hourlyRate);
     }
 }

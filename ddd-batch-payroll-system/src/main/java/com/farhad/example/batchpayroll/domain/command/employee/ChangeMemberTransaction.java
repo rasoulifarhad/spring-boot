@@ -1,10 +1,20 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
+import com.farhad.example.batchpayroll.domain.model.affiliation.Affiliation;
+import com.farhad.example.batchpayroll.domain.model.affiliation.UnionAffiliation;
+
 public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
 
-    public ChangeMemberTransaction(int empId) {
+    private double dues;
+
+    public ChangeMemberTransaction(int empId, double dues) {
         super(empId);
-        //TODO Auto-generated constructor stub
+        this.dues = dues;
+    }
+
+    @Override
+    Affiliation getAffiliation() {
+        return new UnionAffiliation(dues);
     }
     
 }

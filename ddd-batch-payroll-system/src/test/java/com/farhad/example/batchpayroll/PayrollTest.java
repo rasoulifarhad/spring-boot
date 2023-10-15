@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import com.farhad.example.batchpayroll.domain.command.employee.AddCommissionedEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddHourlyEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.AddSalariedEmployee;
+import com.farhad.example.batchpayroll.domain.command.employee.ChangeAddressTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeNameTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
 import com.farhad.example.batchpayroll.domain.command.employee.ServiceChargeTransaction;
@@ -185,6 +186,19 @@ public class PayrollTest {
         assertNotNull(employee);
         final String expectedName = "changed name #" + empId;
         assertThat(employee.getName()).isEqualTo(expectedName);
+        
+    }
+
+    @Test
+    public void changeAddressTransactionTest() {
+        int empId = 2;
+        anHourlyEmployee(empId, 12.25).execute();
+        ChangeAddressTransaction cat = new ChangeAddressTransaction(empId, "changed address #" + empId);
+        cat.execute();
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        final String expectedAddress = "changed address #" + empId;
+        assertThat(employee.getAddress()).isEqualTo(expectedAddress);
         
     }
 

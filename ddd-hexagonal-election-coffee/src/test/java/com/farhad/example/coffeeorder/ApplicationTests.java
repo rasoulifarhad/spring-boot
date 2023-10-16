@@ -35,7 +35,7 @@ class ApplicationTests {
 
 	@Test
 	public void processNewOrder() throws Exception{
-		UUID orderId = placeOrder();
+			UUID orderId = placeOrder();
 		payOrder(orderId);
 		prepareOrder(orderId);
 		readReceipt(orderId);
@@ -52,7 +52,7 @@ class ApplicationTests {
         mockMvc.perform(delete("/order/{id}", orderId))
                 .andExpect(status().isNoContent());
     }
-		
+
 	private void takeOrder(UUID orderId) throws Exception {
 		mockMvc.perform(delete("/receipt/{id}", orderId))
 					.andExpect(status().isOk());		

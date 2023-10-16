@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farhad.example.dddmonolithic.apis.assembler.ProductAssembler;
@@ -26,13 +26,18 @@ public class ProductController {
 	private final ProductService  productService;
 	private final ProductAssembler productAssembler;
 
-    @GetMapping(produces = "application/json")
+    @GetMapping
+	// @ApiOperation("Get all products")
     public List<ProductResponse> getAllProducts() {
         final List<Product> products = productService.getProducts();
         return productAssembler.toProductResponseList(products);
     }
 
-    @RequestMapping(value = "/{productId}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping("/{productId}")
+	// @ApiOperation("Get product by id")
+	// @ApiImplicitParams	({
+	// 	@ApiImplicitParam(name = "productId", required = true, defaultValue = "1") 
+	// })
     public ProductResponse getProductById(@PathVariable("productId") final Long productId) {
 
         final Product product = productService.getProductById(productId);
@@ -40,13 +45,14 @@ public class ProductController {
     }
 
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping
+	// @ApiOperation("Create new product")
     public ProductResponse createProduct(@RequestBody ProductCreationRequest productCreationRequest) {
         Product product = productAssembler.toDomainObject(productCreationRequest);
         return productAssembler.toProductResponse(productService.save(product));
     }
 
-    @RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
+    @PutMapping("/{productId}")
     public void updateProduct(@PathVariable("productId") final Long productId,
                               @RequestBody ProductCreationRequest productUpdateRequest){
         Product newProduct = productAssembler.toDomainObject(productUpdateRequest);

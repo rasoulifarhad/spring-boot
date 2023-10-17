@@ -8,4 +8,8 @@ import lombok.Value;
 public class Title {
 
 	private String value;
+
+	public static Title of(String value) {
+		return new Title(value);
+	}
 }

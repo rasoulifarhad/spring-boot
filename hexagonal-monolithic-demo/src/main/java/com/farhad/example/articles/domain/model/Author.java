@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 @Setter
 @AllArgsConstructor
-@Builder
+@Builder(setterPrefix = "with")
 @NoArgsConstructor
 public class Author {
 

@@ -14,4 +14,8 @@ public class PersonName {
 		return firstName + " " + lastName;
 	}
 
+	public static PersonName of(String name) {
+		return new PersonName(name, "");
+	}
+
 }

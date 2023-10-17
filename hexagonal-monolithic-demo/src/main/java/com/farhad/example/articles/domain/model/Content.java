@@ -8,4 +8,9 @@ import lombok.Value;
 public class Content {
 
 	private String value;
+
+	public static Content of(String value) {
+		return new Content(value);
+	}
+
 }

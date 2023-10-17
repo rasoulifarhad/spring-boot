@@ -4,6 +4,7 @@ import com.farhad.example.articles.domain.model.Article;
 
 public interface ArticleMessageSender {
 
-	void sendMessageForCreated(Article article);
+	public void sendMessageForCreated(final Article article);
+	public void sendMessageForRetrieved(final Article article);
 
 }

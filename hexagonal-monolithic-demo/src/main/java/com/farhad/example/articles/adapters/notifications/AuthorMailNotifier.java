@@ -1,14 +1,16 @@
 package com.farhad.example.articles.adapters.notifications;
 
+import org.springframework.stereotype.Component;
+
 import com.farhad.example.articles.domain.model.Article;
 import com.farhad.example.articles.domain.ports.AuthorNotifier;
 
+@Component
 public class AuthorMailNotifier implements AuthorNotifier {
 
 	@Override
-	public Object notifyAboutCreationOf(Article article) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'notifyAboutCreationOf'");
+	public void notifyAboutCreationOf(Article article) {
+		System.out.println(ArticleMailModel.of(article));
 	}
 	
 }

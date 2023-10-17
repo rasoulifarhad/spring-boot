@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.Value;
 
 @Getter
 @EqualsAndHashCode(of = "articleId")
@@ -25,14 +24,4 @@ public class Author {
 		return personName.getName();
 	}
 
-	@AllArgsConstructor
-	@Value
-	public static class AuthorId {
-
-		private String value;
-
-		public static AuthorId of(String value) {
-			return new AuthorId(value);
-		}
-	}
 }

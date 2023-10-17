@@ -1,6 +1,6 @@
 package com.farhad.example.articles.adapters.apis;
 
-import com.farhad.example.articles.domain.model.Article.ArticleId;
+import com.farhad.example.articles.domain.model.ArticleId;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

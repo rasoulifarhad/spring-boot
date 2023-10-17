@@ -7,7 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.Value;
+
+/**
+ * External dependencies (outbound ports) of Article domain stand for:
+ * 
+ *  - persisting and retrieving an article via ArticleRepository port,
+ *  - retrieving an author via AuthorRepository port,
+ *  - notifying the author about the successful publication of an article via AuthorNotifier port,
+ *  - posting information about an article to social media via SocialMediaPublisher port,
+ *  - sending a message, triggered either by article creation or retrieval, to a message broker via ArticleMessageSender port.
+ *  
+ */
 
 @Getter
 @EqualsAndHashCode(of = "articleId")
@@ -23,28 +33,9 @@ public class Article {
 	private Content content;
 	private Author author;
 
-	@AllArgsConstructor
-	@Value
-	public static class ArticleId {
 
-		private String value;
+	public void validateEligibilityForPublication() {
 
-		public static ArticleId of(String value) {
-			return new ArticleId(value);
-		}
-	}
-
-	@AllArgsConstructor
-	@Value
-	public static class Title {
-
-		private String value;
-	}
-	@AllArgsConstructor
-	@Value
-	public static class Content {
-
-		private String value;
 	}
 
 }

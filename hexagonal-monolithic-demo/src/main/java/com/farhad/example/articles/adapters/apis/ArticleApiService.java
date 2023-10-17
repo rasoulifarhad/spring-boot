@@ -3,7 +3,10 @@ package com.farhad.example.articles.adapters.apis;
 import org.springframework.stereotype.Component;
 
 import com.farhad.example.articles.domain.model.Article;
-import com.farhad.example.articles.domain.model.Article.ArticleId;
+import com.farhad.example.articles.domain.model.ArticleId;
+import com.farhad.example.articles.domain.model.AuthorId;
+import com.farhad.example.articles.domain.model.Content;
+import com.farhad.example.articles.domain.model.Title;
 import com.farhad.example.articles.domain.ports.ArticleService;
 
 import lombok.RequiredArgsConstructor;
@@ -15,9 +18,9 @@ public class ArticleApiService {
 	private final ArticleService articleService;
 	ArticleIdResponse create(ArticleRequest articleRequest) {
 		final ArticleId articleId = articleService.create(
-			articleRequest.getAuthorId(),
-			articleRequest.getTitle(),
-			articleRequest.getContent());
+					AuthorId.of(articleRequest.getAuthorId()),
+					new Title(articleRequest.getTitle()),
+					new Content(articleRequest.getContent()));
 		return ArticleIdResponse.of(articleId);
 	}
 

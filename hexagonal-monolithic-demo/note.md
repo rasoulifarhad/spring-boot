@@ -1,5 +1,5 @@
 
-from https://blog.allegro.tech/2020/05/hexagonal-architecture-by-example.html
+See https://blog.allegro.tech/2020/05/hexagonal-architecture-by-example.html
 See https://refactorizando.com/en/example-hexagonal-architecture-spring-data/
 See https://www.javainuse.com/spring/boot_hex
 See https://reflectoring.io/spring-hexagonal/

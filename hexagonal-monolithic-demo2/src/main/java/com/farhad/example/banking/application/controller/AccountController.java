@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farhad.example.banking.domain.port.incoming.Deposit;
-import com.farhad.example.banking.domain.port.incoming.Withdraw;
+import com.farhad.example.banking.domain.port.incoming.DepositUseCase;
+import com.farhad.example.banking.domain.port.incoming.WithdrawUseCase;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountController {
 
-	private final Deposit depositUseCase;
-	private final Withdraw withdrawUseCase;
+	private final DepositUseCase depositUseCase;
+	private final WithdrawUseCase withdrawUseCase;
 
 	@PostMapping("/{accountNo}/deposit/{depositAmount}")
 	public void deposit(@PathVariable final Long accountNo, @PathVariable final BigDecimal depositAmount) {

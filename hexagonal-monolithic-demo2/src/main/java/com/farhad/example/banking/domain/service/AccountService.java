@@ -3,15 +3,15 @@ package com.farhad.example.banking.domain.service;
 import java.math.BigDecimal;
 
 import com.farhad.example.banking.domain.model.Account;
-import com.farhad.example.banking.domain.port.incoming.Deposit;
-import com.farhad.example.banking.domain.port.incoming.Withdraw;
+import com.farhad.example.banking.domain.port.incoming.DepositUseCase;
+import com.farhad.example.banking.domain.port.incoming.WithdrawUseCase;
 import com.farhad.example.banking.domain.port.outgoing.PersistAccount;
 import com.farhad.example.banking.domain.port.outgoing.RetrieveAccount;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class AccountService implements Deposit, Withdraw {
+public class AccountService implements DepositUseCase, WithdrawUseCase {
 
 	private final PersistAccount persistAccount;
 	private final RetrieveAccount retrieveAccount;

@@ -1,4 +1,4 @@
-package com.farhad.example.banking.infrastructure.persistence.jpa;
+package com.farhad.example.banking.infrastructure.persistence.mongo;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -14,17 +14,16 @@ import lombok.RequiredArgsConstructor;
 @Profile("jpa")
 public class AccountRepository implements PersistAccount, RetrieveAccount{
 
-	private final SpringJpaAccountRepository springJpaAccountRepository;
+	private final SpringDataBankAccountRepository accountRepository;
 
 	@Override
 	public Account load(Long accountNo) {
-		return springJpaAccountRepository.findById(accountNo).orElse(null);
+		return accountRepository.findById(accountNo).orElse(null);
 	}
 
 	@Override
 
 	public void save(Account account) {
-		springJpaAccountRepository.save(account);
+		accountRepository.save(account);
 	}
-	
 }

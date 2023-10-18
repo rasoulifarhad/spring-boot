@@ -8,7 +8,7 @@
 		<version>2.7.16</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.farhad.example.</groupId>
+	<groupId>com.farhad.example</groupId>
 	<artifactId>onion-arch-shopping-infra-api-rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>onion-arch-shopping-infra-api-rest</name>

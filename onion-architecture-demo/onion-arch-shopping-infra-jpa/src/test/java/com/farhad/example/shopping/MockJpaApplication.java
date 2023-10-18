@@ -1,13 +1,12 @@
-package com.farhad.example.shopping.infra.jpa;
+package com.farhad.example.shopping;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class MockJpaApplication {
 	
-
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(MockJpaApplication.class, args);
 	}
 }

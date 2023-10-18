@@ -42,7 +42,7 @@ public class ShoppingListController {
 		return ResponseEntity.created(uriComponents.toUri()).build();
 	}
 
-	@PostMapping("/{shoppingList}/items")
+	@PostMapping("/{shoppingListId}/items")
     @ApiOperation(value = "Add new item to a shopping list", produces = "application/json")
 	ResponseEntity<?> addItemToShoppingList(
 				UriComponentsBuilder uriComponentsBuilder,

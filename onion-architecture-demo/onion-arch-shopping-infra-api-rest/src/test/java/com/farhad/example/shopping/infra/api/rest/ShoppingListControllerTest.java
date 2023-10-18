@@ -14,9 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(ShoppingListController.class)
 public class ShoppingListControllerTest {
 	
-	protected static final String BASE_URI = "/api/v1/shoppinglists";
-
-	private static final UUID MOCK_SHOPPING_LIST_ID = UUID.randomUUID();
+	protected static final String SHOPPING_LIST_URI = "/api/v1/shoppinglists";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -24,13 +22,14 @@ public class ShoppingListControllerTest {
 	@Test
 	public void createShoppingListTest() throws Exception {
 		mockMvc.perform(
-					post(BASE_URI + "/"))
+					post(SHOPPING_LIST_URI + "/"))
 				.andExpect(status().isCreated());
 	}
 
    @Test
     void addItemToTheShoppingList() throws Exception {
-        String uri = String.format("%s/%s/items", BASE_URI, MOCK_SHOPPING_LIST_ID);
+		UUID shippingListId = UUID.randomUUID();
+        String uri = String.format("%s/%s/items", SHOPPING_LIST_URI, shippingListId);
         mockMvc
             .perform(post(uri)
                 .queryParam("productName", "milk")
@@ -42,8 +41,19 @@ public class ShoppingListControllerTest {
 
     @Test
     void getTotalPrice() throws Exception {
-        String uri = String.format("%s/%s/totalprice", BASE_URI, MOCK_SHOPPING_LIST_ID);
-        mockMvc.perform(get(uri))
+
+		UUID shippingListId = UUID.randomUUID();
+        String uri = String.format("%s/%s/items", SHOPPING_LIST_URI, shippingListId);
+        mockMvc
+            .perform(post(uri)
+                .queryParam("productName", "milk")
+                .queryParam("price", "3.8")
+                .queryParam("quantity", "1")
+            )
+            .andExpect(status().isCreated());
+
+		String totalPriceUri = String.format("%s/%s/totalprice", SHOPPING_LIST_URI, shippingListId);
+        mockMvc.perform(get(totalPriceUri))
             .andExpect(status().isOk());
     }	
 }

@@ -78,7 +78,7 @@ public class ShoppingList {
 		return STANDARD_SHIPPING_COSTS;
 	}
 
-	public Double getTottalPrice() {
+	public Double getTotalPrice() {
 		return getSubTotalPrice() + getShippingCosts();
 	}
 

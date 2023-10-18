@@ -14,4 +14,5 @@ See http://gorodinski.com/blog/2012/04/14/services-in-domain-driven-design-ddd/
 See https://www.baeldung.com/hexagonal-architecture-ddd-spring
 See https://rskupnik.github.io/framework-independence-with-hexagonal-architecture
 See https://beyondxscratch.com/2020/08/23/hexagonal-architecture-example-digging-a-spring-boot-implementation/
+See https://betterprogramming.pub/hexagonal-architecture-with-spring-boot-74e93030eba3
 

@@ -42,26 +42,28 @@ public class Employee {
     }
 
     public PayCheck payday(Instant date) {
-        PayCheck payCheck = null;
-        if(isPayDay(date)) {
-            double amount = paymentClassification.calculatePay(date);
-            paymentMethod.pay(amount);
-            post(date);
-            payCheck = PayCheck.builder()
-                            .payDate(date)
-                            .empId(employeeId)
-                            .grossPay(amount)
-                            .deduction(0.0)
-                            .disposition("Hold")
-                            .netPay(amount)
-                            .build();
-        }
-        return payCheck;
+        PayCheck payCheck = new PayCheck(date);
+        return payday(payCheck);
     }
 
     private void post(Instant date) {
         paymentClassification.post(date);
         affiliation.post(date);
+    }
+
+    public PayCheck payday(PayCheck payCheck) {
+        Instant date = payCheck.getPayDate();
+        if(isPayDay(date)) {
+            double amount = paymentClassification.calculatePay(date);
+            paymentMethod.pay(amount);
+            post(date);
+            payCheck.setEmpId(employeeId);
+            payCheck.setGrossPay(amount);
+            payCheck.setDeduction(0.0);
+            payCheck.setDisposition("Hold");
+            payCheck.setNetPay(amount);
+        }
+        return payCheck;
     }
 
 }

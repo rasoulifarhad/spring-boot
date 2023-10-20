@@ -18,8 +18,18 @@ public class PaydayTransaction implements Transaction {
     public void execute() {
         List<Employee> employees = PayrollDatabase.inmemory().getEmployees();
         for (Employee employee : employees) {
-            employee.payday(date);
+            if(employee.isPayDay(date)) {
+                // PayCheck payCheck = new PayCheck(date);
+                // PayCheck payCheck = employee.payday(payCheck);
+
+                PayCheck payCheck = employee.payday(date);
+            }
+           
         }
+    }
+
+    public PayCheck getPayCheck(int empId) {
+        return null;
     }
     
 }

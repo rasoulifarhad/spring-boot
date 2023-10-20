@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,8 @@ import com.farhad.example.batchpayroll.domain.command.employee.ChangeMemberTrans
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeNameTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeSalariedTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
+import com.farhad.example.batchpayroll.domain.command.employee.PayCheck;
+import com.farhad.example.batchpayroll.domain.command.employee.PaydayTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ServiceChargeTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.TimeCardTransaction;
 import com.farhad.example.batchpayroll.domain.model.ServiceCharge;
@@ -317,6 +320,38 @@ public class PayrollTest {
         assertThat(employee).isEqualTo(member);
     }
         
+    @Test
+    void paySingleSalariedEmployeeTest() {
+        int empId = 2;
+        AddSalariedEmployee t = aSalariedEmp(empId, 1000.00);
+        t.execute();
+        Instant date = Instant.from( LocalDate.of(2001, 11, 30));
+
+        PaydayTransaction pdt = new PaydayTransaction(date);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNotNull(payCheck);
+        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertEquals(1000.00, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition).isEqualTo("Hold");
+        assertEquals(0.0, payCheck.getDeduction(), 0.001);
+        assertEquals(1000.00, payCheck.getNetPay(), 0.001);
+    }
+
+    @Test
+    void paySingleSalariedEmployeeOnWrongDateTest() {
+        int empId = 2;
+        AddSalariedEmployee t = aSalariedEmp(empId, 1000.00);
+        t.execute();
+        Instant date = Instant.from( LocalDate.of(2001, 11, 29));
+
+        PaydayTransaction pdt = new PaydayTransaction(date);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNull(payCheck);
+    }
+    
+
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {
         return new AddHourlyEmployee(
             empId, 

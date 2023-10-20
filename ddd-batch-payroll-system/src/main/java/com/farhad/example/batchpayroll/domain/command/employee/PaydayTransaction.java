@@ -23,6 +23,7 @@ public class PaydayTransaction implements Transaction {
         for (Employee employee : employees) {
             if(employee.isPayDay(date)) {
                 PayCheck payCheck = new PayCheck(date);
+                payChecks.put(employee.getEmployeeId(), payCheck);
                 employee.payday(payCheck);
 
                 // PayCheck payCheck = employee.payday(date);

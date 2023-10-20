@@ -12,6 +12,9 @@ See https://medium.com/@msandin/strategies-for-organizing-code-2c9d690b6f33
 See https://martinfowler.com/bliki/PresentationDomainDataLayering.html
 
 See https://dev.to/bertilmuth/implementing-a-hexagonal-architecture-1kgf
+See https://github.com/bertilmuth/poem-hexagon/tree/master
+See https://speakerdeck.com/thirion/clean-architecture-hands-on
+See https://github.com/bertilmuth/modern-clean-architecture
 
 ### Principles of Hexagonal Architecture
 

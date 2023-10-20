@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.farhad.example.petclinic.application.pet.PetService;
 import com.farhad.example.petclinic.domain.model.customer.Customer;
+import com.farhad.example.petclinic.domain.model.pet.Pet;
 import com.farhad.example.petclinic.domain.port.incoming.CustomerUseCase;
 import com.farhad.example.petclinic.domain.port.outgoing.CustomerRepository;
 
@@ -17,19 +18,21 @@ public class CustomerService implements CustomerUseCase {
 
 	@Override
 	public Customer get(long id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'get'");
+		return customerRepository.get(id)
+					.orElse(null);
+					
 	}
 
 	@Override
 	public List<Customer> getAll() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+		return customerRepository.getAll();
 	}
 
 	@Override
 	public void add(Customer customer) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'add'");
+		for (Pet pet : customer.getPets()) {
+			petService.add(pet);
+		}
+		customerRepository.add(customer);
 	}
 }

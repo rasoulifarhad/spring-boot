@@ -15,14 +15,12 @@ public class PetService implements PetUseCase {
 
 	@Override
 	public List<Pet> getAllPet() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAllPet'");
+		return petRepository.getAll();
 	}
 
 	@Override
 	public void add(Pet pet) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'add'");
+		petRepository.add(pet);
 	}
 	
 }

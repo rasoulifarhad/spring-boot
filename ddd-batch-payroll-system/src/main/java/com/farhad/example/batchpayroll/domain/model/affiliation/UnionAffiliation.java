@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class UnionAffiliation implements Affiliation{
     
+    private final int memberId;
     private final double dues;
     private List<ServiceCharge> serviceCharges = new ArrayList<>();
     

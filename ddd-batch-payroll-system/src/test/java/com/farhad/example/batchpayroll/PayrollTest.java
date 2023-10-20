@@ -19,6 +19,7 @@ import com.farhad.example.batchpayroll.domain.command.employee.ChangeCommissione
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeDirectTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeHourlyTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeMailTransaction;
+import com.farhad.example.batchpayroll.domain.command.employee.ChangeMemberTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeNameTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.ChangeSalariedTransaction;
 import com.farhad.example.batchpayroll.domain.command.employee.DeleteEmployee;
@@ -172,9 +173,9 @@ public class PayrollTest {
         hourlyEmployee.execute();
         Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
         assertNotNull(employee);
-        UnionAffiliation unionAffiliation = new UnionAffiliation(12.25);
-        employee.setAffiliation(unionAffiliation);
         int memberId = 86;
+        UnionAffiliation unionAffiliation = new UnionAffiliation(memberId, 12.25);
+        employee.setAffiliation(unionAffiliation);
         PayrollDatabase.inmemory().addUnionMember(memberId, employee);
         ServiceChargeTransaction serviceChargeTransaction = new ServiceChargeTransaction(memberId, LocalDate.now(), 12.25);
         serviceChargeTransaction.execute();
@@ -295,6 +296,27 @@ public class PayrollTest {
     }
     
    
+   @Test
+    public void changeMemberTransactionTest() {
+        int empId = 2;
+        int memberId = 7734;
+        AddHourlyEmployee t = anHourlyEmp(empId, 12.25);
+        t.execute();
+              
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId,99.42);
+        cmt.execute();
+        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        assertNotNull(employee);
+        assertNotNull(employee.getAffiliation());
+         
+        assertTrue(employee.getAffiliation() instanceof UnionAffiliation );
+        UnionAffiliation uf = (UnionAffiliation) employee.getAffiliation();
+        assertEquals( 99.42, uf.getDues(), 0.001);
+        Employee member = PayrollDatabase.inmemory().getEmployeeByMemberId(memberId);
+        assertNotNull(member);
+        assertThat(employee).isEqualTo(member);
+    }
+        
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {
         return new AddHourlyEmployee(
             empId, 

@@ -17,7 +17,7 @@ public abstract class ChangeEmployeeTransaction implements Transaction {
 
     @Override
     public void execute() {
-        Employee employee = PayrollDatabase.inmemory().getEmployee(empId);
+        Employee employee = PayrollDatabase.inmemory().getEmployee(Integer.valueOf(empId));
         if (employee != null) {
             change(employee);
         }

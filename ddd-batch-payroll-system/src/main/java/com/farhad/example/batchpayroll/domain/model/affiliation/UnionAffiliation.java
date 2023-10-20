@@ -35,4 +35,10 @@ public class UnionAffiliation implements Affiliation{
                     .orElse(null);
     }
 
+    @Override
+    public void post(Instant date) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'post'");
+    }
+
 }

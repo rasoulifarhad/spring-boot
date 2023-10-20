@@ -50,6 +50,7 @@ public class Employee {
 
     private void post(Instant date) {
         paymentClassification.post(date);
+        affiliation.post(date);
     }
 
 }

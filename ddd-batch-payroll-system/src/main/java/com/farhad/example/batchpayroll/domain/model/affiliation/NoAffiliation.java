@@ -11,5 +11,11 @@ public class NoAffiliation implements Affiliation{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getFee'");
     }
+
+    @Override
+    public void post(Instant date) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'post'");
+    }
     
 }

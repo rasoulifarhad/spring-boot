@@ -11,6 +11,8 @@ See https://reflectoring.io/spring-hexagonal/
 See https://medium.com/@msandin/strategies-for-organizing-code-2c9d690b6f33
 See https://martinfowler.com/bliki/PresentationDomainDataLayering.html
 
+See https://dev.to/bertilmuth/implementing-a-hexagonal-architecture-1kgf
+
 ### Principles of Hexagonal Architecture
 
 #### Principle: Separate User-Side, Business Logic and Server-Side
@@ -40,3 +42,30 @@ See https://martinfowler.com/bliki/PresentationDomainDataLayering.html
 #### Another Metaphor: the Hexagone
 
 ![](archi_hexa_en_06.png)
+
+#### Detail: Dependencies inversion on the right
+
+![](archi_hexa_en_07.png)
+
+
+![](archi_hexa_en_08.png)
+
+![](archi_hexa_en_09.png)
+
+#### Detail: Why an Interface on the left?
+
+![](archi_hexa_en_10.webp)
+
+#### Testing in Hexagonal Architecture
+
+##### How to replace some code from the User-Side?
+
+![](archi_hexa_en_11.webp)
+
+
+##### How to replace some code of the Server-Side?
+
+![](archi_hexa_en_12.webp)
+
+
+!

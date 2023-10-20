@@ -1,8 +1,8 @@
 package com.farhad.example.batchpayroll.domain.model.affiliation;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.farhad.example.batchpayroll.domain.model.ServiceCharge;
@@ -20,7 +20,7 @@ public class UnionAffiliation implements Affiliation{
     private List<ServiceCharge> serviceCharges = new ArrayList<>();
     
     @Override
-    public Fee getFee(Date date) {
+    public Fee getFee(Instant date) {
         throw new UnsupportedOperationException("Unimplemented method 'getFee'");
     }
 

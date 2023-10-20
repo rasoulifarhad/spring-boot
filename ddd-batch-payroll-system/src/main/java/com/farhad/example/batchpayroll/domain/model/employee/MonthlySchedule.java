@@ -1,11 +1,11 @@
 package com.farhad.example.batchpayroll.domain.model.employee;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class MonthlySchedule implements PaymentSchedule {
 
     @Override
-    public boolean isPayDay(Date date) {
+    public boolean isPayDay(Instant date) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isPayDay'");
     }

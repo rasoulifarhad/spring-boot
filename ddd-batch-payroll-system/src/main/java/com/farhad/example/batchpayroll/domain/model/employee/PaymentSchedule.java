@@ -1,7 +1,7 @@
 package com.farhad.example.batchpayroll.domain.model.employee;
 
-import java.util.Date;
+import java.time.Instant;
 
 public interface PaymentSchedule {
-    boolean isPayDay(Date date);
+    boolean isPayDay(Instant date);
 }

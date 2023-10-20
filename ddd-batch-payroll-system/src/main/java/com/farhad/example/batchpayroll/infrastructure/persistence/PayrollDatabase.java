@@ -1,6 +1,8 @@
 package com.farhad.example.batchpayroll.infrastructure.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.farhad.example.batchpayroll.domain.model.employee.Employee;
@@ -68,9 +70,16 @@ public interface PayrollDatabase {
         public void removeUnionMember(int memberId) {
             membersIdtoEmployeeIdMap.remove(Integer.valueOf(memberId));
         }
+
+        @Override
+        public List<Employee> getEmployees() {
+            return new ArrayList<>( employees.values());
+        }
         
 
     }
+
+    List<Employee> getEmployees();
 
 }
 

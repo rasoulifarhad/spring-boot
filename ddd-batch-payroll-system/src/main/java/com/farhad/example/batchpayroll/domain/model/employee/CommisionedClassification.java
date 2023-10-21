@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.farhad.example.batchpayroll.domain.command.employee.PayCheck;
+
 import lombok.Data;
 
 @Data
@@ -30,7 +32,7 @@ public class CommisionedClassification implements PaymentClassification {
 
 
     @Override
-    public double calculatePay(LocalDate date) {
+    public double calculatePay(PayCheck payCheck) {
         throw new UnsupportedOperationException("Unimplemented method 'calculatePay'");
     }
 

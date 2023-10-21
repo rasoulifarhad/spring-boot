@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.farhad.example.batchpayroll.domain.command.employee.PayCheck;
 import com.farhad.example.batchpayroll.domain.model.ServiceCharge;
-import com.farhad.example.batchpayroll.domain.model.employee.Fee;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +18,6 @@ public class UnionAffiliation implements Affiliation{
     private final double dues;
     private List<ServiceCharge> serviceCharges = new ArrayList<>();
     
-    @Override
-    public Fee getFee(LocalDate date) {
-        throw new UnsupportedOperationException("Unimplemented method 'getFee'");
-    }
 
     public void addServiceCharge(ServiceCharge serviceCharge) {
         serviceCharges.add(serviceCharge);
@@ -37,6 +33,11 @@ public class UnionAffiliation implements Affiliation{
     @Override
     public void post(LocalDate date) {
         throw new UnsupportedOperationException("Unimplemented method 'post'");
+    }
+
+    @Override
+    public double calculateDeductions(PayCheck payCheck) {
+        return dues;
     }
 
 }

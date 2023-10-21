@@ -32,8 +32,6 @@ public class Employee {
 
     public double calculatePay(LocalDate date) {
         double pay =  paymentClassification.getSalary();
-        Fee fee = affiliation.getFee(date);
-        pay = fee.apply(pay);
         return pay;
     }
      
@@ -54,14 +52,14 @@ public class Employee {
     public PayCheck payday(PayCheck payCheck) {
         LocalDate date = payCheck.getPayDate();
         if(isPayDay(date)) {
-            double amount = paymentClassification.calculatePay(date);
-            paymentMethod.pay(amount);
-            post(date);
+            double grossPay = paymentClassification.calculatePay(payCheck);
+            double deductions = affiliation.calculateDeductions(payCheck);
+            double netPay = grossPay - deductions;
             payCheck.setEmpId(employeeId);
-            payCheck.setGrossPay(amount);
-            payCheck.setDeduction(0.0);
-            payCheck.setDisposition("Hold");
-            payCheck.setNetPay(amount);
+            payCheck.setGrossPay(grossPay);
+            payCheck.setDeduction(deductions);
+            payCheck.setNetPay(netPay);
+            paymentMethod.pay(payCheck);
         }
         return payCheck;
     }

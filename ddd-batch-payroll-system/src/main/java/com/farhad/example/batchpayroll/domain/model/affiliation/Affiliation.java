@@ -2,11 +2,11 @@ package com.farhad.example.batchpayroll.domain.model.affiliation;
 
 import java.time.LocalDate;
 
-import com.farhad.example.batchpayroll.domain.model.employee.Fee;
+import com.farhad.example.batchpayroll.domain.command.employee.PayCheck;
 
 public interface Affiliation {
 
-    Fee getFee(LocalDate date);
+    double calculateDeductions(PayCheck payCheck);
 
     void post(LocalDate date);
     

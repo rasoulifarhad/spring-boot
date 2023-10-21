@@ -2,6 +2,8 @@ package com.farhad.example.batchpayroll.domain.model.employee;
 
 import java.time.LocalDate;
 
+import com.farhad.example.batchpayroll.domain.command.employee.PayCheck;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,7 +14,7 @@ public class SalariedClassification implements PaymentClassification {
     private double salary;
 
     @Override
-    public double calculatePay(LocalDate date) {
+    public double calculatePay(PayCheck payCheck) {
         return salary;
     }
 

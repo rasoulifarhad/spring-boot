@@ -10,5 +10,5 @@ public interface CustomerRepository {
 
     Optional<Customer> get(Long id);
 
-    void add(Customer customer);	
+    Long add(Customer customer);	
 }

@@ -20,11 +20,11 @@ public abstract class InMemoryRepository<T> {
 		return new ArrayList<>(storage.values());
 	}
 
-	protected Optional<T> getById(Long id) {
+	protected Optional<T> get(Long id) {
 		return Optional.ofNullable(storage.get(id));
 	}
 
-	protected Long save(T entity) {
+	protected Long add(T entity) {
 		Long id = Long.valueOf(nextId());
 		storage.put(id, entity);
 		return id;

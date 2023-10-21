@@ -52,6 +52,7 @@ public class Employee {
     public PayCheck payday(PayCheck payCheck) {
         LocalDate date = payCheck.getPayDate();
         if(isPayDay(date)) {
+            System.out.println("is pay day");
             double grossPay = paymentClassification.calculatePay(payCheck);
             double deductions = affiliation.calculateDeductions(payCheck);
             double netPay = grossPay - deductions;

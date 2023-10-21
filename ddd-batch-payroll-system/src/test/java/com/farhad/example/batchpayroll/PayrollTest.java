@@ -351,6 +351,26 @@ public class PayrollTest {
         assertNull(payCheck);
     }
     
+    @Test
+    public void paySingleHourlyEmployeeNoTimeCardsTest() {
+        int empId = 2;
+        AddHourlyEmployee t = anHourlyEmp(empId, 15.25);
+        t.execute();
+        LocalDate date = LocalDate.of(2001, 11, 9);
+        System.out.println(date.getDayOfWeek());
+        PaydayTransaction pdt = new PaydayTransaction(date);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNotNull(payCheck);
+        System.out.println(payCheck);
+        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertEquals(0.0, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
+        assertEquals(0.0, payCheck.getDeduction(), 0.001);
+        assertEquals(0.0, payCheck.getNetPay(), 0.001);
+
+    }
+
 
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {
         return new AddHourlyEmployee(

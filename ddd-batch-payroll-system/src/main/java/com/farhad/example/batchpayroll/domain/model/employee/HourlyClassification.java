@@ -38,12 +38,13 @@ public class HourlyClassification implements PaymentClassification{
 
     @Override
     public double calculatePay(PayCheck payCheck) {
-        throw new UnsupportedOperationException("Unimplemented method 'calculatePay'");
+        return timeCards.stream()
+            .mapToDouble(value -> value.getHours() * hourlyRate )
+            .sum();
     }
 
     @Override
     public void post(LocalDate date) {
-        throw new UnsupportedOperationException("Unimplemented method 'post'");
     }
     
     

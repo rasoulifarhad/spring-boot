@@ -1,6 +1,6 @@
 package com.farhad.example.batchpayroll.domain.model.employee;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -8,6 +8,6 @@ import lombok.Value;
 @AllArgsConstructor
 @Value
 public class SalesReceipt {
-    private Instant date;
+    private LocalDate date;
     private double amount;
 }

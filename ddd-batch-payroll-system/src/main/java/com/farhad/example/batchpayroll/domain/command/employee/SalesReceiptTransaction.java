@@ -1,6 +1,6 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import com.farhad.example.batchpayroll.domain.model.employee.CommisionedClassification;
 import com.farhad.example.batchpayroll.domain.model.employee.Employee;
@@ -16,7 +16,7 @@ import lombok.Value;
 @Value
 public class SalesReceiptTransaction implements Transaction {
 
-    private Instant date;
+    private LocalDate date;
     private double amount;
     private int employeeId;
 

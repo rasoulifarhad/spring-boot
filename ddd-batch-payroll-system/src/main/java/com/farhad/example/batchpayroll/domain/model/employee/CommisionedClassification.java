@@ -33,17 +33,19 @@ public class CommisionedClassification implements PaymentClassification {
 
     @Override
     public double calculatePay(PayCheck payCheck) {
-        return salesReceipts.stream()
-            .filter(salesReceipt -> isInPayPeriod(salesReceipt, payCheck.getPayDate()))
-            .mapToDouble(this::calculatePayForSalesRece)
-            .sum();
+        return salary + calculateCommision(payCheck);
 
     }
 
+    private double calculateCommision(PayCheck payCheck) {
+        return salesReceipts.stream()
+                            .filter(salesReceipt -> isInPayPeriod(salesReceipt, payCheck.getPayDate()))
+                            .mapToDouble(this::calculatePayForSalesRece)
+                            .sum();
+    }
 
     @Override
     public void post(LocalDate date) {
-        throw new UnsupportedOperationException("Unimplemented method 'post'");
     }
 
     private double calculatePayForSalesRece(SalesReceipt salesReceipt) {
@@ -53,7 +55,7 @@ public class CommisionedClassification implements PaymentClassification {
 
     private boolean isInPayPeriod(SalesReceipt salesReceipt, LocalDate payDate) {
         return 
-            salesReceipt.getDate().isAfter(payDate.minusWeeks(1)) 
+            salesReceipt.getDate().isAfter(payDate.minusWeeks(2)) 
                 ? salesReceipt.getDate().isBefore(payDate) || salesReceipt.getDate().isEqual(payDate)
                 : false;
     }

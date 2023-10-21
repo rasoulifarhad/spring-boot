@@ -13,12 +13,12 @@ public class SalariedClassification implements PaymentClassification {
 
     @Override
     public double calculatePay(LocalDate date) {
-        throw new UnsupportedOperationException("Unimplemented method 'calculatePay'");
+        return salary;
     }
 
     @Override
     public void post(LocalDate date) {
-        throw new UnsupportedOperationException("Unimplemented method 'post'");
+        
     }
 
 }

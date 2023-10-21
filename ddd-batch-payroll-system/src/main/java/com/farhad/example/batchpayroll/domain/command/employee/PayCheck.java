@@ -20,7 +20,6 @@ public class PayCheck {
     private double deduction;
     private double netPay;
     private String disposition;
-    public String getDisposition;
     
     public PayCheck(LocalDate payDate) {
         this.payDate = payDate;

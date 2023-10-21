@@ -330,9 +330,10 @@ public class PayrollTest {
         pdt.execute();
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
+        System.out.println(payCheck);
         assertThat(payCheck.getPayDate()).isEqualTo(date);
         assertEquals(1000.00, payCheck.getGrossPay(), 0.001);
-        assertThat(payCheck.getDisposition).isEqualTo("Hold");
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
         assertEquals(1000.00, payCheck.getNetPay(), 0.001);
     }

@@ -33,7 +33,7 @@ public class PaydayTransaction implements Transaction {
     }
 
     public PayCheck getPayCheck(int empId) {
-        return null;
+        return payChecks.get(Integer.valueOf(empId));
     }
     
 }

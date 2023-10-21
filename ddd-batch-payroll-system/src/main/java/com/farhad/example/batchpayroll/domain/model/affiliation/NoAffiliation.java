@@ -13,7 +13,6 @@ public class NoAffiliation implements Affiliation{
 
     @Override
     public void post(LocalDate date) {
-        throw new UnsupportedOperationException("Unimplemented method 'post'");
     }
     
 }

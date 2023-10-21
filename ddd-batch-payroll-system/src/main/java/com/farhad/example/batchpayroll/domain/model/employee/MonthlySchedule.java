@@ -1,13 +1,14 @@
 package com.farhad.example.batchpayroll.domain.model.employee;
 
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.YearMonth;
 
 public class MonthlySchedule implements PaymentSchedule {
 
     @Override
-    public boolean isPayDay(Instant date) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isPayDay'");
+    public boolean isPayDay(LocalDate date) {
+        YearMonth currebtYearMonth = YearMonth.from(date);
+        return currebtYearMonth.atEndOfMonth().isEqual(date);
     }
     
 }

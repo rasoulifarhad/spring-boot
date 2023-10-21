@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -325,7 +324,7 @@ public class PayrollTest {
         int empId = 2;
         AddSalariedEmployee t = aSalariedEmp(empId, 1000.00);
         t.execute();
-        Instant date = Instant.from( LocalDate.of(2001, 11, 30));
+        LocalDate date = LocalDate.of(2001, 11, 30);
 
         PaydayTransaction pdt = new PaydayTransaction(date);
         pdt.execute();
@@ -343,7 +342,7 @@ public class PayrollTest {
         int empId = 2;
         AddSalariedEmployee t = aSalariedEmp(empId, 1000.00);
         t.execute();
-        Instant date = Instant.from( LocalDate.of(2001, 11, 29));
+        LocalDate date = LocalDate.of(2001, 11, 29);
 
         PaydayTransaction pdt = new PaydayTransaction(date);
         pdt.execute();

@@ -1,6 +1,6 @@
 package com.farhad.example.batchpayroll.domain.model.employee;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import com.farhad.example.batchpayroll.domain.command.employee.PayCheck;
 import com.farhad.example.batchpayroll.domain.model.affiliation.Affiliation;
@@ -30,29 +30,29 @@ public class Employee {
         this.affiliation = new NoAffiliation();
     }
 
-    public double calculatePay(Instant date) {
+    public double calculatePay(LocalDate date) {
         double pay =  paymentClassification.getSalary();
         Fee fee = affiliation.getFee(date);
         pay = fee.apply(pay);
         return pay;
     }
      
-    public boolean isPayDay(Instant date) {
+    public boolean isPayDay(LocalDate date) {
         return itsSchedule.isPayDay(date);
     }
 
-    public PayCheck payday(Instant date) {
+    public PayCheck payday(LocalDate date) {
         PayCheck payCheck = new PayCheck(date);
         return payday(payCheck);
     }
 
-    private void post(Instant date) {
+    private void post(LocalDate date) {
         paymentClassification.post(date);
         affiliation.post(date);
     }
 
     public PayCheck payday(PayCheck payCheck) {
-        Instant date = payCheck.getPayDate();
+        LocalDate date = payCheck.getPayDate();
         if(isPayDay(date)) {
             double amount = paymentClassification.calculatePay(date);
             paymentMethod.pay(amount);

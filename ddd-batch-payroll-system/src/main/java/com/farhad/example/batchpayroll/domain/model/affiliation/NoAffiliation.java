@@ -1,20 +1,18 @@
 package com.farhad.example.batchpayroll.domain.model.affiliation;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import com.farhad.example.batchpayroll.domain.model.employee.Fee;
 
 public class NoAffiliation implements Affiliation{
 
     @Override
-    public Fee getFee(Instant date) {
-        // TODO Auto-generated method stub
+    public Fee getFee(LocalDate date) {
         throw new UnsupportedOperationException("Unimplemented method 'getFee'");
     }
 
     @Override
-    public void post(Instant date) {
-        // TODO Auto-generated method stub
+    public void post(LocalDate date) {
         throw new UnsupportedOperationException("Unimplemented method 'post'");
     }
     

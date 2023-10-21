@@ -1,6 +1,5 @@
 package com.farhad.example.batchpayroll.domain.model.affiliation;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class UnionAffiliation implements Affiliation{
     private List<ServiceCharge> serviceCharges = new ArrayList<>();
     
     @Override
-    public Fee getFee(Instant date) {
+    public Fee getFee(LocalDate date) {
         throw new UnsupportedOperationException("Unimplemented method 'getFee'");
     }
 
@@ -36,8 +35,7 @@ public class UnionAffiliation implements Affiliation{
     }
 
     @Override
-    public void post(Instant date) {
-        // TODO Auto-generated method stub
+    public void post(LocalDate date) {
         throw new UnsupportedOperationException("Unimplemented method 'post'");
     }
 

@@ -1,6 +1,6 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PaydayTransaction implements Transaction {
 
-    protected final Instant date;
+    protected final LocalDate date;
     private Map<Integer, PayCheck> payChecks = new HashMap<>();
     
     @Override

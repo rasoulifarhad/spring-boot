@@ -1,13 +1,13 @@
 package com.farhad.example.batchpayroll.domain.model.affiliation;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import com.farhad.example.batchpayroll.domain.model.employee.Fee;
 
 public interface Affiliation {
 
-    Fee getFee(Instant date);
+    Fee getFee(LocalDate date);
 
-    void post(Instant date);
+    void post(LocalDate date);
     
 }

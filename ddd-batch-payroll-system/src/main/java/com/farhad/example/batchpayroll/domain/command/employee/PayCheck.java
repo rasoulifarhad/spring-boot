@@ -1,6 +1,6 @@
 package com.farhad.example.batchpayroll.domain.command.employee;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class PayCheck {
 
 
-    private Instant payDate;
+    private LocalDate payDate;
     private int empId;
     private double grossPay;
     private double deduction;
@@ -22,7 +22,7 @@ public class PayCheck {
     private String disposition;
     public String getDisposition;
     
-    public PayCheck(Instant payDate) {
+    public PayCheck(LocalDate payDate) {
         this.payDate = payDate;
     }
 

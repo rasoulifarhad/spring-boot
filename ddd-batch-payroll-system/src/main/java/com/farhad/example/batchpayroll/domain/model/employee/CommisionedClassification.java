@@ -1,6 +1,6 @@
 package com.farhad.example.batchpayroll.domain.model.employee;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +30,13 @@ public class CommisionedClassification implements PaymentClassification {
 
 
     @Override
-    public double calculatePay(Instant date) {
-        // TODO Auto-generated method stub
+    public double calculatePay(LocalDate date) {
         throw new UnsupportedOperationException("Unimplemented method 'calculatePay'");
     }
 
 
     @Override
-    public void post(Instant date) {
-        // TODO Auto-generated method stub
+    public void post(LocalDate date) {
         throw new UnsupportedOperationException("Unimplemented method 'post'");
     }
 

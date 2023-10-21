@@ -38,6 +38,8 @@ public class HourlyClassification implements PaymentClassification{
 
     @Override
     public double calculatePay(PayCheck payCheck) {
+        System.out.println(timeCards);
+        System.out.println(hourlyRate);
         return timeCards.stream()
             .mapToDouble(value -> value.getHours() * hourlyRate )
             .sum();

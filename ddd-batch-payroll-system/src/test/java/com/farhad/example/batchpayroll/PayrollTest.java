@@ -371,6 +371,90 @@ public class PayrollTest {
 
     }
 
+    @Test
+    public void paySingleHourlyEmployeeOneTimeCardTest() {
+        int empId = 2;
+        AddHourlyEmployee t = anHourlyEmp(empId, 15.25);
+        t.execute();
+        LocalDate date = LocalDate.of(2001, 11, 9);
+        TimeCardTransaction tct = new TimeCardTransaction(date, 2.0, empId)        ;
+        tct.execute();
+        PaydayTransaction pdt = new PaydayTransaction(date);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNotNull(payCheck);
+        System.out.println(payCheck);
+        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertEquals(30.5, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
+        assertEquals(0.0, payCheck.getDeduction(), 0.001);
+        assertEquals(30.5, payCheck.getNetPay(), 0.001);
+    }
+
+    @Test
+    public void paySingleHourlyEmployeeOvertimeOneTimeCardTest() {
+        int empId = 2;
+        AddHourlyEmployee t = anHourlyEmp(empId, 15.25);
+        t.execute();
+        LocalDate date = LocalDate.of(2001, 11, 9);
+        TimeCardTransaction tct = new TimeCardTransaction(date, 9.0, empId)        ;
+        tct.execute();
+        PaydayTransaction pdt = new PaydayTransaction(date);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNotNull(payCheck);
+        System.out.println(payCheck);
+        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertEquals(( 8 + 1.5) * 12.25, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
+        assertEquals(0.0, payCheck.getDeduction(), 0.001);
+        assertEquals(( 8 + 1.5) * 12.25, payCheck.getNetPay(), 0.001);
+    }
+
+    @Test
+    public void paySingleHourlyEmployeeOnWrongDateTest() {
+        int empId = 2;
+        AddHourlyEmployee t = anHourlyEmp(empId, 15.25);
+        t.execute();
+        LocalDate date = LocalDate.of(2001, 11, 8);
+        TimeCardTransaction tct = new TimeCardTransaction(date, 9.0, empId)        ;
+        tct.execute();
+        PaydayTransaction pdt = new PaydayTransaction(date);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNull(payCheck);
+    }
+
+    @Test
+    public void paySingleHourlyEmployeeTwoTimeCardsTest() {
+        int empId = 2;
+        AddHourlyEmployee t = anHourlyEmp(empId, 15.25);
+        t.execute();
+        LocalDate date = LocalDate.of(2001, 11, 9);
+        TimeCardTransaction tct = new TimeCardTransaction(
+                        LocalDate.of(2001, 11, 9),
+                        2.0, 
+                        empId)        ;
+        tct.execute();
+
+        TimeCardTransaction tct2 = new TimeCardTransaction(
+                        LocalDate.of(2001, 11, 8), 
+                        5.0, 
+                        empId);
+        tct2.execute();
+
+        PaydayTransaction pdt = new PaydayTransaction(date);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNotNull(payCheck);
+        System.out.println(payCheck);
+        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertEquals(7.0 * 15.25, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
+        assertEquals(0.0, payCheck.getDeduction(), 0.001);
+        assertEquals(7.0 * 15.25, payCheck.getNetPay(), 0.001);
+
+    }
 
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {
         return new AddHourlyEmployee(

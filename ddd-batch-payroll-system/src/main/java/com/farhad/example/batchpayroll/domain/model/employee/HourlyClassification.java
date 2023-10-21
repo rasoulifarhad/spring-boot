@@ -20,8 +20,8 @@ public class HourlyClassification implements PaymentClassification{
 
     @Override
     public double getSalary() {
-        double sumOhHours = timeCards.stream().mapToDouble(TimeCard::getHours).sum();
-        return hourlyRate * sumOhHours ;
+        return timeCards.stream()
+                        .mapToDouble(this::calculatePayForTimeCard).sum();
     }
 
     public TimeCard getTimeCard(LocalDate now) {
@@ -41,7 +41,8 @@ public class HourlyClassification implements PaymentClassification{
         System.out.println(timeCards);
         System.out.println(hourlyRate);
         return timeCards.stream()
-            .mapToDouble(value -> value.getHours() * hourlyRate )
+            .filter(timecard -> isInPayPeriod(timecard, payCheck.getPayDate()))
+            .mapToDouble(this::calculatePayForTimeCard)
             .sum();
     }
 
@@ -49,5 +50,17 @@ public class HourlyClassification implements PaymentClassification{
     public void post(LocalDate date) {
     }
     
-    
+    private double calculatePayForTimeCard(TimeCard timeCard) {
+        double overTimeHours = Math.max(0.0, timeCard.getHours() - 8);
+        double normalHours = timeCard.getHours() - overTimeHours;
+        return (normalHours * hourlyRate) + (hourlyRate * 1.5 * overTimeHours) ;
+
+    }
+
+    private boolean isInPayPeriod(TimeCard timecard, LocalDate payDate) {
+        return 
+            timecard.getDate().isAfter(payDate.minusWeeks(1)) 
+                ? timecard.getDate().isBefore(payDate) || timecard.getDate().isEqual(payDate)
+                : false;
+    }
 }

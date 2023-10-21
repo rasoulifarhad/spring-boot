@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,12 +78,7 @@ public class PayrollTest {
     public void AddHourlyEmployeeTest() {
         int empId = 1;
         double hourlyRate = 34.00;
-        AddHourlyEmployee t = new AddHourlyEmployee(
-                            empId, 
-                            
-                            "name #1", 
-                            "address #1", 
-                            hourlyRate);
+        AddHourlyEmployee t = anHourlyEmp(empId, hourlyRate);
         t.execute();
         Employee employee = payrollDatabase.getEmployee(empId);
         assertEquals("name #1", employee.getName());
@@ -89,7 +86,7 @@ public class PayrollTest {
         PaymentClassification paymentClassification = employee.getPaymentClassification();
         assertTrue(paymentClassification instanceof HourlyClassification);
 
-        assertEquals(1000.00, paymentClassification.getSalary(), 0.001);
+        assertEquals(0.0, paymentClassification.getSalary(), 0.001);
         PaymentSchedule paymentSchedule = employee.getItsSchedule();
         assertTrue(paymentSchedule instanceof WeeklySchedule);
 
@@ -405,10 +402,10 @@ public class PayrollTest {
         assertNotNull(payCheck);
         System.out.println(payCheck);
         assertThat(payCheck.getPayDate()).isEqualTo(date);
-        assertEquals(( 8 + 1.5) * 12.25, payCheck.getGrossPay(), 0.001);
+        assertEquals(( 8 + 1.5) * 15.25, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
-        assertEquals(( 8 + 1.5) * 12.25, payCheck.getNetPay(), 0.001);
+        assertEquals(( 8 + 1.5) * 15.25, payCheck.getNetPay(), 0.001);
     }
 
     @Test
@@ -454,6 +451,47 @@ public class PayrollTest {
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
         assertEquals(7.0 * 15.25, payCheck.getNetPay(), 0.001);
 
+    }
+
+    @Test
+    public void paySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriodsTest() {
+        int empId = 2;
+        AddHourlyEmployee t = anHourlyEmp(empId, 15.25);
+        t.execute();
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
+        LocalDate dateInPreviousPayPeriod = LocalDate.of(2001, 11, 2);
+        TimeCardTransaction tct = new TimeCardTransaction(
+                        payDate,
+                        2.0, 
+                        empId)        ;
+        tct.execute();
+
+        TimeCardTransaction tct2 = new TimeCardTransaction(
+                        dateInPreviousPayPeriod, 
+                        5.0, 
+                        empId);
+        tct2.execute();
+
+        PaydayTransaction pdt = new PaydayTransaction(payDate);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNotNull(payCheck);
+        System.out.println(payCheck);
+        assertThat(payCheck.getPayDate()).isEqualTo(payDate);
+        assertEquals(2.0 * 15.25, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
+        assertEquals(0.0, payCheck.getDeduction(), 0.001);
+        assertEquals(2.0 * 15.25, payCheck.getNetPay(), 0.001);
+
+
+    }
+
+    @Test
+    public void period() {
+         LocalDate payDate = LocalDate.of(2001, 11, 9);
+         LocalDate previousPayDate = payDate.minusWeeks(1);
+         System.out.println(payDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)) );
+         System.out.println(previousPayDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
     }
 
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {

@@ -14,15 +14,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PaydayTransaction implements Transaction {
 
-    protected final LocalDate date;
+    protected final LocalDate payDate;
     private Map<Integer, PayCheck> payChecks = new HashMap<>();
     
     @Override
     public void execute() {
         List<Employee> employees = PayrollDatabase.inmemory().getEmployees();
         for (Employee employee : employees) {
-            if(employee.isPayDay(date)) {
-                PayCheck payCheck = new PayCheck(date);
+            if(employee.isPayDay(payDate)) {
+                PayCheck payCheck = new PayCheck(employee.getPayPeriodStartDate(payDate), payDate);
                 payChecks.put(employee.getEmployeeId(), payCheck);
                 employee.payday(payCheck);
 

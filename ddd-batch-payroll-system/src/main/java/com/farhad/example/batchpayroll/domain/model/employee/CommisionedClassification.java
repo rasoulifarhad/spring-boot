@@ -39,7 +39,7 @@ public class CommisionedClassification implements PaymentClassification {
 
     private double calculateCommision(PayCheck payCheck) {
         return salesReceipts.stream()
-                            .filter(salesReceipt -> isInPayPeriod(salesReceipt, payCheck.getPayDate()))
+                            .filter(salesReceipt -> isInPayPeriod(salesReceipt, payCheck))
                             .mapToDouble(this::calculatePayForSalesRece)
                             .sum();
     }
@@ -53,11 +53,16 @@ public class CommisionedClassification implements PaymentClassification {
 
     }
 
-    private boolean isInPayPeriod(SalesReceipt salesReceipt, LocalDate payDate) {
+    private boolean isInPayPeriod(SalesReceipt salesReceipt, PayCheck payCheck) {
+        return isInPayPeriod(salesReceipt.getDate(), payCheck);
+    }
+    
+    private boolean isInPayPeriod(LocalDate date, PayCheck payCheck) {
         return 
-            salesReceipt.getDate().isAfter(payDate.minusWeeks(2)) 
-                ? salesReceipt.getDate().isBefore(payDate) || salesReceipt.getDate().isEqual(payDate)
+            date.isAfter(payCheck.getPayPeriodStart()) 
+                ? date.isBefore(payCheck.getPayDate()) || date.isEqual(payCheck.getPayDate())
                 : false;
     }
+
     
 }

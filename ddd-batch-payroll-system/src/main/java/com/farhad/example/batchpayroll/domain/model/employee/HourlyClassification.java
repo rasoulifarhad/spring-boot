@@ -39,7 +39,7 @@ public class HourlyClassification implements PaymentClassification{
     @Override
     public double calculatePay(PayCheck payCheck) {
         return timeCards.stream()
-            .filter(timecard -> isInPayPeriod(timecard, payCheck.getPayDate()))
+            .filter(timecard -> isInPayPeriod(timecard, payCheck))
             .mapToDouble(this::calculatePayForTimeCard)
             .sum();
     }
@@ -55,10 +55,14 @@ public class HourlyClassification implements PaymentClassification{
 
     }
 
-    private boolean isInPayPeriod(TimeCard timecard, LocalDate payDate) {
+    private boolean isInPayPeriod(TimeCard timecard, PayCheck payCheck) {
+        return isInPayPeriod(timecard.getDate(), payCheck);
+    }
+
+    private boolean isInPayPeriod(LocalDate date, PayCheck payCheck) {
         return 
-            timecard.getDate().isAfter(payDate.minusWeeks(1)) 
-                ? timecard.getDate().isBefore(payDate) || timecard.getDate().isEqual(payDate)
+            date.isAfter(payCheck.getPayPeriodStart()) 
+                ? date.isBefore(payCheck.getPayDate()) || date.isEqual(payCheck.getPayDate())
                 : false;
     }
 }

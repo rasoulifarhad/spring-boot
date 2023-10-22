@@ -39,10 +39,10 @@ public class Employee {
         return itsSchedule.isPayDay(date);
     }
 
-    public PayCheck payday(LocalDate date) {
-        PayCheck payCheck = new PayCheck(date);
-        return payday(payCheck);
-    }
+    // public PayCheck payday(LocalDate date) {
+    //     PayCheck payCheck = new PayCheck(date);
+    //     return payday(payCheck);
+    // }
 
     private void post(LocalDate date) {
         paymentClassification.post(date);
@@ -63,6 +63,10 @@ public class Employee {
             paymentMethod.pay(payCheck);
         }
         return payCheck;
+    }
+
+    public LocalDate getPayPeriodStartDate(LocalDate payDate) {
+        return null;
     }
 
 }

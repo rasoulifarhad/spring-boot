@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class PayCheck {
 
 
+    private LocalDate payPeriodStart;
     private LocalDate payDate;
     private int empId;
     private double grossPay;
@@ -21,7 +22,8 @@ public class PayCheck {
     private double netPay;
     private String disposition;
     
-    public PayCheck(LocalDate payDate) {
+    public PayCheck(LocalDate payPeriodStart, LocalDate payDate) {
+        this.payPeriodStart = payPeriodStart;
         this.payDate = payDate;
     }
 

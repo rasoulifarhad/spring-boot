@@ -482,8 +482,27 @@ public class PayrollTest {
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
         assertEquals(2.0 * 15.25, payCheck.getNetPay(), 0.001);
+    }
 
-
+    @Test
+    public void salariedUnionMemberDuesTest() {
+        int empId = 1;
+        AddSalariedEmployee t = aSalariedEmp(empId, 1000.00);
+        t.execute();
+        int memberId = 7734;
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        cmt.execute();
+        LocalDate payDate = LocalDate.of(2001, 11, 30);
+        PaydayTransaction pdt = new PaydayTransaction(payDate);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+        assertNotNull(payCheck);
+        System.out.println(payCheck);
+        assertThat(payCheck.getPayDate()).isEqualTo(payDate);
+        assertEquals(2.0 * 15.25, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
+        assertEquals(0.0, payCheck.getDeduction(), 0.001);
+        assertEquals(2.0 * 15.25, payCheck.getNetPay(), 0.001);
     }
 
     @Test

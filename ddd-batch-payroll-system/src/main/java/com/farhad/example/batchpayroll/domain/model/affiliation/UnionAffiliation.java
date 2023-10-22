@@ -1,5 +1,6 @@
 package com.farhad.example.batchpayroll.domain.model.affiliation;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,43 @@ public class UnionAffiliation implements Affiliation{
 
     @Override
     public double calculateDeductions(PayCheck payCheck) {
-        return dues;
+        double totalDues = 0;
+        int fridays = numberOfFridaysInPayPeriod(payCheck.getPayPeriodStart(), payCheck.getPayPeriodEnd());
+        System.out.println( fridays);
+        double d = serviceCharges.stream()
+            .filter(s -> isInPayPeriod(s, payCheck))
+            .mapToDouble(ServiceCharge::getCharge)
+            .sum();
+
+        totalDues = fridays * (d + dues);
+        return totalDues;
+
+    }
+
+    private int numberOfFridaysInPayPeriod(LocalDate start, LocalDate end) {
+        LocalDate date = start;
+        int numberofFriday = 0;
+        date = date.plusDays(1);
+        while (date.compareTo(end) <= 0 ) {
+            if(date.getDayOfWeek() == DayOfWeek.FRIDAY) {
+                numberofFriday++;
+            }
+            date = date.plusDays(1);
+        }
+        return numberofFriday;
+    }
+    
+    private boolean isInPayPeriod(ServiceCharge serviceCharge, PayCheck payCheck) {
+        System.out.println(serviceCharge);
+        System.out.println(payCheck);
+        return isInPayPeriod(serviceCharge.getDate(), payCheck);
+    }
+
+    private boolean isInPayPeriod(LocalDate date, PayCheck payCheck) {
+        return 
+            date.isAfter(payCheck.getPayPeriodStart()) 
+                ? date.isBefore(payCheck.getPayPeriodEnd()) || date.isEqual(payCheck.getPayPeriodEnd())
+                : false;
     }
 
 }

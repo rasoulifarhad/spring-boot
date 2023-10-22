@@ -50,7 +50,7 @@ public class Employee {
     }
 
     public PayCheck payday(PayCheck payCheck) {
-        LocalDate date = payCheck.getPayDate();
+        LocalDate date = payCheck.getPayPeriodEnd();
         if(isPayDay(date)) {
             System.out.println("is pay day");
             double grossPay = paymentClassification.calculatePay(payCheck);
@@ -65,8 +65,8 @@ public class Employee {
         return payCheck;
     }
 
-    public LocalDate getPayPeriodStartDate(LocalDate payDate) {
-        return null;
+    public LocalDate getPayPeriodStartDate(LocalDate payPeriodEndDate) {
+        return this.itsSchedule.getPayPeriodStartDate(payPeriodEndDate);
     }
 
 }

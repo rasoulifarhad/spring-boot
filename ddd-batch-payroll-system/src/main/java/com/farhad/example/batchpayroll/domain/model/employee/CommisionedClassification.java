@@ -60,7 +60,7 @@ public class CommisionedClassification implements PaymentClassification {
     private boolean isInPayPeriod(LocalDate date, PayCheck payCheck) {
         return 
             date.isAfter(payCheck.getPayPeriodStart()) 
-                ? date.isBefore(payCheck.getPayDate()) || date.isEqual(payCheck.getPayDate())
+                ? date.isBefore(payCheck.getPayPeriodEnd()) || date.isEqual(payCheck.getPayPeriodEnd())
                 : false;
     }
 

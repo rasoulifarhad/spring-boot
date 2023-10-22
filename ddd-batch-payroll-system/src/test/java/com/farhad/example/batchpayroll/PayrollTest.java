@@ -328,7 +328,7 @@ public class PayrollTest {
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
         System.out.println(payCheck);
-        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(date);
         assertEquals(1000.00, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
@@ -360,7 +360,7 @@ public class PayrollTest {
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
         System.out.println(payCheck);
-        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(date);
         assertEquals(0.0, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
@@ -381,7 +381,7 @@ public class PayrollTest {
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
         System.out.println(payCheck);
-        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(date);
         assertEquals(30.5, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
@@ -401,7 +401,7 @@ public class PayrollTest {
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
         System.out.println(payCheck);
-        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(date);
         assertEquals(( 8 + 1.5) * 15.25, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
@@ -445,7 +445,7 @@ public class PayrollTest {
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
         System.out.println(payCheck);
-        assertThat(payCheck.getPayDate()).isEqualTo(date);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(date);
         assertEquals(7.0 * 15.25, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
@@ -477,7 +477,7 @@ public class PayrollTest {
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
         System.out.println(payCheck);
-        assertThat(payCheck.getPayDate()).isEqualTo(payDate);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(payDate);
         assertEquals(2.0 * 15.25, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
@@ -498,7 +498,7 @@ public class PayrollTest {
         PayCheck payCheck = pdt.getPayCheck(empId);
         assertNotNull(payCheck);
         System.out.println(payCheck);
-        assertThat(payCheck.getPayDate()).isEqualTo(payDate);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(payDate);
         assertEquals(2.0 * 15.25, payCheck.getGrossPay(), 0.001);
         assertThat(payCheck.getDisposition()).isEqualTo("Hold");
         assertEquals(0.0, payCheck.getDeduction(), 0.001);
@@ -511,6 +511,36 @@ public class PayrollTest {
          LocalDate previousPayDate = payDate.minusWeeks(1);
          System.out.println(payDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)) );
          System.out.println(previousPayDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+    }
+
+    @Test
+    public void hourlyUnionMemberServiceChargeTest(){
+        int empId = 1;
+        AddHourlyEmployee t = anHourlyEmp(empId, 15.24);
+        t.execute();
+        int memberId = 7734;
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        cmt.execute();
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
+        System.out.println(payDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, payDate, 19.42);
+        sct.execute();
+        TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
+        tct.execute();
+
+        PaydayTransaction pdt = new PaydayTransaction(payDate);
+        pdt.execute();
+        PayCheck payCheck = pdt.getPayCheck(empId);
+
+        
+        assertNotNull(payCheck);
+        System.out.println(payCheck);
+        assertThat(payCheck.getPayPeriodEnd()).isEqualTo(payDate);
+        assertEquals(8.0 * 15.24, payCheck.getGrossPay(), 0.001);
+        assertThat(payCheck.getDisposition()).isEqualTo("Hold");
+        assertEquals((9.42 + 19.42), payCheck.getDeduction(), 0.001);
+        assertEquals((8.0 * 15.24) - (9.42 + 19.42), payCheck.getNetPay(), 0.001);
+
     }
 
     private static AddHourlyEmployee anHourlyEmp(int empId, double hourlyRate) {

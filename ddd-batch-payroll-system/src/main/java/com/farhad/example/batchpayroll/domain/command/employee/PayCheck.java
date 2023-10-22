@@ -15,7 +15,7 @@ public class PayCheck {
 
 
     private LocalDate payPeriodStart;
-    private LocalDate payDate;
+    private LocalDate payPeriodEnd;
     private int empId;
     private double grossPay;
     private double deduction;
@@ -24,7 +24,7 @@ public class PayCheck {
     
     public PayCheck(LocalDate payPeriodStart, LocalDate payDate) {
         this.payPeriodStart = payPeriodStart;
-        this.payDate = payDate;
+        this.payPeriodEnd = payDate;
     }
 
     

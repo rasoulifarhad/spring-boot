@@ -56,13 +56,17 @@ public class HourlyClassification implements PaymentClassification{
     }
 
     private boolean isInPayPeriod(TimeCard timecard, PayCheck payCheck) {
+        System.out.println(timecard);
+        System.out.println(payCheck);
         return isInPayPeriod(timecard.getDate(), payCheck);
     }
 
     private boolean isInPayPeriod(LocalDate date, PayCheck payCheck) {
         return 
             date.isAfter(payCheck.getPayPeriodStart()) 
-                ? date.isBefore(payCheck.getPayDate()) || date.isEqual(payCheck.getPayDate())
+                ? date.isBefore(payCheck.getPayPeriodEnd()) || date.isEqual(payCheck.getPayPeriodEnd())
                 : false;
     }
+
+    
 }

@@ -9,5 +9,10 @@ public class WeeklySchedule implements PaymentSchedule {
     public boolean isPayDay(LocalDate date) {
         return DayOfWeek.FRIDAY.compareTo(date.getDayOfWeek()) == 0;
     }
+
+    @Override
+    public LocalDate getPayPeriodStartDate(LocalDate payPeriodEndDate) {
+        return payPeriodEndDate.minusWeeks(1);
+    }
     
 }

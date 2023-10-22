@@ -10,5 +10,10 @@ public class MonthlySchedule implements PaymentSchedule {
         YearMonth currebtYearMonth = YearMonth.from(date);
         return currebtYearMonth.atEndOfMonth().isEqual(date);
     }
+
+    @Override
+    public LocalDate getPayPeriodStartDate(LocalDate payPeriodEndDate) {
+        return payPeriodEndDate.minusMonths(1).plusDays(1);
+    }
     
 }

@@ -25,5 +25,6 @@
         <module>discount-application</module>
         <module>discount-outside</module>
         <module>discount-startup</module>
+        <module>coffee-machine</module>
     </modules>
 </project>

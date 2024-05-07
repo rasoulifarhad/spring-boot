@@ -1,5 +1,6 @@
 package com.farhad.example.dddhibernatedemo.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,9 @@ import com.farhad.example.dddhibernatedemo.domain.Order;
 @RepositoryRestResource
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
+    @EntityGraph("order-join-shipping")
+    Order findByCustomerId(@Param("customerId") Long customerId);
+    
     @Query("""
         select o from order o
         left join fetch o.orderItems oi

@@ -1,4 +1,4 @@
-package com.farhad.example.dddhibernatedemo;
+package com.farhad.example.dddhibernatedemo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

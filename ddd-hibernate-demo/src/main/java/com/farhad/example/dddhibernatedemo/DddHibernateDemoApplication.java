@@ -1,4 +1,4 @@
-package com.farhad.example.dddhibernatedemo.domain;
+package com.farhad.example.dddhibernatedemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

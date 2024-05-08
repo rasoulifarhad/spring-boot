@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farhad.example.dddhibernatedemo.domain.Customer;
 import com.farhad.example.dddhibernatedemo.domain.Order;
 import com.farhad.example.dddhibernatedemo.repository.CustomerRepository;
 import com.farhad.example.dddhibernatedemo.repository.OrderRepository;
@@ -19,24 +20,23 @@ public class MainController {
     private final CustomerRepository customerRepository;
 
     @GetMapping("/customers/orders/{id}")
-    public Long getOrder(@PathVariable("id") Long id) {
+    public Order getOrder(@PathVariable("id") Long id) {
         Order byCustomerId = orderRepository.findByCustomerId(id);
         byCustomerId.getOrderItems().get(0).getProduct().getDescription();
-        return 1L;
+        return byCustomerId;
         
     }
 
     @GetMapping("/customers/orders2/{id}")
-    public Long getOrder2(@PathVariable("id") Long id) {
+    public Order getOrder2(@PathVariable("id") Long id) {
         Order byCustomerId = orderRepository.findByCustomerIdCustomQuery(id);
         byCustomerId.getOrderItems().get(0).getProduct().getDescription();
-        return 1L;
+        return byCustomerId;
     }    
 
     @GetMapping("/customers/{id}")
-    public Long getCustomer(@PathVariable("id") Long id) {
-        customerRepository.findById(id).get();
-        return 1L;
+    public Customer getCustomer(@PathVariable("id") Long id) {
+        return customerRepository.findById(id).get();
     }    
 
 

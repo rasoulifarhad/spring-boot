@@ -32,7 +32,7 @@ import lombok.Data;
                 @NamedAttributeNode("product")
             })
     })
-@Entity
+@Entity(name = "order")
 @Data
 @Table(name = "ORDERS")
 public class Order {

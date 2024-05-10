@@ -10,7 +10,7 @@ public class CustomerId implements ValueObject<CustomerId> {
 
 
     @NonNull
-    private String id;
+    private String value;
 
     @Override
     public boolean sameValueAs(CustomerId other) {

@@ -3,16 +3,19 @@ package com.farhad.example.dddorderexample.domain.model;
 import java.time.Instant;
 import java.util.Set;
 
+import com.farhad.example.dddorderexample.domain.model.Order.OrderId;
+import com.farhad.example.dddorderexample.domain.shared.BaseAggregateRoot;
 import com.farhad.example.dddorderexample.domain.shared.ValueObject;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Value;
 
 @Getter
+@Entity
+public class Order extends BaseAggregateRoot<OrderId>{
 
-public class Order {
-
-    private OrderId id;
+    // private OrderId id;
     private String CustomerId;
     private String orderNo;
     private Instant orderDate;

@@ -1,13 +1,13 @@
 package com.farhad.example.dddorderexample.application.service;
 
-import com.farhad.example.dddorderexample.application.api.dto.OrderDto;
-import com.farhad.example.dddorderexample.application.api.dto.PaymentDto;
-import com.farhad.example.dddorderexample.application.api.dto.ShippingAddressDto;
+import com.farhad.example.dddorderexample.domain.model.Order;
+import com.farhad.example.dddorderexample.domain.model.Payment;
+import com.farhad.example.dddorderexample.domain.model.ShippingAddress;
 
 public interface OrderService {
 
-    void createOrder(OrderDto orderDto );
-    void addShippingAddress(ShippingAddressDto shippingAddressDto );
-    void addPaymentDetail(PaymentDto paymentDto);
+    void createOrder(Order order );
+    void addShippingAddress(ShippingAddress shippingAddress );
+    void addPaymentDetail(Payment payment);
     void applyDiscount();
 }

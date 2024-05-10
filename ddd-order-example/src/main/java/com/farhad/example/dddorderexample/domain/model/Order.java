@@ -5,7 +5,10 @@ import java.util.Set;
 
 import com.farhad.example.dddorderexample.domain.shared.ValueObject;
 
+import lombok.Getter;
 import lombok.Value;
+
+@Getter
 
 public class Order {
 

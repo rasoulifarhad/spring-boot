@@ -1,6 +1,7 @@
 package com.farhad.example.dddorderexample.infra.persistence.jpa.converter;
 
-import com.farhad.example.dddorderexample.domain.model.CustomerId;
+
+import com.farhad.example.dddorderexample.domain.model.Customer.CustomerId;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,10 +1,13 @@
 package com.farhad.example.dddorderexample.domain.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-import com.farhad.example.dddorderexample.domain.shared.ValueObject;
-
-import lombok.Value;
+import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class Product {
 
@@ -13,20 +16,17 @@ public class Product {
     private BigDecimal price;
     private BigDecimal total;
 
-   @Value
-    public static class  ProductId implements ValueObject<ProductId> {
+    @Embeddable
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class ProductId implements Serializable {
 
+        @Getter
         private String value;
-
-        @Override
-        public boolean sameValueAs(ProductId other) {
-            return this.equals(other);
-        }
 
         public static ProductId of(String value) {
             return new ProductId(value);
         }
-    
-        
-    }    
+
+    }
 }

@@ -13,19 +13,20 @@ import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class AndFilter extends AbstractFilter {
+public class OrFilter extends AbstractFilter {
 
-    private final List<AbstractFilter> filters;
+    private List<AbstractFilter> filters;
+
     @Override
     public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder,
             Map<String, Join<Object, Object>> attributeToJoin) {
-                return criteriaBuilder.and(
+                return criteriaBuilder.or(
                     filters.stream()
-                        .map(filter -> 
+                       .map(filter -> 
                             filter.toPredicate(root, query, criteriaBuilder, attributeToJoin)
                         )
-                        .collect(toList())
-                        .toArray(Predicate[]::new));
+                       .collect(toList())
+                       .toArray(Predicate[]::new));
     }
 
 }

@@ -20,7 +20,7 @@ public class GenericSpecification<T> implements Specification<T>{
         CriteriaQuery<?> query, 
         CriteriaBuilder criteriaBuilder) {
             if(joinDataSupplier != null && filter != null) {
-                return filter.toPredicate(root, query, criteriaBuilder, joinDataSupplier.getJoinData(root, query))
+                return filter.toPredicate(root, query, criteriaBuilder, joinDataSupplier.getJoinData(root, query));
             }
             return criteriaBuilder.conjunction();
     }

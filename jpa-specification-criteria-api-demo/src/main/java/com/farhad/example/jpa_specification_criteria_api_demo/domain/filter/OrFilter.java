@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrFilter extends AbstractFilter {
 
-    private List<AbstractFilter> filters;
+    private final List<AbstractFilter> filters;
 
     @Override
     public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder,

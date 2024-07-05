@@ -9,7 +9,7 @@ import jakarta.persistence.criteria.Root;
 
 public interface JoinDataSupplier<T> {
 
-    default Map<String, Join<Object, Object>> getJoinData(Root root, CriteriaQuery<?> query) {
+    default Map<String, Join<Object, Object>> getJoinData(Root<T> root, CriteriaQuery<?> query) {
         return new LinkedHashMap<>();
     }
 }

@@ -78,13 +78,13 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 		Specification<Employee> specification = getEmployeeDepartmentJoinSpecification(orFilter);
         
 
-		CriteriaQuery<Tuple> tupleQuery = entityManager.getCriteriaBuilder().createTupleQuery();
+		CriteriaQuery<Tuple> query = entityManager.getCriteriaBuilder().createTupleQuery();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        Root<Employee> employeeRoot = tupleQuery.from(Employee.class);
+        Root<Employee> employeeRoot = query.from(Employee.class);
 
-		Predicate predicate = specification.toPredicate(employeeRoot, tupleQuery, builder);
-        tupleQuery.where(predicate);
-		TypedQuery<Tuple> typedQuery = entityManager.createQuery(tupleQuery);
+		Predicate predicate = specification.toPredicate(employeeRoot, query, builder);
+        query.where(predicate);
+		TypedQuery<Tuple> typedQuery = entityManager.createQuery(query);
 		List<Tuple> result = typedQuery.getResultList();
 		Tuple tuple = result.get(0);
 		System.out.println(tuple);

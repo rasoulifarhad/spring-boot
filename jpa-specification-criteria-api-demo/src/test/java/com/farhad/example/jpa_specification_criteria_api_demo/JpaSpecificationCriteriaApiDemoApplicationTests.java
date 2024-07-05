@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.farhad.example.jpa_specification_criteria_api_demo.domain.Employee;
@@ -35,6 +37,7 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 
     @PersistenceContext
     private EntityManager entityManager;
+	private Class<Employee> entityClass;
 
 
 	@Test
@@ -77,17 +80,37 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 		OrFilter orFilter =  new OrFilter(Arrays.asList(firstAndFilter, secondAndFilter));
 		Specification<Employee> specification = getEmployeeDepartmentJoinSpecification(orFilter);
         
+		Page<Tuple> tuplePage = getPagedData(specification, Employee.class);
+		List<Tuple> tupleList = tuplePage.getContent();
+		// List<Tuple> result = typedQuery.getResultList();
+	}
 
-		CriteriaQuery<Tuple> query = entityManager.getCriteriaBuilder().createTupleQuery();
+	private Page<Tuple> getPagedData(Specification<Employee> specification, Class<Employee> domainClass) {
+		TypedQuery<Tuple> typedQuery = getTupleQuety(specification, domainClass);
+		Page<Tuple> page = new PageImpl<>(typedQuery.getResultList());
+		return page;
+	}
+
+	private TypedQuery<Tuple> getTupleQuety(Specification<Employee> specification, Class<Employee> domainClass) {
+		CriteriaQuery<Tuple> tupleQuery = entityManager.getCriteriaBuilder().createTupleQuery();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		Root<Employee> employeeRoot = applaySpecificariobToCriteria(specification, Employee.class, tupleQuery);
+		return entityManager.createQuery(tupleQuery);
+	}
+
+	private Root<Employee> applaySpecificariobToCriteria(Specification<Employee> specification, Class<Employee> domainClass, CriteriaQuery<Tuple> query ) {
+		Root<Employee> employeeRoot = query.from(domainClass);
+
+		if (specification == null) {
+			return employeeRoot;
+		}
+
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        Root<Employee> employeeRoot = query.from(Employee.class);
-
 		Predicate predicate = specification.toPredicate(employeeRoot, query, builder);
-        query.where(predicate);
-		TypedQuery<Tuple> typedQuery = entityManager.createQuery(query);
-		List<Tuple> result = typedQuery.getResultList();
-		Tuple tuple = result.get(0);
-		System.out.println(tuple);
+		if(predicate != null) {
+			query.where(predicate);
+		}
+		return employeeRoot;
 	}
 
 	public Specification<Employee> getEmployeeDepartmentJoinSpecification(AbstractFilter filter) {

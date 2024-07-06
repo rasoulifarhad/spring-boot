@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import com.farhad.example.jpa_specification_criteria_api_demo.domain.Employee;
 import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.AbstractFilter;
@@ -17,7 +20,10 @@ import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.AndF
 import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.Filter;
 import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.FilterOperator;
 import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.OrFilter;
+import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.SearchQuery;
 import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.SimpleFilter;
+import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.SortOrder;
+import com.farhad.example.jpa_specification_criteria_api_demo.domain.filter.SortOrderMetadata;
 import com.farhad.example.jpa_specification_criteria_api_demo.specification.GenericSpecification;
 import com.farhad.example.jpa_specification_criteria_api_demo.specification.JoinDataSupplier;
 
@@ -78,17 +84,70 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 					"Department"));
 		AndFilter secondAndFilter = new AndFilter(Arrays.asList(salaryFilter2, departmentNameFilter2));
 		OrFilter orFilter =  new OrFilter(Arrays.asList(firstAndFilter, secondAndFilter));
-		Specification<Employee> specification = getEmployeeDepartmentJoinSpecification(orFilter);
-        
-		Page<Tuple> tuplePage = getPagedData(specification, Employee.class);
+
+		SearchQuery searchQuery = 
+			new SearchQuery(
+				orFilter, 
+				0, 
+				10, 
+				Arrays.asList(new SortOrderMetadata(
+								"salary", SortOrder.DESC)));
+
+		Specification<Employee> specification = getEmployeeDepartmentJoinSpecification(searchQuery.getFilter());
+		
+		Page<Tuple> tuplePage = getPagedData(specification, Employee.class, searchQuery);
+		// Page<Tuple> tuplePage = getPagedData(specification, Employee.class);
+
 		List<Tuple> tupleList = tuplePage.getContent();
 		// List<Tuple> result = typedQuery.getResultList();
+		System.out.println(tupleList);
 	}
 
+	private PageRequest getPageRequest(SearchQuery searchQuery) {
+		return PageRequest.of(searchQuery.getPageNumber(), searchQuery.getPageSize());
+	}
 	private Page<Tuple> getPagedData(Specification<Employee> specification, Class<Employee> domainClass) {
 		TypedQuery<Tuple> typedQuery = getTupleQuety(specification, domainClass);
 		Page<Tuple> page = new PageImpl<>(typedQuery.getResultList());
 		return page;
+	}
+
+	private Page<Tuple> getPagedData(Specification<Employee> specification, Class<Employee> domainClass, SearchQuery searchQuery) {
+		PageRequest pageRequest = getPageRequest(searchQuery);
+		TypedQuery<Tuple> typedQuery = getTupleQuety(specification, domainClass);
+		Page<Tuple> page;
+		if(pageRequest.isUnpaged()) {
+			page = new PageImpl<>(typedQuery.getResultList());	
+		} else {
+			page = getPage(typedQuery, domainClass, pageRequest, specification);
+		}
+		return page;
+	}
+
+	private Page<Tuple> getPage(TypedQuery<Tuple> typedQuery, Class<Employee> domainClass, Pageable pageable,
+			Specification<Employee> specification) {
+				if(pageable.isPaged()) {
+					typedQuery.setFirstResult((int)pageable.getOffset());
+					typedQuery.setMaxResults(pageable.getPageSize());
+				}
+				return PageableExecutionUtils.getPage(
+					typedQuery.getResultList(), 
+					pageable, 
+					() -> executeCountQuery(getCountQuery(specification, domainClass)));
+	}
+
+
+	private long executeCountQuery(TypedQuery<Long> countQuery) {
+		List<Long> totals = countQuery.getResultList();
+		long total = 0;
+		for (Long l : totals) {
+			total += (l == null) ? 0 : l;
+		}
+		return total;
+	}
+
+	private TypedQuery<Long> getCountQuery(Specification<Employee> specification, Class<Employee> domainClass) {
+		return null;
 	}
 
 	private TypedQuery<Tuple> getTupleQuety(Specification<Employee> specification, Class<Employee> domainClass) {
@@ -121,7 +180,8 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 						Map<String, Join<Object, Object>> attributeToJoinMap = new LinkedHashMap<>();
 						Join<Object, Object> joinDepartment = root.join("department", JoinType.INNER);
 						attributeToJoinMap.put("Department", joinDepartment);
-						query.multiselect(root.get("id"), root.get("firstName"), joinDepartment.get("name"));
+						query.multiselect(root, joinDepartment);
+						// query.multiselect(root.get("id"), root.get("firstName"), joinDepartment.get("name"));
 						return attributeToJoinMap;
 					}
 				});

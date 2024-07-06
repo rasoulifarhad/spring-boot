@@ -51,7 +51,11 @@ public class JpaQueryUtils {
         return specification;
     }
 
-    public CriteriaQuery<Tuple> applySpecification(Specification<Employee> specification, Root<Employee> employeeRoot, CriteriaQuery<Tuple> query, CriteriaBuilder builder) {
+    public CriteriaQuery<Tuple> applySpecification(
+            Specification<Employee> specification, 
+            Root<Employee> employeeRoot, 
+            CriteriaQuery<Tuple> query, 
+            CriteriaBuilder builder) {
         Predicate predicate = specification.toPredicate(employeeRoot, query, builder);
         return query.where(predicate);
     }

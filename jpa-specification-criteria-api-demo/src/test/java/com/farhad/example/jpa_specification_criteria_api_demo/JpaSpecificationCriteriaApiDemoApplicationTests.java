@@ -1,6 +1,7 @@
 package com.farhad.example.jpa_specification_criteria_api_demo;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,15 +107,15 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 	private PageRequest getPageRequest(SearchQuery searchQuery) {
 		return PageRequest.of(searchQuery.getPageNumber(), searchQuery.getPageSize());
 	}
-	private Page<Tuple> getPagedData(Specification<Employee> specification, Class<Employee> domainClass) {
-		TypedQuery<Tuple> typedQuery = getTupleQuety(specification, domainClass);
-		Page<Tuple> page = new PageImpl<>(typedQuery.getResultList());
-		return page;
-	}
+	// private Page<Tuple> getPagedData(Specification<Employee> specification, Class<Employee> domainClass) {
+	// 	TypedQuery<Tuple> typedQuery = getTupleQuery(specification, domainClass);
+	// 	Page<Tuple> page = new PageImpl<>(typedQuery.getResultList());
+	// 	return page;
+	// }
 
 	private Page<Tuple> getPagedData(Specification<Employee> specification, Class<Employee> domainClass, SearchQuery searchQuery) {
 		PageRequest pageRequest = getPageRequest(searchQuery);
-		TypedQuery<Tuple> typedQuery = getTupleQuety(specification, domainClass);
+		TypedQuery<Tuple> typedQuery = getTupleQuery(specification, domainClass);
 		Page<Tuple> page;
 		if(pageRequest.isUnpaged()) {
 			page = new PageImpl<>(typedQuery.getResultList());	
@@ -147,10 +148,19 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 	}
 
 	private TypedQuery<Long> getCountQuery(Specification<Employee> specification, Class<Employee> domainClass) {
-		return null;
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> query = builder.createQuery(Long.class);
+		Root<Employee> root = query.from(domainClass);
+		Predicate predicate = specification.toPredicate(root, query, builder);
+		if(predicate != null) {
+			query.where(predicate);
+		}
+		query.select(builder.count(root));
+		query.orderBy(Collections.emptyList());
+		return entityManager.createQuery(query);
 	}
 
-	private TypedQuery<Tuple> getTupleQuety(Specification<Employee> specification, Class<Employee> domainClass) {
+	private TypedQuery<Tuple> getTupleQuery(Specification<Employee> specification, Class<Employee> domainClass) {
 		CriteriaQuery<Tuple> tupleQuery = entityManager.getCriteriaBuilder().createTupleQuery();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		Root<Employee> employeeRoot = applaySpecificariobToCriteria(specification, Employee.class, tupleQuery);

@@ -97,7 +97,7 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 		Specification<Employee> specification = getEmployeeDepartmentJoinSpecification(searchQuery.getFilter());
 		
 		Page<Tuple> tuplePage = getPagedData(specification, Employee.class, searchQuery);
-		// Page<Tuple> tuplePage = getPagedData(specification, Employee.class);
+		// Page<Tuple> tuplePage = getPagedData(specification, Employ ee.class);
 
 		List<Tuple> tupleList = tuplePage.getContent();
 		// List<Tuple> result = typedQuery.getResultList();
@@ -107,6 +107,7 @@ class JpaSpecificationCriteriaApiDemoApplicationTests {
 	private PageRequest getPageRequest(SearchQuery searchQuery) {
 		return PageRequest.of(searchQuery.getPageNumber(), searchQuery.getPageSize());
 	}
+
 	// private Page<Tuple> getPagedData(Specification<Employee> specification, Class<Employee> domainClass) {
 	// 	TypedQuery<Tuple> typedQuery = getTupleQuery(specification, domainClass);
 	// 	Page<Tuple> page = new PageImpl<>(typedQuery.getResultList());

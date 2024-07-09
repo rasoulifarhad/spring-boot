@@ -1,5 +1,6 @@
 package com.farhad.example.realworld_demo.domain.user;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,4 +15,6 @@ public class User {
     @Id
     private Long id;
 
+    @Embedded
+    private Profile profile;
 }

@@ -8,4 +8,7 @@ public class Profile {
 
     @Embedded
     private UserName userName;
+
+    @Embedded
+    private Image image;
 }

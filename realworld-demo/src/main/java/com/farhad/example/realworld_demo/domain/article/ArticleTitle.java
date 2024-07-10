@@ -27,6 +27,9 @@ public class ArticleTitle {
     }
 
     private static String slugFromTitle(String title) {
-        return title;
+        return title.toLowerCase()
+            .replaceAll("\\$,'\"|\\s|\\.|\\?", "-")
+            .replaceAll("-{2,}", "-")
+            .replaceAll("(^-)|(-$)", "");
     }
 }

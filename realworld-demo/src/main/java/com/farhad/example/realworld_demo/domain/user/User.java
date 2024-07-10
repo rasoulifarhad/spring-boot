@@ -7,8 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "users")
+@Getter
 public class User {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,4 +20,11 @@ public class User {
 
     @Embedded
     private Profile profile;
+
+    @Embedded
+    private UserName name;
+    
+    @Embedded
+    private Email email;
+
 }
